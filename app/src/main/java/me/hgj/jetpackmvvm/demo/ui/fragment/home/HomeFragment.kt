@@ -7,6 +7,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.ConvertUtils
 import com.kingja.loadsir.core.LoadService
+import com.kingja.loadsir.core.LoadSir
 import com.yanzhenjie.recyclerview.SwipeRecyclerView
 import com.zhpan.bannerview.BannerViewPager
 import kotlinx.android.synthetic.main.include_list.*
@@ -58,15 +59,21 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
 
     override fun initView(savedInstanceState: Bundle?) {
         //状态页配置
-        loadsir = loadServiceInit(swipeRefresh) {
-            //点击重试时触发的操作
-            loadsir.showLoading()
+//        loadsir = loadServiceInit(swipeRefresh) {
+//            //点击重试时触发的操作
+//            loadsir.showLoading()
+//            requestHomeViewModel.getBannerData()
+//            requestHomeViewModel.getHomeData(true)
+//        }
+        loadsir= LoadSir.getDefault().register(swipeRefresh) {
+                        loadsir.showLoading()
             requestHomeViewModel.getBannerData()
             requestHomeViewModel.getHomeData(true)
         }
+       // loadsir.showSuccess()
         //初始化 toolbar
         toolbar.run {
-            init("首页")
+            init("首页1")
             inflateMenu(R.menu.home_menu)
             setOnMenuItemClickListener {
                 when (it.itemId) {

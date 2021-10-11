@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/MainFragment">  <!--默认加载的Fragment-->
+
+    <fragment
+        android:id="@+id/MainFragment"
+        android:name="com.example.wapp.demo.ui.MainFragment">
+        <action
+            android:id="@+id/act_Main_to_SearFragment"
+            app:destination="@id/SearchFragment" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/SearchFragment"
+        android:name="com.example.wapp.demo.ui.fragment.SearchFragment">
+    </fragment>
+    <!--    <fragment-->
+    <!--        android:id="@+id/HomeFragment"-->
+    <!--        android:label="home_fragment_label"-->
+    <!--        android:name="com.example.wapp.demo.ui.fragment.HomeFragment">-->
+
+    <!--        <action-->
+    <!--            android:id="@+id/action_HomeFragment_to_SearchFragment"-->
+    <!--            app:destination="@id/SearchFragment" />-->
+    <!--    </fragment>-->
+</navigation>

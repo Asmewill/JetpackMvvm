@@ -43,9 +43,9 @@ class WelcomeActivity : BaseActivity<BaseViewModel, ActivityWelcomeBinding>() {
             //是第一次打开App 显示引导页
             welcome_image.gone()
             mViewPager.apply {
-                adapter = WelcomeBannerAdapter()
-                setLifecycleRegistry(lifecycle)
-                registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+                this.adapter = WelcomeBannerAdapter()
+                this.setLifecycleRegistry(lifecycle)
+                this.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
                     override fun onPageSelected(position: Int) {
                         super.onPageSelected(position)
                         if (position == resList.size - 1) {
@@ -55,7 +55,7 @@ class WelcomeActivity : BaseActivity<BaseViewModel, ActivityWelcomeBinding>() {
                         }
                     }
                 })
-                create(resList.toList())
+                this.create(resList.toList())
             }
         } else {
             //不是第一次打开App 0.3秒后自动跳转到主页

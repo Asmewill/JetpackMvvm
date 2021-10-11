@@ -32,6 +32,7 @@ fun AppCompatActivity.showLoadingExt(message: String = "请求网络中") {
                     .cornerRadius(12f)
                     .customView(R.layout.layout_custom_progress_dialog_view)
                     .lifecycleOwner(this)
+
             loadingDialog?.getCustomView()?.run {
                 this.findViewById<TextView>(R.id.loading_tips).text = message
                 this.findViewById<ProgressBar>(R.id.progressBar).indeterminateTintList = SettingUtil.getOneColorStateList(this@showLoadingExt)

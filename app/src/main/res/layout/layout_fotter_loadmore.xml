@@ -30,6 +30,7 @@
         android:layout_marginLeft="6dp"
         android:textColor="@color/colorGray"
         android:textSize="13dp"
+        android:text="loading..."
         android:visibility="gone" />
 
 </merge>

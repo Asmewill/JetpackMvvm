@@ -12,7 +12,6 @@ import me.hgj.jetpackmvvm.demo.app.ext.interceptLongClick
 import me.hgj.jetpackmvvm.demo.app.ext.setUiTheme
 import me.hgj.jetpackmvvm.demo.databinding.FragmentMainBinding
 import me.hgj.jetpackmvvm.demo.viewmodel.state.MainViewModel
-import me.hgj.jetpackmvvm.ext.nav
 
 /**
  * 时间　: 2019/12/27
@@ -20,6 +19,7 @@ import me.hgj.jetpackmvvm.ext.nav
  * 描述　:项目主页Fragment
  */
 class MainFragment : BaseFragment<MainViewModel, FragmentMainBinding>() {
+
 
     override fun layoutId() = R.layout.fragment_main
 
@@ -44,5 +44,4 @@ class MainFragment : BaseFragment<MainViewModel, FragmentMainBinding>() {
             setUiTheme(it, mainBottom)
         })
     }
-
 }

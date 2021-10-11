@@ -17,15 +17,15 @@ class WelcomeBannerAdapter : BaseBannerAdapter<String, WelcomeBannerViewHolder>(
     }
 
     override fun createViewHolder(itemView: View, viewType: Int): WelcomeBannerViewHolder {
-        return WelcomeBannerViewHolder(itemView);
+        return WelcomeBannerViewHolder(itemView)
     }
 
     override fun onBind(
         holder: WelcomeBannerViewHolder?,
         data: String?,
         position: Int,
-        pageSize: Int
-    ) {
-        holder?.bindData(data, position, pageSize);
+        pageSize: Int)
+    {
+        holder?.bindData(data, position, pageSize)
     }
 }

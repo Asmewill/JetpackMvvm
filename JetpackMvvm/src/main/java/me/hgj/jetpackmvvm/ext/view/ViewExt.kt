@@ -49,7 +49,7 @@ fun View.visibleOrInvisible(flag:Boolean) {
  * 设置view隐藏
  */
 fun View.gone() {
-    visibility = View.GONE
+   visibility = View.GONE
 }
 
 /**

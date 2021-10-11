@@ -175,12 +175,7 @@ class SettingFragment : PreferenceFragmentCompat(),
             Beta.checkUpgrade(true, false)
             false
         }
-        findPreference<Preference>("copyRight")?.setOnPreferenceClickListener {
-            activity?.let {
-                showMessage(it.getString(R.string.copyright_tip))
-            }
-            false
-        }
+
         findPreference<Preference>("author")?.setOnPreferenceClickListener {
             showMessage(
                 title = "联系作者",
@@ -196,6 +191,12 @@ class SettingFragment : PreferenceFragmentCompat(),
             view?.let {
                 nav().navigateAction(R.id.action_to_webFragment, Bundle()
                     .apply { putParcelable("bannerdata", data) })
+            }
+            false
+        }
+        findPreference<Preference>("copyRight")?.setOnPreferenceClickListener {
+            activity?.let {
+                showMessage(it.getString(R.string.copyright_tip))
             }
             false
         }

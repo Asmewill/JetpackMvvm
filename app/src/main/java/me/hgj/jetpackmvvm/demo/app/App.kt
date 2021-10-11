@@ -1,5 +1,6 @@
 package me.hgj.jetpackmvvm.demo.app
 
+import androidx.multidex.BuildConfig
 import androidx.multidex.MultiDex
 import cat.ereza.customactivityoncrash.config.CaocConfig
 import com.kingja.loadsir.callback.SuccessCallback
@@ -8,7 +9,7 @@ import com.tencent.bugly.Bugly
 import com.tencent.bugly.crashreport.CrashReport
 import com.tencent.mmkv.MMKV
 import me.hgj.jetpackmvvm.base.BaseApp
-import me.hgj.jetpackmvvm.demo.BuildConfig
+
 import me.hgj.jetpackmvvm.demo.app.event.AppViewModel
 import me.hgj.jetpackmvvm.demo.app.event.EventViewModel
 import me.hgj.jetpackmvvm.demo.app.ext.getProcessName
