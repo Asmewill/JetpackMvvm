@@ -40,7 +40,7 @@ class NetworkApi : BaseNetworkApi() {
             this.writeTimeout(5, TimeUnit.SECONDS)
 
         }
-        return  builder;
+        return  builder
     }
 
     override fun setRetrofitBuilder(builder: Retrofit.Builder): Retrofit.Builder {

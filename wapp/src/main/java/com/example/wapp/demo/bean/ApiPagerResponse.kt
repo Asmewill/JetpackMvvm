@@ -6,7 +6,7 @@ import java.io.Serializable
  * Created by jsxiaoshui on 2021-10-11
  */
 data class ApiPagerResponse<T>(
-    var data:T,
+    var datas:T,
     var curPage:Int,
     var offset:Int,
     var over:Boolean,
@@ -18,7 +18,7 @@ data class ApiPagerResponse<T>(
      * 是否为空
      */
      fun isEmpty():Boolean {
-         return (data as List<*>).size==0
+         return (datas as List<*>).size==0
      }
 
     /**

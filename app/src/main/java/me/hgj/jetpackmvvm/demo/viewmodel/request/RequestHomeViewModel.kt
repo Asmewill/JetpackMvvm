@@ -39,30 +39,33 @@ class RequestHomeViewModel : BaseViewModel() {
         if (isRefresh) {
             pageNo = 0
         }
-        request({ HttpRequestCoroutine.getHomeData(pageNo) }, {
-            //请求成功
-            pageNo++
-            val listDataUiState =
-                ListDataUiState(
-                    isSuccess = true,
-                    isRefresh = isRefresh,
-                    isEmpty = it.isEmpty(),
-                    hasMore = it.hasMore(),
-                    isFirstEmpty = isRefresh && it.isEmpty(),
-                    listData = it.datas
-                )
-            homeDataState.value = listDataUiState
-        }, {
-            //请求失败
-            val listDataUiState =
-                ListDataUiState(
-                    isSuccess = false,
-                    errMessage = it.errorMsg,
-                    isRefresh = isRefresh,
-                    listData = arrayListOf<AriticleResponse>()
-                )
-            homeDataState.value = listDataUiState
-        })
+        request(
+            block = { HttpRequestCoroutine.getHomeData(pageNo) },
+            success = {
+                //请求成功
+                pageNo++
+                val listDataUiState =
+                    ListDataUiState(
+                        isSuccess = true,
+                        isRefresh = isRefresh,
+                        isEmpty = it.isEmpty(),
+                        hasMore = it.hasMore(),
+                        isFirstEmpty = isRefresh && it.isEmpty(),
+                        listData = it.datas
+                    )
+                homeDataState.value = listDataUiState
+            },
+            error = {
+                //请求失败
+                val listDataUiState =
+                    ListDataUiState(
+                        isSuccess = false,
+                        errMessage = it.errorMsg,
+                        isRefresh = isRefresh,
+                        listData = arrayListOf<AriticleResponse>()
+                    )
+                homeDataState.value = listDataUiState
+            })
     }
 
     /**

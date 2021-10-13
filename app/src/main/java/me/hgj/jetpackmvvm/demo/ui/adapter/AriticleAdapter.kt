@@ -19,9 +19,13 @@ class AriticleAdapter(data: MutableList<AriticleResponse>?) :
     private val Ariticle = 1//文章类型
     private val Project = 2//项目类型 本来打算不区分文章和项目布局用统一布局的，但是布局完以后发现差异化蛮大的，所以还是分开吧
     private var showTag = false//是否展示标签 tag 一般主页才用的到
+    //定义一个空方法，待会给这个方法赋值
+   // private lateinit var collectAction: (item: AriticleResponse, v: CollectView, position: Int) -> Unit
 
     private var collectAction: (item: AriticleResponse, v: CollectView, position: Int) -> Unit =
-        { _: AriticleResponse, _: CollectView, _: Int -> }
+        { _: AriticleResponse, _: CollectView, _: Int ->
+
+        }
 
     constructor(data: MutableList<AriticleResponse>?, showTag: Boolean) : this(data) {
         this.showTag = showTag

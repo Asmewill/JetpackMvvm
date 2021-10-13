@@ -5,10 +5,15 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
+import com.example.wapp.demo.MyApp
 import com.example.wapp.demo.ui.fragment.*
+import com.example.wapp.demo.widget.DefineLoadMoreView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
 import com.yanzhenjie.recyclerview.SwipeRecyclerView
 
@@ -87,4 +92,39 @@ fun SwipeRecyclerView.init(
     setHasFixedSize(true)
     isNestedScrollingEnabled=isScroll
     return  this
+}
+
+fun SwipeRecyclerView.initFooter(loadMoreListener:SwipeRecyclerView.LoadMoreListener):DefineLoadMoreView{
+    val footView=DefineLoadMoreView(MyApp.instance)
+    //设置尾部点击
+    footView.setmLoadMoreListener(SwipeRecyclerView.LoadMoreListener {
+        footView.onLoading()
+        loadMoreListener.onLoadMore()
+    })
+     this.addFooterView(footView)
+     this.setLoadMoreView(footView)
+     this.setLoadMoreListener(loadMoreListener)
+    return  footView
+}
+
+fun RecyclerView.initFloatBtn(floatBtn:FloatingActionButton){
+    addOnScrollListener(object:RecyclerView.OnScrollListener(){
+        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+            super.onScrolled(recyclerView, dx, dy)
+        }
+    })
+    floatBtn.setOnClickListener {
+        val layoutManager=layoutManager as LinearLayoutManager
+        if(layoutManager.findLastVisibleItemPosition()>=40){
+            scrollToPosition(0)//没有滚动动画，快速滚动到顶部
+        }else{
+            smoothScrollToPosition(0) //有滚动动画快速返回到顶部
+        }
+    }
+}
+
+fun SwipeRefreshLayout.init(onRefresh:()->Unit){
+    this.setOnRefreshListener {
+        onRefresh.invoke()
+    }
 }

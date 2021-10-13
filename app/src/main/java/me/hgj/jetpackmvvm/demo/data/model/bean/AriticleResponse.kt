@@ -9,7 +9,7 @@ import kotlinx.android.parcel.Parcelize
  */
 @SuppressLint("ParcelCreator")
 @Parcelize
-data class AriticleResponse(
+data class AriticleResponse (
     var apkLink: String,
     var author: String,//作者
     var chapterId: Int,

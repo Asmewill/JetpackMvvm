@@ -146,7 +146,7 @@ fun <T> BaseViewModel.requestNoCheck(
 fun <T> BaseViewModel.request(
     block: suspend () -> BaseResponse<T>,
     success: (T) -> Unit,
-    error: (AppException) -> Unit = {},
+    error: (AppException) -> Unit = { },
     isShowDialog: Boolean = false,
     loadingMessage: String = "请求网络中..."
 ): Job {
@@ -161,7 +161,8 @@ fun <T> BaseViewModel.request(
             loadingChange.dismissDialog.postValue(false)
             runCatching {
                 //校验请求结果码是否正确，不正确会抛出异常走下面的onFailure
-                executeResponse(it) { t -> success(t)
+                executeResponse(it) { t ->
+                    success(t)
                 }
             }.onFailure { e ->
                 //打印错误消息
