@@ -21,7 +21,7 @@ class HttpRequestManager {
      * 二个异步请求合并成一个
      */
     suspend fun getHomeData(pageNo:Int):ApiResponse<ApiPagerResponse<ArrayList<AriticleResponse>>>{
-       return    withContext(Dispatchers.IO){
+       return withContext(Dispatchers.IO){
             val listData=async {
                 apiService.getArticleList(pageNo)
             }
