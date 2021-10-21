@@ -27,6 +27,10 @@ class HttpRequestManager {
             }
             if(pageNo==0){
                 val topData= async {apiService.getTopArticleList()  }
+                //标识是否是置顶数据
+                topData.await().data.forEach {
+                    it.isTop=true
+                }
                 listData.await().data.datas.addAll(0,topData.await().data)
                 listData.await() //最后一行作为返回值
             }else{

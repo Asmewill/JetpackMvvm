@@ -143,6 +143,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
         requestHomeViewModel.getBannerData()
         //请求文章列表数据
         requestHomeViewModel.getHomeData(true)
+
     }
 
     override fun createObserver() {

@@ -26,6 +26,7 @@ class HomeViewModel:BaseViewModel() {
         request(
             block = { httpRequestManager.getHomeData(pageNo)},
             success = {
+                pageNo++
                 val listDataUiState=ListDataUiState(
                     isSuccess = true,
                     isRefresh = isRefresh,

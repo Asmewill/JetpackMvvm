@@ -33,7 +33,8 @@ data class AriticleResponse(
     val type: Int, // 1
     val userId: Int, // 2
     val visible: Int, // 1
-    val zan: Int // 7
+    val zan: Int ,// 7
+    var isTop:Boolean =false
 ) {
     data class Tag(
         val name: String, // 本站发布
