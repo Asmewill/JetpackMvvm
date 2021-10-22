@@ -1,5 +1,8 @@
 package com.example.wapp.demo.ext
 
+import android.os.Build.VERSION_CODES.N
+import android.text.Html
+import android.text.Spanned
 import android.view.View
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
@@ -10,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
+import com.chad.library.adapter.base.BaseQuickAdapter
+import com.example.wapp.R
 import com.example.wapp.demo.MyApp
 import com.example.wapp.demo.ui.fragment.*
 import com.example.wapp.demo.widget.DefineLoadMoreView
@@ -128,3 +133,47 @@ fun SwipeRefreshLayout.init(onRefresh:()->Unit){
         onRefresh.invoke()
     }
 }
+
+fun Toolbar.initClose(
+    titleStr:String="",
+    backImg:Int= R.drawable.ic_back,
+    onBack:(toolbar:Toolbar)->Unit
+):Toolbar{
+    title=titleStr.toHtml()
+    setNavigationIcon(backImg)
+    setNavigationOnClickListener {
+       onBack.invoke(this)
+    }
+    return this
+}
+
+fun String.toHtml(flag:Int=Html.FROM_HTML_MODE_LEGACY):Spanned{
+  return if(android.os.Build.VERSION.SDK_INT>android.os.Build.VERSION_CODES.N){
+        Html.fromHtml(this,flag)
+    }else{
+        Html.fromHtml(this)
+    }
+}
+
+//普通RecycleView的绑定
+fun  RecyclerView.init(
+    layoutManager:RecyclerView.LayoutManager,
+    bindAdapter:RecyclerView.Adapter<*>,
+    isScroll:Boolean=false
+):RecyclerView{
+    this.layoutManager=layoutManager
+    this.setHasFixedSize(true)
+    this.adapter=bindAdapter
+    this.isNestedScrollingEnabled=isScroll
+    return this
+}
+fun BaseQuickAdapter<*,*>.setAdapterAnimation(mode:Int){
+     if(mode==0){
+       this.animationEnable=false
+     }else{
+         this.animationEnable=true
+         this.setAnimationWithDefault(BaseQuickAdapter.AnimationType.values()[mode-1])
+     }
+}
+
+

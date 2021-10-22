@@ -1,9 +1,6 @@
 package com.example.wapp.demo.http
 
-import com.example.wapp.demo.bean.ApiPagerResponse
-import com.example.wapp.demo.bean.ApiResponse
-import com.example.wapp.demo.bean.AriticleResponse
-import com.example.wapp.demo.bean.BannerResponse
+import com.example.wapp.demo.bean.*
 import retrofit2.http.Field
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -34,7 +31,8 @@ interface ApiService {
     @GET("article/list/{page}/json")
     suspend fun getArticleList(@Path("page") pageNo:Int):ApiResponse<ApiPagerResponse<ArrayList<AriticleResponse>>>
 
-
+    @GET("hotkey/json")
+    suspend fun getSearchData():ApiResponse<ArrayList<SearchResponse>>
 
 
 

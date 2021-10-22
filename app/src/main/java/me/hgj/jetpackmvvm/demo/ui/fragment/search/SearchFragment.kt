@@ -177,6 +177,7 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>() {
                 override fun onQueryTextChange(newText: String?): Boolean {
                     return false
                 }
+
             })
             isSubmitButtonEnabled = true //右边是否展示搜索图标
             val field = javaClass.getDeclaredField("mGoButton")
@@ -185,6 +186,7 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>() {
                 val mGoButton = get(searchView) as ImageView
                 mGoButton.setImageResource(R.drawable.ic_search)
             }
+
         }
         super.onCreateOptionsMenu(menu, inflater)
     }
@@ -221,7 +223,7 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>() {
         toolbar.run {
             //设置menu 关键代码
             mActivity.setSupportActionBar(this)
-            initClose {
+            initClose{
                 nav().navigateUp()
             }
         }

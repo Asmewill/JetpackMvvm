@@ -8,7 +8,7 @@
         android:id="@+id/MainFragment"
         android:name="com.example.wapp.demo.ui.MainFragment">
         <action
-            android:id="@+id/act_Main_to_SearFragment"
+            android:id="@+id/action_Main_to_SearchFragment"
             app:destination="@id/SearchFragment" />
 
     </fragment>

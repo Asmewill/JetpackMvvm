@@ -57,7 +57,7 @@ class HomeFragment : BaseVmDbFragment<HomeViewModel, FragmentHomeBinding>() {
                 when (it.itemId) {
                     R.id.home_search -> {
                         // NavHostFragment.findNavController(this@HomeFragment).navigate(R.id.act_Main_to_SearFragment)
-                        nav().navigate(R.id.act_Main_to_SearFragment)
+                        nav().navigate(R.id.action_Main_to_SearchFragment)
                     }
                 }
                 return@setOnMenuItemClickListener true
