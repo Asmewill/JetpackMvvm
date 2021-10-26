@@ -6,11 +6,7 @@ import com.example.wapp.demo.bean.BaseResponse
 import com.example.wapp.demo.bean.exception.AppException
 import com.example.wapp.demo.utils.ExceptionHandle
 import com.kunminx.architecture.ui.callback.UnPeekLiveData
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.launch
-import java.lang.Appendable
+import kotlinx.coroutines.*
 
 /**
  * Created by jsxiaoshui on 2021/7/22
@@ -66,6 +62,21 @@ open class BaseViewModel : ViewModel() {
             }
         }
     }
-
-
+    fun <T> launch(
+        block:()->T,
+        success:(T)->Unit,
+        error:(Throwable)->Unit={}
+    ){
+        viewModelScope.launch {
+            kotlin.runCatching {
+                withContext(Dispatchers.IO){
+                    block()
+                }
+            }.onSuccess {
+                success(it)
+            }.onFailure {
+                error(it)
+            }
+        }
+    }
 }

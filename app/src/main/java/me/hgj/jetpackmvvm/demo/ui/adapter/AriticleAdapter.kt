@@ -14,7 +14,7 @@ import me.hgj.jetpackmvvm.demo.data.model.bean.AriticleResponse
 import me.hgj.jetpackmvvm.ext.util.toHtml
 
 
-class AriticleAdapter(data: MutableList<AriticleResponse>?) :
+class AriticleAdapter(data: MutableList<AriticleResponse>) :
     BaseDelegateMultiAdapter<AriticleResponse, BaseViewHolder>(data) {
     private val Ariticle = 1//文章类型
     private val Project = 2//项目类型 本来打算不区分文章和项目布局用统一布局的，但是布局完以后发现差异化蛮大的，所以还是分开吧
@@ -27,7 +27,7 @@ class AriticleAdapter(data: MutableList<AriticleResponse>?) :
 
         }
 
-    constructor(data: MutableList<AriticleResponse>?, showTag: Boolean) : this(data) {
+    constructor(data: MutableList<AriticleResponse>, showTag: Boolean) : this(data) {
         this.showTag = showTag
     }
 

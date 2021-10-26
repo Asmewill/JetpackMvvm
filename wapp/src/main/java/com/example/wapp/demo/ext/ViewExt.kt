@@ -19,6 +19,7 @@ import com.example.wapp.demo.MyApp
 import com.example.wapp.demo.ui.fragment.*
 import com.example.wapp.demo.widget.DefineLoadMoreView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.gson.Gson
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
 import com.yanzhenjie.recyclerview.SwipeRecyclerView
 
@@ -100,7 +101,7 @@ fun SwipeRecyclerView.init(
 }
 
 fun SwipeRecyclerView.initFooter(loadMoreListener:SwipeRecyclerView.LoadMoreListener):DefineLoadMoreView{
-    val footView=DefineLoadMoreView(MyApp.instance)
+     val footView=DefineLoadMoreView(MyApp.instance)
     //设置尾部点击
     footView.setmLoadMoreListener(SwipeRecyclerView.LoadMoreListener {
         footView.onLoading()
@@ -174,6 +175,15 @@ fun BaseQuickAdapter<*,*>.setAdapterAnimation(mode:Int){
          this.animationEnable=true
          this.setAnimationWithDefault(BaseQuickAdapter.AnimationType.values()[mode-1])
      }
+}
+
+
+/**
+ * 将对象转为JSON字符串
+ */
+
+fun Any?.toJson():String{
+    return Gson().toJson(this)
 }
 
 

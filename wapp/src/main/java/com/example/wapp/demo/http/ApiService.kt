@@ -1,40 +1,43 @@
 package com.example.wapp.demo.http
 
 import com.example.wapp.demo.bean.*
-import retrofit2.http.Field
-import retrofit2.http.GET
-import retrofit2.http.Path
+import retrofit2.http.*
 
 /**
  * Created by jsxiaoshui on 2021-10-11
  */
 interface ApiService {
-   //URL	https://wanandroid.com/banner/json
-    companion object{
-        const val  SERVER_URL="https://wanandroid.com"
+    //URL	https://wanandroid.com/banner/json
+    companion object {
+        const val SERVER_URL = "https://wanandroid.com"
     }
 
     /***
      * 获取banner数据
      */
     @GET("banner/json")
-    suspend fun getBanner():ApiResponse<ArrayList<BannerResponse>>
+    suspend fun getBanner(): ApiResponse<ArrayList<BannerResponse>>
 
     /**
      * 获取置顶数据
      */
     @GET("article/top/json")
-    suspend fun getTopArticleList():ApiResponse<ArrayList<AriticleResponse>>
+    suspend fun getTopArticleList(): ApiResponse<ArrayList<AriticleResponse>>
+
     /**
      * 获取首页文章数据
      */
     @GET("article/list/{page}/json")
-    suspend fun getArticleList(@Path("page") pageNo:Int):ApiResponse<ApiPagerResponse<ArrayList<AriticleResponse>>>
+    suspend fun getArticleList(@Path("page") pageNo: Int): ApiResponse<ApiPagerResponse<ArrayList<AriticleResponse>>>
 
     @GET("hotkey/json")
-    suspend fun getSearchData():ApiResponse<ArrayList<SearchResponse>>
+    suspend fun getSearchData(): ApiResponse<ArrayList<SearchResponse>>
 
-
+    @POST("article/query/{page}/json")
+    suspend fun getSearchDataByKey(
+        @Path("page") pageNo: Int,
+        @Query("k") searchKey: String
+    ): ApiResponse<ApiPagerResponse<ArrayList<AriticleResponse>>>
 
 
 }

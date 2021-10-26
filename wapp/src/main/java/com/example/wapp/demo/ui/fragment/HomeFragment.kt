@@ -65,7 +65,7 @@ class HomeFragment : BaseVmDbFragment<HomeViewModel, FragmentHomeBinding>() {
         }
         //初始化RecycleView
         recyclerView.init(LinearLayoutManager(activity), articleAdapter).let {
-            footView = it.initFooter(SwipeRecyclerView.LoadMoreListener {
+             it.initFooter(SwipeRecyclerView.LoadMoreListener {
                 mViewModel.getHomeData(false)
             })
             it.initFloatBtn(floatbtn)

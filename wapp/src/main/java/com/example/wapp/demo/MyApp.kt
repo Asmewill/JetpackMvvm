@@ -2,6 +2,7 @@ package com.example.wapp.demo
 
 import android.app.Application
 import com.kingja.loadsir.core.LoadSir
+import com.tencent.mmkv.MMKV
 import me.hgj.jetpackmvvm.demo.app.weight.loadCallBack.*
 
 /**
@@ -15,8 +16,8 @@ class MyApp : Application() {
     override fun onCreate() {
         super.onCreate()
         instance=this
+        MMKV.initialize(filesDir.absolutePath+"/mmkv")
         initLoadSir()
-
     }
 
     private fun initLoadSir() {

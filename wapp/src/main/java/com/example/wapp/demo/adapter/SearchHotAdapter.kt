@@ -15,7 +15,7 @@ import com.example.wapp.demo.utils.ColorUtil
 class SearchHotAdapter:BaseQuickAdapter<SearchResponse, BaseViewHolder>(R.layout.flow_layout) {
 
     init {
-        this.setAdapterAnimation(3)
+        this.setAdapterAnimation(2)
     }
     override fun convert(holder: BaseViewHolder, item: SearchResponse) {
         val flow_tag=holder.getView<TextView>(R.id.flow_tag)
