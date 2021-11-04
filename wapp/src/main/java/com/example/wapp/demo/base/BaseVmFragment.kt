@@ -3,11 +3,13 @@ package com.example.oapp.base
 import android.app.ProgressDialog
 import android.content.Context
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.wapp.demo.ext.getVmClazz
@@ -16,6 +18,7 @@ import com.example.wapp.demo.ext.getVmClazz
  * Created by jsxiaoshui on 2021/7/22
  */
 abstract class BaseVmFragment<VM:BaseViewModel>:Fragment() {
+    private var isFirst: Boolean=true;
     lateinit var mViewModel:VM
     lateinit var mActivity: AppCompatActivity
     override fun onAttach(context: Context) {
@@ -40,11 +43,22 @@ abstract class BaseVmFragment<VM:BaseViewModel>:Fragment() {
         initData()
     }
 
+    override fun onResume() {
+        super.onResume()
+         if(lifecycle.currentState==Lifecycle.State.STARTED&&isFirst){
+             Handler().postDelayed({
+                 lazyLoad()
+                 isFirst=false
+             },300)
+         }
+    }
+
 
     abstract  fun layoutId():Int
     abstract fun initView()
     abstract fun initData()
     abstract fun createObserver()
+    abstract  fun lazyLoad()
     /**
      * 创建viewModel
      */

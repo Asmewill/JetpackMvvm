@@ -1,6 +1,7 @@
 package me.hgj.jetpackmvvm.demo.ui.fragment.me
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.blankj.utilcode.util.ToastUtils
@@ -151,4 +152,19 @@ class MeFragment : BaseFragment<MeViewModel, FragmentMeBinding>() {
         }
 
     }
+
+    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
+        super.setUserVisibleHint(isVisibleToUser)
+        if(isVisibleToUser){
+            ToastUtils.showLong("isVisibleToUser:$isVisibleToUser")
+        }else{
+            ToastUtils.showLong("isVisibleToUser:$isVisibleToUser")
+        }
+    }
+
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+    }
+
+
 }

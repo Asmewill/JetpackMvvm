@@ -87,10 +87,15 @@ class HomeFragment : BaseVmDbFragment<HomeViewModel, FragmentHomeBinding>() {
         }
     }
 
-    override fun initData() {
+    override fun lazyLoad() {
+        super.lazyLoad()
         loadService.showCallback(LoadingCallback::class.java)
         mViewModel.getBannerData()
         mViewModel.getHomeData(true)
+    }
+
+    override fun initData() {
+
     }
 
     override fun createObserver() {

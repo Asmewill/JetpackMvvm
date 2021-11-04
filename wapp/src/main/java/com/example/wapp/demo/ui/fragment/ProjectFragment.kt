@@ -43,7 +43,7 @@ class ProjectFragment:BaseVmDbFragment<ProjectViewModel,FragmentProjectBinding>(
 
     override fun initView() {
         //注册LoadingService
-        loadService = LoadSir.getDefault().register(viewpager_linear) {
+        loadService = LoadSir.getDefault().register(view_pager) {
             loadService.showCallback(LoadingCallback::class.java)
             mViewModel.getProjectTitle()
         }
@@ -112,14 +112,16 @@ class ProjectFragment:BaseVmDbFragment<ProjectViewModel,FragmentProjectBinding>(
                 magic_indicator.onPageScrollStateChanged(state)
             }
         })
+    }
 
-
-
+    override fun lazyLoad() {
+        super.lazyLoad()
+        loadService.showCallback(LoadingCallback::class.java)
+        mViewModel.getProjectTitle()
     }
 
     override fun initData() {
-        loadService.showCallback(LoadingCallback::class.java)
-        mViewModel.getProjectTitle()
+
     }
 
     override fun createObserver() {

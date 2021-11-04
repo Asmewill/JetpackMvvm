@@ -82,9 +82,14 @@ class ProjectChildFragment : BaseVmDbFragment<ProjectViewModel, FragmentProjectC
         }
     }
 
+    override fun lazyLoad() {
+        super.lazyLoad()
+        loadService.showCallback(LoadingCallback::class.java)
+        mViewModel.getProjectData(isRefresh = true,cid = cid,isNew = isNew)
+    }
+
     override fun initData() {
-       loadService.showCallback(LoadingCallback::class.java)
-       mViewModel.getProjectData(isRefresh = true,cid = cid,isNew = isNew)
+
     }
 
     override fun createObserver() {

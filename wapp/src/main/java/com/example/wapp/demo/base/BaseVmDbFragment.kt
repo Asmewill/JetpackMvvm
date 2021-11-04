@@ -22,4 +22,8 @@ abstract  class BaseVmDbFragment<VM:BaseViewModel,DB:ViewDataBinding>:BaseVmFrag
         return mDataBind.root
     }
 
+    override fun lazyLoad() {
+
+    }
+
 }
