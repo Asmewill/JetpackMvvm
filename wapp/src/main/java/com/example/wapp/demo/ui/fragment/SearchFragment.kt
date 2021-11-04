@@ -183,7 +183,7 @@ class SearchFragment : BaseVmDbFragment<SearchViewModel, FragmentSearchBinding>(
         toolbar.run {
             mActivity.setSupportActionBar(this)//必须设置，否则不显示toolbar按钮
             this.initClose {
-                NavHostFragment.findNavController(this@SearchFragment).navigateUp()
+                nav().navigateUp()
             }
         }
     }
