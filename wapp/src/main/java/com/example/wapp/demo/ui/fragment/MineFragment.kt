@@ -7,6 +7,7 @@ import com.example.wapp.demo.viewmodel.MineViewModel
 
 /**
  * Created by jsxiaoshui on 2021/8/20
+ *
  */
 class MineFragment:BaseVmDbFragment<MineViewModel,FragmentMineBinding>() {
     override fun layoutId(): Int {

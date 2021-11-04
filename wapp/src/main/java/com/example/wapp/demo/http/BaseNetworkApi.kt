@@ -26,9 +26,10 @@ abstract class BaseNetworkApi {
     abstract fun setHttpClientBuilder(builder: OkHttpClient.Builder): OkHttpClient.Builder
 
     private val okHttpClient:OkHttpClient
-       get() {
+        get() {
            var builder=RetrofitUrlManager.getInstance().with(OkHttpClient.Builder())
            builder=setHttpClientBuilder(builder)
-           return  builder.build();
+           return  builder.build()
        }
+
 }

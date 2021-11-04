@@ -22,13 +22,10 @@ import me.hgj.jetpackmvvm.ext.parseState
  * 描述　:
  */
 class ProjectFragment : BaseFragment<ProjectViewModel, FragmentViewpagerBinding>() {
-
     //界面状态管理者
     private lateinit var loadsir: LoadService<Any>
-
     //fragment集合
     var fragments: ArrayList<Fragment> = arrayListOf()
-
     //标题集合
     var mDataList: ArrayList<String> = arrayListOf()
 

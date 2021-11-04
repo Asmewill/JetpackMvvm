@@ -1,5 +1,7 @@
 package studynote
 
+import kotlinx.android.synthetic.main.fragment_project_child.*
+
 /**
  * Created by jsxiaoshui on 2021/7/31
  */
@@ -48,5 +50,11 @@ fun main(args:Array<String>){
         println("")
     }
 
+
+      //4中写法都是Ok的
+//    floatbtn.setOnClickListener {  }
+//    floatbtn.setOnClickListener ({  })
+//    floatbtn.setOnClickListener { v->  }
+//    floatbtn.setOnClickListener( {v->  })
 
 }

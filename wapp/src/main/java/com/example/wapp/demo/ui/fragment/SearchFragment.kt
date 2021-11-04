@@ -39,7 +39,7 @@ class SearchFragment : BaseVmDbFragment<SearchViewModel, FragmentSearchBinding>(
         SearchHotAdapter()
     })
     private val searchHistoryAdapter by lazy {
-        SearchHistoryAdapter()
+        SearchHistoryAdapter(this)
     }
 
     override fun layoutId(): Int {
@@ -101,6 +101,10 @@ class SearchFragment : BaseVmDbFragment<SearchViewModel, FragmentSearchBinding>(
         }
     }
 
+    fun setClearTextVisibility(visibility:Int){
+        search_clear.visibility=visibility
+    }
+
     override fun initData() {
         mViewModel.getHotData()
         mViewModel.getHistoryData()
@@ -119,6 +123,11 @@ class SearchFragment : BaseVmDbFragment<SearchViewModel, FragmentSearchBinding>(
         //历史记录
         mViewModel.historyData.observe(mActivity, Observer {
             searchHistoryAdapter.setList(it)
+            if(it.isNotEmpty()){
+                search_clear.visibility=View.VISIBLE
+            }else{
+                search_clear.visibility=View.GONE
+            }
         })
     }
 

@@ -74,6 +74,8 @@ class AriticleAdapter(data: MutableList<AriticleResponse>) :
                 item_home_date.text = item.niceDate
                 item_home_content.text = Html.fromHtml(item.title)
                 item_home_type2.text = item.superChapterName
+
+
             }
             2 -> {
                 val item_project_author = holder.getView<TextView>(R.id.item_project_author)

@@ -38,4 +38,16 @@ class HttpRequestManager {
             }
         }
     }
+
+    suspend fun getProjectData(
+        pageNo:Int,
+        cid:Int=0,
+        isNew:Boolean
+    ):ApiResponse<ApiPagerResponse<ArrayList<AriticleResponse>>>{
+        return if(isNew){
+            apiService.getProjectNewData(pageNo)
+        }else{
+            apiService.getProjectDataByType(pageNo,cid)
+        }
+    }
 }

@@ -244,7 +244,8 @@ fun BaseQuickAdapter<*, *>.setAdapterAnimation(mode: Int) {
 fun MagicIndicator.bindViewPager2(
     viewPager: ViewPager2,
     mStringList: List<String> = arrayListOf(),
-    action: (index: Int) -> Unit = {}) {
+    action: (Int) -> Unit = {}
+) {
     val commonNavigator = CommonNavigator(appContext)
     commonNavigator.adapter = object : CommonNavigatorAdapter() {
 
@@ -357,6 +358,7 @@ fun ViewPager2.initMain(fragment: Fragment): ViewPager2 {
 }
 
 fun BottomNavigationViewEx.init(navigationItemSelectedAction: (Int) -> Unit): BottomNavigationViewEx {
+
     enableAnimation(true)
     enableShiftingMode(false)
     enableItemShiftingMode(true)
