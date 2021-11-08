@@ -2,27 +2,21 @@ package com.example.wapp.demo.ui.fragment
 
 import android.os.Bundle
 import android.view.View
-import androidx.core.view.ViewCompat
-import androidx.core.view.ViewCompat.canScrollVertically
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.blankj.utilcode.util.ToastUtils
 import com.example.oapp.base.BaseVmDbFragment
 import com.example.wapp.R
-import com.example.wapp.databinding.FragmentProjectChildBinding
+import com.example.wapp.databinding.FragmentSquareListBinding
 import com.example.wapp.demo.MyApp
 import com.example.wapp.demo.adapter.AriticleAdapter
-import com.example.wapp.demo.bean.AriticleResponse
-import com.example.wapp.demo.constant.Constant
-import com.example.wapp.demo.viewmodel.ProjectViewModel
+import com.example.wapp.demo.viewmodel.SquareViewModel
 import com.example.wapp.demo.widget.DefineLoadMoreView
 import com.kingja.loadsir.callback.SuccessCallback
 import com.kingja.loadsir.core.LoadService
 import com.kingja.loadsir.core.LoadSir
 import com.yanzhenjie.recyclerview.SwipeRecyclerView
 import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.include_recyclerview.*
 import kotlinx.android.synthetic.main.include_recyclerview.recyclerView
 import kotlinx.android.synthetic.main.include_recyclerview.swipeRefresh
 import me.hgj.jetpackmvvm.demo.app.weight.loadCallBack.EmptyCallback
@@ -30,47 +24,38 @@ import me.hgj.jetpackmvvm.demo.app.weight.loadCallBack.ErrorCallback
 import me.hgj.jetpackmvvm.demo.app.weight.loadCallBack.LoadingCallback
 
 /**
- * Created by jsxiaoshui on 2021-11-03
+ * Created by jsxiaoshui on 2021-11-08
  */
-class ProjectChildFragment : BaseVmDbFragment<ProjectViewModel, FragmentProjectChildBinding>() {
+class AskFragment:BaseVmDbFragment<SquareViewModel,FragmentSquareListBinding>() {
     lateinit var loadService: LoadService<Any>
-    private var cid = 0
-    private var isNew = false
-    private val articleAdapter by lazy {
-       AriticleAdapter(mutableListOf())
-    }
     private val footView by lazy {
         DefineLoadMoreView(MyApp.instance)
     }
-    companion object {
-        fun newInstance(cid: Int, isNew: Boolean): ProjectChildFragment {
-            val instance = ProjectChildFragment()
-            val bundle = Bundle()
-            bundle.putInt(Constant.CID, cid)
-            bundle.putBoolean(Constant.IS_NEW, isNew)
-            instance.arguments = bundle
-            return instance
+    private val articleAdapter by lazy {
+        AriticleAdapter(arrayListOf())
+    }
+    companion object{
+        fun newInstance():AskFragment{
+            val askFragment=AskFragment()
+            val bundle= Bundle()
+            askFragment.arguments=bundle
+            return askFragment
         }
     }
-
     override fun layoutId(): Int {
-        return R.layout.fragment_project_child
+       return R.layout.fragment_square_list
     }
-
     override fun initView() {
-        arguments?.let {
-            cid = it.getInt(Constant.CID, 0)
-            isNew = it.getBoolean(Constant.IS_NEW)
-        }
-        //注册LoadingService
+        //注册LoadingService,并设置--重试监听
         loadService = LoadSir.getDefault().register(swipeRefresh) {
             loadService.showCallback(LoadingCallback::class.java)
-            mViewModel.getProjectData(isRefresh = true,cid = cid,isNew = isNew)
+            mViewModel.getAskData(true)
         }
-        recyclerView.layoutManager=LinearLayoutManager(mActivity)
-        recyclerView.setHasFixedSize(true)
+        recyclerView.layoutManager= LinearLayoutManager(mActivity)
+        recyclerView.setHasFixedSize(true)//Adapter内Item的改变不会影响RecyclerView宽高的时候，可以设置为true让RecyclerView避免重新计算大小
         recyclerView.adapter=articleAdapter
-        recyclerView.addOnScrollListener(object:RecyclerView.OnScrollListener(){
+        //recycle滑动到顶部时,隐藏floatbtn
+        recyclerView.addOnScrollListener(object: RecyclerView.OnScrollListener(){
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 if(!recyclerView.canScrollVertically(-1)) {
@@ -78,6 +63,7 @@ class ProjectChildFragment : BaseVmDbFragment<ProjectViewModel, FragmentProjectC
                 }
             }
         })
+        //快速返回顶部
         floatbtn.setOnClickListener{
             val layoutManager=recyclerView.layoutManager as LinearLayoutManager
             if(layoutManager.findLastVisibleItemPosition()>=40){
@@ -86,60 +72,53 @@ class ProjectChildFragment : BaseVmDbFragment<ProjectViewModel, FragmentProjectC
                 recyclerView.smoothScrollToPosition(0)//有滚动动画，快速滑动到底部
             }
         }
-
         //给recycleView添加footview
         recyclerView.addFooterView(footView)
         recyclerView.setLoadMoreView(footView)
         //设置上拉加载更多
         recyclerView.setLoadMoreListener {
-            mViewModel.getProjectData(isRefresh = false,cid = cid,isNew = isNew)
+            mViewModel.getAskData(false)
         }
         //异常时,点击footView,获取更多数据
         footView.setmLoadMoreListener(SwipeRecyclerView.LoadMoreListener {
-            mViewModel.getProjectData(isRefresh = false,cid = cid,isNew = isNew)
+            mViewModel.getAskData(false)
         })
         swipeRefresh.setOnRefreshListener {
-            mViewModel.getProjectData(isRefresh = true,cid = cid,isNew = isNew)
+            mViewModel.getAskData(true)
         }
-    }
-
-    override fun lazyLoad() {
-        super.lazyLoad()
-        loadService.showCallback(LoadingCallback::class.java)
-        mViewModel.getProjectData(isRefresh = true,cid = cid,isNew = isNew)
     }
 
     override fun initData() {
 
     }
 
+    override fun lazyLoad() {
+        super.lazyLoad()
+        loadService.showCallback(LoadingCallback::class.java)
+        mViewModel.getAskData(true)
+    }
+
     override fun createObserver() {
-        mViewModel.projectLiveData.observe(mActivity, Observer {
+        mViewModel.askLiveData.observe(mActivity, Observer {
             swipeRefresh.isRefreshing=false
             recyclerView.loadMoreFinish(it.listData.isEmpty(),it.hasMore)
             if(it.isSuccess){
                 when{
-                    //第一页，没有数据，显示空布局
                     it.isEmpty->{
                         loadService.showCallback(EmptyCallback::class.java)
                     }
-                    //第一页，有数据
                     it.isRefresh->{
-                        articleAdapter.setList(it.listData)
                         loadService.showCallback(SuccessCallback::class.java)
+                        articleAdapter.setList(it.listData)
                     }
-                    //不是第一页
-                    else ->{
+                    else->{
                         articleAdapter.addData(it.listData)
                     }
                 }
             }else{
-                //如果是第一的时候，网络异常了
                 if(it.isRefresh){
                     loadService.showCallback(ErrorCallback::class.java)
-                    ToastUtils.showShort(it.errorMsg)
-                }else{//第二页，第三页...异常
-                    //上啦加载网络异常
+                }else{
                     recyclerView.loadMoreError(0,it.errorMsg)
                 }
             }

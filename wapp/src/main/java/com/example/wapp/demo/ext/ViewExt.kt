@@ -117,6 +117,9 @@ fun RecyclerView.initFloatBtn(floatBtn:FloatingActionButton){
     addOnScrollListener(object:RecyclerView.OnScrollListener(){
         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
             super.onScrolled(recyclerView, dx, dy)
+            if (!canScrollVertically(-1)) {
+                floatBtn.visibility = View.INVISIBLE
+            }
         }
     })
     floatBtn.setOnClickListener {

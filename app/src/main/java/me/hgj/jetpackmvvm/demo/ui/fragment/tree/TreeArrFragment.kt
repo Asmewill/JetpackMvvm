@@ -24,7 +24,6 @@ import me.hgj.jetpackmvvm.ext.navigateAction
 class TreeArrFragment : BaseFragment<TreeViewModel, FragmentViewpagerBinding>() {
 
     var titleData = arrayListOf("广场", "每日一问", "体系", "导航")
-
     private var fragments: ArrayList<Fragment> = arrayListOf()
 
     init {
