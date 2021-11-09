@@ -110,7 +110,7 @@ class PlazaFragment:BaseVmDbFragment<SquareViewModel,FragmentSquareListBinding>(
                recyclerView.loadMoreFinish(it.listData.isEmpty(),it.hasMore)
                if(it.isSuccess){
                    when{
-                       it.isEmpty->{
+                       it.isFirstEmpty->{
                            loadService.showCallback(EmptyCallback::class.java)
                        }
                        it.isRefresh->{

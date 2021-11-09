@@ -7,6 +7,7 @@ import android.view.animation.DecelerateInterpolator
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
+import com.blankj.utilcode.util.ToastUtils
 import com.example.oapp.base.BaseVmDbFragment
 import com.example.wapp.R
 import com.example.wapp.databinding.FragmentSquareBinding
@@ -44,6 +45,19 @@ class SquareFragment:BaseVmDbFragment<SquareViewModel,FragmentSquareBinding>() {
     }
 
     override fun initView() {
+        include_viewpager_toolbar.inflateMenu(R.menu.todo_menu)
+        include_viewpager_toolbar.setOnMenuItemClickListener {
+             when(it.itemId){
+                 R.id.todo_add->{
+                     ToastUtils.showLong("去分享文章...")
+                   true
+                 }
+                 else -> {
+                     true
+                 }
+
+             }
+        }
         view_pager.isUserInputEnabled=true//设置是否禁止用户滑动页面
         view_pager.adapter=object: FragmentStateAdapter(this) {
             override fun getItemCount(): Int {
@@ -53,6 +67,7 @@ class SquareFragment:BaseVmDbFragment<SquareViewModel,FragmentSquareBinding>() {
                 return fragmentList[position]
             }
         }
+
 
         commonNavigator.adapter=object : CommonNavigatorAdapter(){
             override fun getCount(): Int {
