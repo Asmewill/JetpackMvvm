@@ -2,8 +2,6 @@ package com.example.wapp.demo.ui.fragment
 
 import android.os.Bundle
 import android.view.View
-import androidx.core.view.ViewCompat
-import androidx.core.view.ViewCompat.canScrollVertically
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -13,7 +11,6 @@ import com.example.wapp.R
 import com.example.wapp.databinding.FragmentProjectChildBinding
 import com.example.wapp.demo.MyApp
 import com.example.wapp.demo.adapter.AriticleAdapter
-import com.example.wapp.demo.bean.AriticleResponse
 import com.example.wapp.demo.constant.Constant
 import com.example.wapp.demo.viewmodel.ProjectViewModel
 import com.example.wapp.demo.widget.DefineLoadMoreView
@@ -22,11 +19,10 @@ import com.kingja.loadsir.core.LoadService
 import com.kingja.loadsir.core.LoadSir
 import com.yanzhenjie.recyclerview.SwipeRecyclerView
 import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.include_recyclerview.*
 import kotlinx.android.synthetic.main.include_recyclerview.recyclerView
 import kotlinx.android.synthetic.main.include_recyclerview.swipeRefresh
 import me.hgj.jetpackmvvm.demo.app.weight.loadCallBack.EmptyCallback
-import me.hgj.jetpackmvvm.demo.app.weight.loadCallBack.ErrorCallback
+import com.example.wapp.demo.loadcallback.ErrorCallback
 import me.hgj.jetpackmvvm.demo.app.weight.loadCallBack.LoadingCallback
 
 /**

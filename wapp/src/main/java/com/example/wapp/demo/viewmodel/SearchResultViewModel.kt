@@ -18,7 +18,8 @@ class SearchResultViewModel : BaseViewModel() {
         if(isRefresh){
             pageNo=0
         }
-        request(block = {
+        request(
+            block = {
                  apiService.getSearchDataByKey(pageNo,searchKey)
              },
             success = {

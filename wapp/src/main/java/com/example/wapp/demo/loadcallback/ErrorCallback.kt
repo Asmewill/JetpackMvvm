@@ -1,4 +1,4 @@
-package me.hgj.jetpackmvvm.demo.app.weight.loadCallBack
+package com.example.wapp.demo.loadcallback
 
 import com.example.wapp.R
 import com.kingja.loadsir.callback.Callback

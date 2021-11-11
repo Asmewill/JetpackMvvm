@@ -1,6 +1,7 @@
 package com.example.wapp.demo
 
 import android.app.Application
+import com.example.wapp.demo.loadcallback.ErrorCallback
 import com.kingja.loadsir.core.LoadSir
 import com.tencent.mmkv.MMKV
 import me.hgj.jetpackmvvm.demo.app.weight.loadCallBack.*

@@ -2,7 +2,9 @@ package com.example.oapp.base
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.wapp.demo.bean.ApiResponse
 import com.example.wapp.demo.bean.BaseResponse
+import com.example.wapp.demo.bean.ClassifyResponse
 import com.example.wapp.demo.bean.exception.AppException
 import com.example.wapp.demo.utils.ExceptionHandle
 import com.kunminx.architecture.ui.callback.UnPeekLiveData
@@ -20,7 +22,7 @@ open class BaseViewModel : ViewModel() {
     }
 
     fun <T> request(
-        block: suspend () -> BaseResponse<T>,
+        block: suspend () -> ApiResponse<T>,
         success: (BaseResponse<T>) -> Unit,
         error: (AppException) -> Unit = {},
         isShowLoading: Boolean = false,

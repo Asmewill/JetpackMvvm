@@ -82,7 +82,7 @@ class SquareViewModel:BaseViewModel() {
     }
     fun getSystemData(isRefresh:Boolean){
         request(
-            block={
+            block ={
                   apiService.getSystemData()
             },
             success = {
@@ -109,7 +109,7 @@ class SquareViewModel:BaseViewModel() {
 
     fun getNavigationData(isRefresh:Boolean){
         request(
-            block={
+            block ={
                 apiService.getNavigationData()
             },
             success = {

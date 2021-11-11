@@ -98,4 +98,19 @@ interface ApiService {
         @Query("cid") cid: Int
     ): ApiResponse<ApiPagerResponse<ArrayList<AriticleResponse>>>
 
+    /**
+     * 公众号分类
+     */
+    @GET("wxarticle/chapters/json")
+    suspend fun getPublicTitle(): ApiResponse<ArrayList<ClassifyResponse>>
+
+    /**
+     * 获取公众号数据
+     */
+    @GET("wxarticle/list/{id}/{page}/json")
+    suspend fun getPublicData(
+        @Path("page") pageNo: Int,
+        @Path("id") id: Int
+    ): ApiResponse<ApiPagerResponse<ArrayList<AriticleResponse>>>
+
 }
