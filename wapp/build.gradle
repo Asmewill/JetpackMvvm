@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-android-extensions'//引入该插件可直接使用xml中定义的ID
+    id 'kotlin-kapt'
 }
 
 android {

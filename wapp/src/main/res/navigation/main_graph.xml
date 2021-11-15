@@ -3,13 +3,33 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
     app:startDestination="@id/MainFragment">  <!--默认加载的Fragment-->
-
     <fragment
         android:id="@+id/MainFragment"
         android:name="com.example.wapp.demo.ui.MainFragment">
         <action
             android:id="@+id/action_Main_to_SearchFragment"
             app:destination="@id/SearchFragment" />
+        <action
+            android:id="@+id/action_Main_to_LoginFragment"
+            app:destination="@id/LoginFragment" />
+        <action
+            android:id="@+id/action_Main_to_CollectFragment"
+            app:destination="@id/CollectFragment" />
+
+        <action
+            android:id="@+id/action_Main_to_MyPointFragment"
+            app:destination="@id/MyPointFragment" />
+
+        <action
+            android:id="@+id/action_Main_to_ArticleFragment"
+            app:destination="@id/ArticleFragment" />
+        <action
+            android:id="@+id/action_Main_to_ToDoFragment"
+            app:destination="@id/ToDoFragment" />
+        <action
+            android:id="@+id/action_Main_to_SettingFragment"
+            app:destination="@id/SettingFragment" />
+
 
     </fragment>
     <fragment
@@ -27,6 +47,37 @@
     <fragment
         android:id="@+id/SearchResultFragment"
         android:name="com.example.wapp.demo.ui.fragment.SearchResultFragment">
-
     </fragment>
+
+    <fragment
+        android:id="@+id/LoginFragment"
+        android:name="com.example.wapp.demo.ui.fragment.LoginFragment">
+        <action
+            android:id="@+id/action_Login_to_RegisterFragment"
+            app:destination="@id/RegisterFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/RegisterFragment"
+        android:name="com.example.wapp.demo.ui.fragment.RegisterFragment"/>
+    <fragment
+        android:id="@+id/CollectFragment"
+        android:name="com.example.wapp.demo.ui.fragment.CollectFragment"/>
+
+    <fragment
+        android:id="@+id/MyPointFragment"
+        android:name="com.example.wapp.demo.ui.fragment.MyPointFragment"/>
+
+    <fragment
+        android:id="@+id/ArticleFragment"
+        android:name="com.example.wapp.demo.ui.fragment.ArticleFragment"/>
+
+    <fragment
+        android:id="@+id/ToDoFragment"
+        android:name="com.example.wapp.demo.ui.fragment.ToDoFragment"/>
+
+
+    <fragment
+        android:id="@+id/SettingFragment"
+        android:name="com.example.wapp.demo.ui.fragment.SettingFragment"/>
+
 </navigation>
