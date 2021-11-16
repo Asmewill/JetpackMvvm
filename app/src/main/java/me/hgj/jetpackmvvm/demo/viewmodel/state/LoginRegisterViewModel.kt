@@ -18,7 +18,7 @@ import me.hgj.jetpackmvvm.ext.util.logd
 class LoginRegisterViewModel : BaseViewModel() {
 
     //用户名
-    var username = StringObservableField()
+    var username = ObservableField<String>("")
 
     //密码(登录注册界面)
     var password = StringObservableField()
@@ -34,7 +34,7 @@ class LoginRegisterViewModel : BaseViewModel() {
     //用户名清除按钮是否显示   不要在 xml 中写逻辑 所以逻辑判断放在这里
     var clearVisible = object :ObservableInt(username){
         override fun get(): Int {
-            return if(username.get().isEmpty()){
+            return if(username.get()!!.isEmpty()){
                 View.GONE
             }else{
                 View.VISIBLE

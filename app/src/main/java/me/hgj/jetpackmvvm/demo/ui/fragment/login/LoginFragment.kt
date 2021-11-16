@@ -73,10 +73,10 @@ class LoginFragment : BaseFragment<LoginRegisterViewModel, FragmentLoginBinding>
 
         fun login() {
             when {
-                mViewModel.username.get().isEmpty() -> showMessage("请填写账号")
-                mViewModel.password.get().isEmpty() -> showMessage("请填写密码")
+                mViewModel.username.get()!!.isEmpty() -> showMessage("请填写账号")
+                mViewModel.password.get()!!.isEmpty() -> showMessage("请填写密码")
                 else -> requestLoginRegisterViewModel.loginReq(
-                    mViewModel.username.get(),
+                    mViewModel.username.get()!!,
                     mViewModel.password.get()
                 )
             }

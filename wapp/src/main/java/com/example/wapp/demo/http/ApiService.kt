@@ -113,4 +113,27 @@ interface ApiService {
         @Path("id") id: Int
     ): ApiResponse<ApiPagerResponse<ArrayList<AriticleResponse>>>
 
+
+    /**
+     * 登录
+     */
+    @FormUrlEncoded
+    @POST("user/login")
+    suspend fun login(
+        @Field("username") username: String,
+        @Field("password") pwd: String
+    ): ApiResponse<UserInfo>
+
+    /**
+     * 注册
+     */
+    @FormUrlEncoded
+    @POST("user/register")
+    suspend fun register(
+        @Field("username") username: String, @Field("password") pwd: String, @Field(
+            "repassword"
+        ) rpwd: String
+    ): ApiResponse<Any>
+
+
 }

@@ -32,7 +32,6 @@ object CacheUtil {
             kv.encode("user", Gson().toJson(userResponse))
             setIsLogin(true)
         }
-
     }
 
     /**

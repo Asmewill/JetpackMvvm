@@ -3,12 +3,14 @@ package com.example.wapp.demo.ui.fragment
 import android.content.Intent
 import android.net.Uri
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.NavHostFragment
 import com.blankj.utilcode.util.ToastUtils
 import com.example.oapp.base.BaseVmDbFragment
 import com.example.wapp.R
 import com.example.wapp.databinding.FragmentMineBinding
 import com.example.wapp.demo.ext.nav
+import com.example.wapp.demo.viewmodel.EventViewModel
 import com.example.wapp.demo.viewmodel.MineViewModel
 
 /**
@@ -31,6 +33,10 @@ class MineFragment:BaseVmDbFragment<MineViewModel,FragmentMineBinding>() {
     }
 
     override fun createObserver() {
+        EventViewModel.userInfoLiveData.observeInFragment(this, Observer {
+            mViewModel.name.set(it.username)
+            mViewModel.info.set("id:${it.id}　排名：${it.coinCount}")
+        })
 
     }
 
