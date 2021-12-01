@@ -135,5 +135,11 @@ interface ApiService {
         ) rpwd: String
     ): ApiResponse<Any>
 
+    /**
+     * 获取当前账户的个人积分和排名
+     */
+    @GET("lg/coin/userinfo/json")
+    suspend fun getPointAndRank(): ApiResponse<PointBean>
+
 
 }

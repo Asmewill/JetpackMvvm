@@ -51,7 +51,7 @@ fun ViewPager2.initMain(fragment:Fragment):ViewPager2{
                     return SquareFragment()
                 }
                 3->{
-                    return WechatFragment()
+                    return MessageFragment()
                 }
                 4->{
                     return MineFragment()

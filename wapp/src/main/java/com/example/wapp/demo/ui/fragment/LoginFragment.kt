@@ -11,6 +11,8 @@ import com.blankj.utilcode.util.ToastUtils
 import com.example.oapp.base.BaseVmDbFragment
 import com.example.wapp.R
 import com.example.wapp.databinding.FragmentLoginBinding
+import com.example.wapp.demo.ext.init
+import com.example.wapp.demo.ext.initClose
 import com.example.wapp.demo.ext.nav
 import com.example.wapp.demo.navigation.NavHostFragment
 import com.example.wapp.demo.utils.CacheUtil
@@ -22,12 +24,16 @@ import kotlinx.android.synthetic.main.fragment_home.*
  * Created by jsxiaoshui on 2021-11-12
  */
 class LoginFragment: BaseVmDbFragment<LoginRegisterViewModel, FragmentLoginBinding>() {
+    var accout=""
+    var pwd=""
     override fun layoutId(): Int {
         return  R.layout.fragment_login
     }
 
     override fun initView() {
-        toolbar.title="登录"
+        toolbar.initClose(titleStr = "登录"){
+            nav().navigateUp()
+        }
         mDataBind.vm=mViewModel
         mDataBind.click=MyClick()
         mDataBind.etAccount.addTextChangedListener(object:TextWatcher{
@@ -70,10 +76,20 @@ class LoginFragment: BaseVmDbFragment<LoginRegisterViewModel, FragmentLoginBindi
             if(it.isSuccess){
                 CacheUtil.setUser(it.listData[0])
                 CacheUtil.setIsLogin(true)
+                if(accout.isNotEmpty()&&pwd.isNotEmpty()){
+                    mViewModel.loginHx(accout,pwd)
+                }
                 EventViewModel.userInfoLiveData.value=it.listData[0]
                 NavHostFragment.findNavController(this).navigateUp()
             }else{
                 ToastUtils.showShort(it.errorMsg)
+            }
+        })
+        mViewModel.loginHxLiveData.observe(mActivity, Observer {
+            if(it.isSuccess){
+                ToastUtils.showShort("环信登录成功："+it.listData[0].username)
+            }else{
+                ToastUtils.showShort("环信登录失败："+it.errorMsg)
             }
         })
     }
@@ -83,8 +99,8 @@ class LoginFragment: BaseVmDbFragment<LoginRegisterViewModel, FragmentLoginBindi
             nav().navigate(R.id.action_Login_to_RegisterFragment)
         }
         fun goToLogin(){
-            var accout=mDataBind.etAccount.text.toString().trim()
-            var pwd=mDataBind.etPwd.text.toString().trim()
+             accout=mDataBind.etAccount.text.toString().trim()
+             pwd=mDataBind.etPwd.text.toString().trim()
             if(TextUtils.isEmpty(accout)){
                 ToastUtils.showLong("请输入账号")
                 return

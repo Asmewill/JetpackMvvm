@@ -20,6 +20,10 @@ import com.kingja.loadsir.core.LoadService
 import com.kingja.loadsir.core.LoadSir
 import kotlinx.android.synthetic.main.fragment_project.*
 import com.example.wapp.demo.loadcallback.ErrorCallback
+import kotlinx.android.synthetic.main.fragment_project.ll_content
+import kotlinx.android.synthetic.main.fragment_project.magic_indicator
+import kotlinx.android.synthetic.main.fragment_project.view_pager
+import kotlinx.android.synthetic.main.fragment_wechat.*
 import me.hgj.jetpackmvvm.demo.app.weight.loadCallBack.LoadingCallback
 import net.lucode.hackware.magicindicator.buildins.UIUtil
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator
@@ -45,7 +49,7 @@ class WechatFragment:BaseVmDbFragment<WechatViewModel,FragmentWechatBinding>() {
 
     override fun initView() {
         //注册LoadingService
-        loadService = LoadSir.getDefault().register(ll_content) {
+        loadService = LoadSir.getDefault().register(ll_content_wechat) {
             loadService.showCallback(LoadingCallback::class.java)
             mViewModel.getPublicTitle()
         }

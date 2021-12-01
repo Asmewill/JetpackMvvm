@@ -11,7 +11,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.example.wapp.demo.ext.dismissLoadingExt
 import com.example.wapp.demo.ext.getVmClazz
+import com.example.wapp.demo.ext.showLoadingExt
+import com.hyphenate.chat.EMClient
 
 /**
  * Created by jsxiaoshui on 2021/7/22
@@ -71,11 +74,11 @@ abstract class BaseVmFragment<VM:BaseViewModel>:Fragment() {
     private fun registerUiChange() {
         //显示弹窗
         mViewModel.loadingDialog.showLoading.observeInFragment(this, Observer {
-            //showLoading(it)
+            showLoadingExt(it)
         })
         //关闭弹窗
         mViewModel.loadingDialog.dismissDialog.observeInFragment(this, Observer {
-           // dismissLoading()
+            dismissLoadingExt()
         })
     }
 
@@ -96,24 +99,11 @@ abstract class BaseVmFragment<VM:BaseViewModel>:Fragment() {
         }
     }
 
-//    private fun dismissLoading() {
-//        loadingDialog?.let {
-//            it.dismiss()
-//        }
-//    }
-//
-//    private var loadingDialog: ProgressDialog? = null
-//    /**
-//     * 打开等待框
-//     */
-//    fun showLoading(message: String = "loading") {
-//        activity?.let {
-//            if(!it.isFinishing){
-//                loadingDialog= DialogUtil.getWaitDialog(it,message)
-//                loadingDialog?.show()
-//            }
-//        }
-//    }
+    open fun isLoggedIn(): Boolean {
+        return EMClient.getInstance().isLoggedInBefore
+    }
+
+
 
 
 

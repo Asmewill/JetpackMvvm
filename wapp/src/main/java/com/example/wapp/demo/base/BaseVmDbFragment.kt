@@ -26,4 +26,6 @@ abstract  class BaseVmDbFragment<VM:BaseViewModel,DB:ViewDataBinding>:BaseVmFrag
 
     }
 
+
+
 }

@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
     app:startDestination="@id/MainFragment">  <!--默认加载的Fragment-->
+    <!--注册所有要加载的Fragment-->
     <fragment
         android:id="@+id/MainFragment"
         android:name="com.example.wapp.demo.ui.MainFragment">
@@ -30,6 +31,18 @@
             android:id="@+id/action_Main_to_SettingFragment"
             app:destination="@id/SettingFragment" />
 
+        <action
+            android:id="@+id/action_Main_to_WechatFragment"
+            app:destination="@id/WechatFragment" />
+        <action
+            android:id="@+id/action_Main_to_AddContactFragment"
+            app:destination="@id/AddContactFragment" />
+        <action
+            android:id="@+id/action_Main_to_SystemMsgFragment"
+            app:destination="@id/SystemMsgFragment" />
+        <action
+            android:id="@+id/action_Main_to_ChatFragment"
+            app:destination="@id/ChatFragment" />
 
     </fragment>
     <fragment
@@ -58,7 +71,11 @@
     </fragment>
     <fragment
         android:id="@+id/RegisterFragment"
-        android:name="com.example.wapp.demo.ui.fragment.RegisterFragment"/>
+        android:name="com.example.wapp.demo.ui.fragment.RegisterFragment">
+        <action
+            android:id="@+id/action_Register_to_MainFragment"
+            app:destination="@id/MainFragment" />
+    </fragment>
     <fragment
         android:id="@+id/CollectFragment"
         android:name="com.example.wapp.demo.ui.fragment.CollectFragment"/>
@@ -79,5 +96,28 @@
     <fragment
         android:id="@+id/SettingFragment"
         android:name="com.example.wapp.demo.ui.fragment.SettingFragment"/>
+
+    <fragment
+        android:id="@+id/WechatFragment"
+        android:name="com.example.wapp.demo.ui.fragment.WechatFragment"/>
+
+    <fragment
+        android:id="@+id/AddContactFragment"
+        android:name="com.example.wapp.demo.ui.fragment.AddContactFragment"/>
+    <fragment
+        android:id="@+id/SystemMsgFragment"
+        android:name="com.example.wapp.demo.ui.fragment.SystemMsgFragment"/>
+
+    <fragment
+        android:id="@+id/ChatFragment"
+        android:name="com.example.wapp.demo.ui.fragment.ChatFragment">
+        <action
+            android:id="@+id/action_Chat_to_ImageGridFragment"
+            app:destination="@id/ImageGridFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/ImageGridFragment"
+        android:name="com.example.wapp.demo.ui.fragment.ImageGridFragment"/>
 
 </navigation>

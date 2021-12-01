@@ -2,16 +2,24 @@ package com.example.wapp.demo.ui.fragment
 
 import android.content.Context
 import android.graphics.Color
+import android.os.Bundle
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
+import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.bottomsheets.BottomSheet
+import com.afollestad.materialdialogs.bottomsheets.setPeekHeight
+import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
+import com.afollestad.materialdialogs.list.listItems
+import com.blankj.utilcode.util.ConvertUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.example.oapp.base.BaseVmDbFragment
 import com.example.wapp.R
 import com.example.wapp.databinding.FragmentSquareBinding
 import com.example.wapp.demo.MyApp
+import com.example.wapp.demo.ext.nav
 import com.example.wapp.demo.ext.toHtml
 import com.example.wapp.demo.viewmodel.SquareViewModel
 import com.example.wapp.demo.widget.ScaleTransitionPagerTitleView
@@ -49,7 +57,24 @@ class SquareFragment:BaseVmDbFragment<SquareViewModel,FragmentSquareBinding>() {
         include_viewpager_toolbar.setOnMenuItemClickListener {
              when(it.itemId){
                  R.id.todo_add->{
-                     ToastUtils.showLong("去分享文章...")
+                     val items= arrayListOf<String>("分享文章", "公众号")
+                     activity?.let { activity ->
+                         MaterialDialog(activity, BottomSheet())
+                             .lifecycleOwner(viewLifecycleOwner).show {
+                                 cornerRadius(8f)
+                                 setPeekHeight(ConvertUtils.dp2px((items.size * 50 + 36).toFloat()))
+                                 listItems(items = items) { _, index, item ->
+                                     when (index) {
+                                         0 -> {
+                                             ToastUtils.showShort("分享文章")
+                                         }
+                                         1 -> {
+                                             nav().navigate(R.id.action_Main_to_WechatFragment)
+                                         }
+                                     }
+                                 }
+                             }
+                     }
                    true
                  }
                  else -> {

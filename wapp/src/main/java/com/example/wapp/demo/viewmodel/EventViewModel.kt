@@ -11,6 +11,7 @@ import com.kunminx.architecture.ui.callback.UnPeekLiveData
  * fragment与fragment ,fragment与activity之间通信的ViewModel
  */
 object EventViewModel:BaseViewModel() {
-    var userInfoLiveData= UnPeekLiveData<UserInfo>()
+    //允许值为null
+    var userInfoLiveData = UnPeekLiveData.Builder<UserInfo>().setAllowNullValue(true).create()
 
 }

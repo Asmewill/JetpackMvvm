@@ -4,9 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.wapp.demo.bean.ApiResponse
 import com.example.wapp.demo.bean.BaseResponse
-import com.example.wapp.demo.bean.ClassifyResponse
 import com.example.wapp.demo.bean.exception.AppException
 import com.example.wapp.demo.utils.ExceptionHandle
+import com.hyphenate.chat.EMClient
 import com.kunminx.architecture.ui.callback.UnPeekLiveData
 import kotlinx.coroutines.*
 
@@ -44,26 +44,35 @@ open class BaseViewModel : ViewModel() {
         }
     }
 
-    suspend fun <T> executeResponse(
-        response: BaseResponse<T>,
-        success: CoroutineScope.(T) -> Unit
-    ) {
-        coroutineScope {
-            when {
-                response.getStatus() -> {
-                    success(response.getResponseData())
-                    //success(response.getResponseData())
+    /**
+     * 调用失败
+     */
+    fun  requestHX(
+        block: suspend () -> Unit={},
+        success: () -> Unit={},
+        error: (Throwable) -> Unit = {},
+        isShowLoading: Boolean = false,
+        loadingMsg: String = "加载中..."
+    ): Job {
+        return viewModelScope.launch {
+            runCatching {
+                if(isShowLoading){
+                    loadingDialog.showLoading.value=loadingMsg
                 }
-                else -> {
-                    throw AppException(
-                        response.getrResponseCode(),
-                        response.getResponseMes(),
-                        response.getResponseMes()
-                    )
+                withContext(Dispatchers.IO) {
+                    block()
                 }
+            }.onSuccess {
+                success()
+                loadingDialog.dismissDialog.value="close"
+            }.onFailure {
+                error(it)
+                loadingDialog.dismissDialog.value="close"
             }
         }
     }
+
+
     fun <T> launch(
         block:()->T,
         success:(T)->Unit,
@@ -80,5 +89,10 @@ open class BaseViewModel : ViewModel() {
                 error(it)
             }
         }
+    }
+
+
+    open fun isLoggedIn(): Boolean {
+        return EMClient.getInstance().isLoggedInBefore
     }
 }

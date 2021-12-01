@@ -6,6 +6,8 @@ import com.example.wapp.R
 import com.example.wapp.databinding.FragmentMainBinding
 import com.example.wapp.demo.ext.init
 import com.example.wapp.demo.ext.initMain
+import com.example.wapp.demo.permission.PermissionsManager
+import com.example.wapp.demo.permission.PermissionsResultAction
 import com.example.wapp.demo.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.fragment_main.*
 
@@ -45,10 +47,22 @@ class MainFragment :BaseVmDbFragment<MainViewModel,FragmentMainBinding>() {
     }
 
     override fun initData() {
-
+        requestPermissions()
     }
 
     override fun createObserver() {
 
+    }
+    // TODO: 2019/12/19 0019 有必要修改一下
+    private fun requestPermissions() {
+        PermissionsManager.getInstance()
+            .requestAllManifestPermissionsIfNecessary(mActivity, object : PermissionsResultAction() {
+                override fun onGranted() {
+
+                }
+                override fun onDenied(permission: String?) {
+
+                }
+            })
     }
 }

@@ -14,6 +14,7 @@ import com.example.wapp.demo.MyApp
 import com.example.wapp.demo.ext.initClose
 import com.example.wapp.demo.ext.nav
 import com.example.wapp.demo.ext.toHtml
+import com.example.wapp.demo.navigation.NavHostFragment
 import com.example.wapp.demo.viewmodel.CollectViewModel
 import com.example.wapp.demo.widget.ScaleTransitionPagerTitleView
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -27,6 +28,7 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.Li
 
 /**
  * Created by jsxiaoshui on 2021-11-15
+ *
  */
 class CollectFragment:BaseVmDbFragment<CollectViewModel,FragmentCollectBinding>() {
     private val mDataList= arrayListOf("文章","网址")
@@ -40,7 +42,9 @@ class CollectFragment:BaseVmDbFragment<CollectViewModel,FragmentCollectBinding>(
        return R.layout.fragment_collect
     }
     override fun initView() {
-       toolbar.title="收藏"
+        toolbar.initClose(titleStr = "",onBack={
+            NavHostFragment.findNavController(this).navigateUp()
+        })
         view_pager.isUserInputEnabled=true//设置是否禁止用户滑动页面
         view_pager.adapter=object: FragmentStateAdapter(this) {
             override fun getItemCount(): Int {

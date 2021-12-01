@@ -10,8 +10,10 @@ import com.example.oapp.base.BaseVmDbFragment
 import com.example.wapp.R
 import com.example.wapp.databinding.FragmentMineBinding
 import com.example.wapp.demo.ext.nav
+import com.example.wapp.demo.utils.CacheUtil
 import com.example.wapp.demo.viewmodel.EventViewModel
 import com.example.wapp.demo.viewmodel.MineViewModel
+import kotlinx.android.synthetic.main.fragment_mine.*
 
 /**
  * Created by jsxiaoshui on 2021/8/20
@@ -26,33 +28,77 @@ class MineFragment:BaseVmDbFragment<MineViewModel,FragmentMineBinding>() {
     override fun initView() {
         mDataBind.vm = mViewModel
         mDataBind.click = MyClick()
+        if(CacheUtil.isLogin()){
+            mViewModel.name.set(CacheUtil.getUser()?.username)
+        }else{
+            mViewModel.name.set("请先登录~")
+        }
     }
 
-    override fun initData() {
+    override fun lazyLoad() {
+        super.lazyLoad()
+        if(CacheUtil.isLogin()){
+            mViewModel.getPointAndRank()
+        }
 
+    }
+    override fun initData() {
+        me_swipe.setOnRefreshListener {
+            me_swipe.isRefreshing=true
+            mViewModel.getPointAndRank()
+        }
     }
 
     override fun createObserver() {
         EventViewModel.userInfoLiveData.observeInFragment(this, Observer {
-            mViewModel.name.set(it.username)
-            mViewModel.info.set("id:${it.id}　排名：${it.coinCount}")
+            if(it!=null){
+                mViewModel.name.set(it.username)
+                mViewModel.info.set("id:${it.id}　排名：--")
+                mViewModel.getPointAndRank()
+            }else{
+                mViewModel.name.set("请先登录~")
+                mViewModel.info.set("id:--　排名:--")
+            }
         })
-
+        mViewModel.pointLiveData.observe(mActivity, Observer {
+            me_swipe.isRefreshing=false
+            if(it.isSuccess){
+                mViewModel.info.set("id:${it.listData[0].userId}　排名：${it.listData[0].rank}")
+                mViewModel.point.set(it.listData[0].coinCount)
+            }else{
+                mViewModel.info.set("id:--　排名:--")
+            }
+        })
     }
 
     inner class MyClick(){
         fun myPonit(){
-            NavHostFragment.findNavController(this@MineFragment).navigate(R.id.action_Main_to_LoginFragment)
+            if(CacheUtil.isLogin()){
+                NavHostFragment.findNavController(this@MineFragment).navigate(R.id.action_Main_to_MyPointFragment)
+            }else{
+                NavHostFragment.findNavController(this@MineFragment).navigate(R.id.action_Main_to_LoginFragment)
+            }
         }
         fun myCollect(){
-            NavHostFragment.findNavController(this@MineFragment).navigate(R.id.action_Main_to_CollectFragment)
+            if(CacheUtil.isLogin()){
+                NavHostFragment.findNavController(this@MineFragment).navigate(R.id.action_Main_to_CollectFragment)
+            }else{
+                NavHostFragment.findNavController(this@MineFragment).navigate(R.id.action_Main_to_LoginFragment)
+            }
         }
-
         fun myArticle(){
-            NavHostFragment.findNavController(this@MineFragment).navigate(R.id.action_Main_to_ArticleFragment)
+            if(CacheUtil.isLogin()){
+                NavHostFragment.findNavController(this@MineFragment).navigate(R.id.action_Main_to_ArticleFragment)
+            }else{
+                NavHostFragment.findNavController(this@MineFragment).navigate(R.id.action_Main_to_LoginFragment)
+            }
         }
         fun goTodo(){
-            NavHostFragment.findNavController(this@MineFragment).navigate(R.id.action_Main_to_ToDoFragment)
+            if(CacheUtil.isLogin()){
+                NavHostFragment.findNavController(this@MineFragment).navigate(R.id.action_Main_to_ToDoFragment)
+            }else{
+                NavHostFragment.findNavController(this@MineFragment).navigate(R.id.action_Main_to_LoginFragment)
+            }
         }
         fun openSoureWebSite(){
 

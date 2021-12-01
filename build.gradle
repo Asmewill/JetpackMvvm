@@ -10,6 +10,9 @@ buildscript {
         maven {
             url 'https://dl.bintray.com/novoda-oss/snapshots/'
         }
+        //环信
+        mavenCentral()
+        maven { url 'http://developer.huawei.com/repo'} //如果需要使用华为推送HMS，则需要加上此句
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:4.1.1'
@@ -27,6 +30,9 @@ allprojects {
         maven {
             url 'https://jitpack.io'
         }
+        //环信
+        mavenCentral()
+        maven { url 'http://developer.huawei.com/repo'} //如果需要使用华为推送HMS，则需要加上此句
     }
     //配置这个
     tasks.withType(Javadoc) {
