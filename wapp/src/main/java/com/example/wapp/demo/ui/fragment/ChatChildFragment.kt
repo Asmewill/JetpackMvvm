@@ -4,8 +4,10 @@ import android.content.Intent
 import android.net.Uri
 import android.text.TextUtils
 import androidx.lifecycle.Observer
+import androidx.lifecycle.observe
 import com.example.wapp.R
 import com.example.wapp.demo.constant.Constant
+import com.example.wapp.demo.constant.DemoConstant
 import com.example.wapp.demo.ext.nav
 import com.example.wapp.demo.hxchat.LiveDataBus
 import com.example.wapp.demo.hxchat.event.VideoEvent
@@ -35,6 +37,80 @@ class ChatChildFragment:EaseChatFragment() {
                 }
             }
         })
+       //通知会话列表刷新---更新消息个数
+        LiveDataBus.get().with(DemoConstant.MESSAGE_CHANGE_CHANGE)
+            .postValue(EaseEvent(DemoConstant.MESSAGE_CHANGE_CHANGE, EaseEvent.TYPE.MESSAGE))
+
+
+        /****
+         * 收到各种消息之后进行处理
+         */
+       /* LiveDataBus.get().with(DemoConstant.MESSAGE_CALL_SAVE, Boolean::class.java).observe(
+            viewLifecycleOwner
+        ) { event ->
+            if (event == null) {
+                return@observe
+            }
+            if (event) {
+                chatLayout.chatMessageListLayout.refreshToLatest()
+            }
+        }
+
+        LiveDataBus.get().with(DemoConstant.CONVERSATION_DELETE, EaseEvent::class.java).observe(
+            viewLifecycleOwner
+        ) { event ->
+            if (event == null) {
+                return@observe
+            }
+            if (event.isMessageChange) {
+                chatLayout.chatMessageListLayout.refreshMessages()
+            }
+        }*/
+
+       /* LiveDataBus.get().with(DemoConstant.MESSAGE_CHANGE_CHANGE, EaseEvent::class.java).observe(
+            viewLifecycleOwner
+        ) { event ->
+            if (event == null) {
+                return@observe
+            }
+            if (event.isMessageChange) {
+                chatLayout.chatMessageListLayout.refreshToLatest()
+            }
+        }*/
+       /* LiveDataBus.get().with(DemoConstant.CONVERSATION_READ, EaseEvent::class.java).observe(
+            viewLifecycleOwner
+        ) { event ->
+            if (event == null) {
+                return@observe
+            }
+            if (event.isMessageChange) {
+                chatLayout.chatMessageListLayout.refreshMessages()
+            }
+        }
+
+        //更新用户属性刷新列表
+
+        //更新用户属性刷新列表
+        LiveDataBus.get().with(DemoConstant.CONTACT_ADD, EaseEvent::class.java)
+            .observe(viewLifecycleOwner) { event ->
+                if (event == null) {
+                    return@observe
+                }
+                if (event != null) {
+                    chatLayout.chatMessageListLayout.refreshMessages()
+                }
+            }
+
+        LiveDataBus.get().with(DemoConstant.CONTACT_UPDATE, EaseEvent::class.java).observe(
+            viewLifecycleOwner
+        ) { event ->
+            if (event == null) {
+                return@observe
+            }
+            if (event != null) {
+                chatLayout.chatMessageListLayout.refreshMessages()
+            }
+        }*/
     }
 
     override fun initListener() {
@@ -71,6 +147,8 @@ class ChatChildFragment:EaseChatFragment() {
             }
         }
     }
+
+
 
 
 }

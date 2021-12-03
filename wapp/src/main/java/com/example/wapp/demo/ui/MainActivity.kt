@@ -25,5 +25,6 @@ class MainActivity: BaseVmDbActivity<MainViewModel, ActivityMainBinding>() {
 
     override fun initData() {
 
+
     }
 }

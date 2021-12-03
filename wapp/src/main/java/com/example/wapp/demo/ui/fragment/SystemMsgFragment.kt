@@ -12,6 +12,8 @@ import com.example.wapp.demo.constant.DemoConstant
 import com.example.wapp.demo.ext.nav
 import com.example.wapp.demo.hxchat.LiveDataBus
 import com.example.wapp.demo.viewmodel.ConversationViewModel
+import com.hyphenate.chat.EMClient
+import com.hyphenate.chat.EMConversation
 import com.hyphenate.easeui.model.EaseEvent
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_system_msgs.*
@@ -37,12 +39,26 @@ class SystemMsgFragment:BaseVmDbFragment<ConversationViewModel,FragmentSystemMsg
         }
         rv_list.layoutManager=LinearLayoutManager(mActivity)
         rv_list.adapter=systemMsgAdapter
-
+        //通知会话列表刷新---更新消息个数
+        LiveDataBus.get().with(DemoConstant.MESSAGE_CHANGE_CHANGE)
+            .postValue(EaseEvent(DemoConstant.MESSAGE_CHANGE_CHANGE, EaseEvent.TYPE.MESSAGE))
 
     }
 
     override fun initData() {
         conversationViewModel.loadSystemMsg(20)
+        //所有系统消息设置为已读
+        makeAllMsgRead()
+    }
+
+    fun makeAllMsgRead() {
+        val conversation = EMClient.getInstance().chatManager().getConversation(
+            DemoConstant.DEFAULT_SYSTEM_MESSAGE_ID,
+            EMConversation.EMConversationType.Chat,
+            true)
+       conversation.markAllMessagesAsRead()
+       LiveDataBus.get().with(DemoConstant.NOTIFY_CHANGE)
+            .postValue(EaseEvent.create(DemoConstant.NOTIFY_CHANGE, EaseEvent.TYPE.NOTIFY))
     }
 
     override fun createObserver() {

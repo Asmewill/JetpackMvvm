@@ -110,7 +110,7 @@ class SystemMsgAdapter(data: MutableList<EMMessage>,private val conversationView
                     EaseDateUtils.getTimestampString(context, Date(msg.getMsgTime()))
 
                 agree!!.setOnClickListener { view: View? ->
-                    ToastUtils.showShort("agree")
+                    //ToastUtils.showShort("agree")
                     conversationViewModel.agreeInvite(msg)
                 }
 

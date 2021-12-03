@@ -1,14 +1,17 @@
 package com.example.wapp.demo.ui.fragment
 
 import android.os.Bundle
+import com.blankj.utilcode.util.KeyboardUtils
 import com.example.oapp.base.BaseVmDbFragment
 import com.example.wapp.R
 import com.example.wapp.databinding.FragmentChatBinding
 import com.example.wapp.demo.constant.Constant
 import com.example.wapp.demo.constant.DemoConstant
 import com.example.wapp.demo.ext.nav
+import com.example.wapp.demo.hxchat.LiveDataBus
 import com.example.wapp.demo.viewmodel.ConversationViewModel
 import com.hyphenate.easeui.constants.EaseConstant
+import com.hyphenate.easeui.model.EaseEvent
 import kotlinx.android.synthetic.main.fragment_system_msgs.*
 
 /**
@@ -30,9 +33,13 @@ class ChatFragment:BaseVmDbFragment<ConversationViewModel,FragmentChatBinding>()
         tv_title.text=conversionId
         titlebar.setNavigationIcon(R.drawable.ic_back)
         titlebar.setNavigationOnClickListener{
+            KeyboardUtils.hideSoftInput(requireActivity())
             nav().navigateUp()
+
         }
         initChatFragment()
+
+
 
     }
 

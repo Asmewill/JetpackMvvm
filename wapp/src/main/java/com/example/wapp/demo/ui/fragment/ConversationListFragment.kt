@@ -1,30 +1,21 @@
 package com.example.wapp.demo.ui.fragment
 
 import android.os.Bundle
-import android.text.TextUtils
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.blankj.utilcode.util.ToastUtils
 import com.example.wapp.R
-import com.example.wapp.demo.MyApp
 import com.example.wapp.demo.constant.Constant
 import com.example.wapp.demo.constant.DemoConstant
 import com.example.wapp.demo.ext.nav
-import com.example.wapp.demo.hxchat.InviteMessageStatus
 import com.example.wapp.demo.hxchat.LiveDataBus
-import com.example.wapp.demo.hxchat.PushAndMessageHelper
 import com.example.wapp.demo.viewmodel.ConversationViewModel
-import com.hyphenate.EMContactListener
-import com.hyphenate.chat.EMClient
 import com.hyphenate.chat.EMConversation
-import com.hyphenate.chat.EMMessage
-import com.hyphenate.easeui.EaseIM
 import com.hyphenate.easeui.manager.EaseSystemMsgManager
 import com.hyphenate.easeui.model.EaseEvent
 import com.hyphenate.easeui.modules.conversation.EaseConversationListFragment
 import com.hyphenate.easeui.utils.EaseCommonUtils
-import com.hyphenate.util.EMLog
 
 /**
  * Created by jsxiaoshui on 2021-11-23
@@ -47,73 +38,70 @@ class ConversationListFragment: EaseConversationListFragment() {
               ToastUtils.showShort(it.errorMsg)
            }
         })
-        //添加联系人监听
-        EMClient.getInstance().contactManager().setContactListener(ChatContactListener())
-        //收到好友邀请之后监听
+
+        conversationListLayout.showItemDefaultMenu(true)
+
+        /****
+         * ChatPresenter中进行各种监听
+         *
+         */
+        //进入聊天详情之后，刷新列表，更新消息个数
+        LiveDataBus.get().with(DemoConstant.CONVERSATION_READ, EaseEvent::class.java).observe(
+            viewLifecycleOwner, Observer {
+                conversationListLayout.loadDefaultData()
+            })
+
+        //收到好友邀请之后监听，刷新列表，显示系统消息
         LiveDataBus.get().with(DemoConstant.CONTACT_CHANGE, EaseEvent::class.java).observe(
             viewLifecycleOwner, Observer {
                 conversationListLayout.loadDefaultData()
             })
-        //设置长按显示默认的对话框，默认为true
-        conversationListLayout.showItemDefaultMenu(true)
+
+        LiveDataBus.get().with(DemoConstant.NOTIFY_CHANGE, EaseEvent::class.java).observe(
+            viewLifecycleOwner, Observer {
+                conversationListLayout.loadDefaultData()
+            })
+        LiveDataBus.get().with(DemoConstant.MESSAGE_CHANGE_CHANGE, EaseEvent::class.java).observe(
+            viewLifecycleOwner,Observer {
+                conversationListLayout.loadDefaultData()
+            })
+        LiveDataBus.get().with(DemoConstant.GROUP_CHANGE, EaseEvent::class.java).observe(
+            viewLifecycleOwner, Observer {
+                conversationListLayout.loadDefaultData()
+            })
+        LiveDataBus.get().with(DemoConstant.CHAT_ROOM_CHANGE, EaseEvent::class.java).observe(
+            viewLifecycleOwner, Observer {
+                conversationListLayout.loadDefaultData()
+            })
+        LiveDataBus.get().with(DemoConstant.CONVERSATION_DELETE, EaseEvent::class.java).observe(
+            viewLifecycleOwner,Observer {
+                conversationListLayout.loadDefaultData()
+            })
+        LiveDataBus.get().with(DemoConstant.CONVERSATION_READ, EaseEvent::class.java).observe(
+            viewLifecycleOwner, Observer {
+                conversationListLayout.loadDefaultData()
+            })
+        LiveDataBus.get().with(DemoConstant.CONTACT_CHANGE, EaseEvent::class.java).observe(
+            viewLifecycleOwner, Observer {
+                conversationListLayout.loadDefaultData()
+            })
+        LiveDataBus.get().with(DemoConstant.CONTACT_ADD, EaseEvent::class.java).observe(
+            viewLifecycleOwner,Observer {
+                conversationListLayout.loadDefaultData()
+            })
+        LiveDataBus.get().with(DemoConstant.CONTACT_UPDATE, EaseEvent::class.java).observe(
+            viewLifecycleOwner, Observer {
+                conversationListLayout.loadDefaultData()
+            })
+        LiveDataBus.get().with(DemoConstant.MESSAGE_CALL_SAVE, Boolean::class.java).observe(
+            viewLifecycleOwner, Observer {
+                conversationListLayout.loadDefaultData()
+            })
+        LiveDataBus.get().with(DemoConstant.MESSAGE_NOT_SEND, Boolean::class.java).observe(
+            viewLifecycleOwner, Observer {
+                conversationListLayout.loadDefaultData()
+            })
     }
-
-    private inner class ChatContactListener : EMContactListener {
-        override fun onContactAdded(username: String) {
-
-        }
-
-        override fun onContactDeleted(username: String) {
-
-        }
-
-        override fun onContactInvited(username: String, reason: String) {
-            EMLog.i("ChatContactListener", "onContactInvited")
-            val allMessages = EaseSystemMsgManager.getInstance().allMessages
-            if (allMessages != null && !allMessages.isEmpty()) {
-                for (message in allMessages) {
-                    val ext = message.ext()
-                    if (ext != null && !ext.containsKey(DemoConstant.SYSTEM_MESSAGE_GROUP_ID)
-                        && ext.containsKey(DemoConstant.SYSTEM_MESSAGE_FROM) && TextUtils.equals(
-                            username,
-                            ext[DemoConstant.SYSTEM_MESSAGE_FROM] as String?
-                        )
-                    ) {
-                        EaseSystemMsgManager.getInstance().removeMessage(message)
-                    }
-                }
-            }
-            val ext = EaseSystemMsgManager.getInstance().createMsgExt()
-            ext[DemoConstant.SYSTEM_MESSAGE_FROM] = username
-            ext[DemoConstant.SYSTEM_MESSAGE_REASON] = reason
-            ext[DemoConstant.SYSTEM_MESSAGE_STATUS] = InviteMessageStatus.BEINVITEED.name
-            //这是是将好友邀请信息保存到本地数据库
-            val message = EaseSystemMsgManager.getInstance()
-                .createMessage(PushAndMessageHelper.getSystemMessage(ext), ext)
-            notifyNewInviteMessage(message)
-            val event = EaseEvent.create(DemoConstant.CONTACT_CHANGE, EaseEvent.TYPE.CONTACT)
-            LiveDataBus.get().with(DemoConstant.CONTACT_CHANGE).postValue(event)
-            ToastUtils.showShort(MyApp.instance.getString(InviteMessageStatus.BEINVITEED.getMsgContent(), username))
-         //   showToast(context.getString(InviteMessageStatus.BEINVITEED.getMsgContent(), username))
-
-        }
-
-        override fun onFriendRequestAccepted(username: String) {
-
-        }
-
-        override fun onFriendRequestDeclined(username: String) {
-
-        }
-    }
-
-
-     fun notifyNewInviteMessage(msg: EMMessage) {
-        // notify there is new message
-        EaseIM.getInstance().notifier.vibrateAndPlayTone(null)
-    }
-
-
     override fun initData() {
         super.initData()
         conversationViewModel.fetchConversationsFromServer()
