@@ -11,7 +11,6 @@ import com.blankj.utilcode.util.Utils
 import com.example.oapp.base.BaseViewModel
 import com.example.wapp.demo.MyApp
 import com.example.wapp.demo.bean.ListDataUiState
-import com.hyphenate.easeui.domain.EaseUser
 import com.hyphenate.easeui.model.VideoEntity
 import com.hyphenate.easeui.utils.EaseCompat
 import com.hyphenate.util.PathUtil

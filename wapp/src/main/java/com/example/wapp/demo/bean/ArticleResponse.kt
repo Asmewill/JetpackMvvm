@@ -1,6 +1,6 @@
 package com.example.wapp.demo.bean
 
-data class AriticleResponse(
+data class ArticleResponse(
     val apkLink: String,
     val audit: Int, // 1
     val author: String, // xiaoyang

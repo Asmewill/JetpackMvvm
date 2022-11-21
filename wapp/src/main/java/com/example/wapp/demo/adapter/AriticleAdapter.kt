@@ -11,24 +11,24 @@ import com.chad.library.adapter.base.BaseDelegateMultiAdapter
 import com.chad.library.adapter.base.delegate.BaseMultiTypeDelegate
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.example.wapp.R
-import com.example.wapp.demo.bean.AriticleResponse
+import com.example.wapp.demo.bean.ArticleResponse
 import com.example.wapp.demo.widget.CollectView
 
 /**
  * Created by jsxiaoshui on 2021-10-11
  */
-class AriticleAdapter(data: MutableList<AriticleResponse>) :
-    BaseDelegateMultiAdapter<AriticleResponse, BaseViewHolder>(data) {
+class AriticleAdapter(data: MutableList<ArticleResponse>) :
+    BaseDelegateMultiAdapter<ArticleResponse, BaseViewHolder>(data) {
     private var showTag = false
 
-    constructor(data: MutableList<AriticleResponse>, showTag: Boolean) : this(data) {
+    constructor(data: MutableList<ArticleResponse>, showTag: Boolean) : this(data) {
         this.showTag = showTag
     }
 
     init {
         //第一步---设置ItemType
-        setMultiTypeDelegate(object : BaseMultiTypeDelegate<AriticleResponse>() {
-            override fun getItemType(data: List<AriticleResponse>, position: Int): Int {
+        setMultiTypeDelegate(object : BaseMultiTypeDelegate<ArticleResponse>() {
+            override fun getItemType(data: List<ArticleResponse>, position: Int): Int {
                 if (TextUtils.isEmpty(data.get(position).envelopePic)) {
                     return 1
                 } else {
@@ -37,12 +37,12 @@ class AriticleAdapter(data: MutableList<AriticleResponse>) :
             }
         })
         //第二步 绑定item类型
-        getMultiTypeDelegate()?.addItemType(1, R.layout.item_ariticle)
+        getMultiTypeDelegate()?.addItemType(1, R.layout.item_article)
         getMultiTypeDelegate()?.addItemType(2, R.layout.item_project)
 
     }
 
-    override fun convert(holder: BaseViewHolder, item: AriticleResponse) {
+    override fun convert(holder: BaseViewHolder, item: ArticleResponse) {
         when (holder.itemViewType) {
             1 -> {//文章
                 val item_home_author = holder.getView<TextView>(R.id.item_home_author)

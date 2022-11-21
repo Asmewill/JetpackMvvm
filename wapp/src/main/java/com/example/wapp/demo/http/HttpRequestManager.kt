@@ -2,11 +2,10 @@ package com.example.wapp.demo.http
 
 import com.example.wapp.demo.bean.ApiPagerResponse
 import com.example.wapp.demo.bean.ApiResponse
-import com.example.wapp.demo.bean.AriticleResponse
+import com.example.wapp.demo.bean.ArticleResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
-import okhttp3.Dispatcher
 
 /**
  * Created by jsxiaoshui on 2021-10-13
@@ -20,7 +19,7 @@ class HttpRequestManager {
     /***
      * 二个异步请求合并成一个
      */
-    suspend fun getHomeData(pageNo:Int):ApiResponse<ApiPagerResponse<ArrayList<AriticleResponse>>>{
+    suspend fun getHomeData(pageNo:Int):ApiResponse<ApiPagerResponse<ArrayList<ArticleResponse>>>{
        return withContext(Dispatchers.IO){
             val listData=async {
                 apiService.getArticleList(pageNo)
@@ -43,7 +42,7 @@ class HttpRequestManager {
         pageNo:Int,
         cid:Int=0,
         isNew:Boolean
-    ):ApiResponse<ApiPagerResponse<ArrayList<AriticleResponse>>>{
+    ):ApiResponse<ApiPagerResponse<ArrayList<ArticleResponse>>>{
         return if(isNew){
             apiService.getProjectNewData(pageNo)
         }else{

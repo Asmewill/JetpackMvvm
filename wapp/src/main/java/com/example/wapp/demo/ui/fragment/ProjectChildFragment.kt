@@ -6,12 +6,17 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.ToastUtils
+import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.example.oapp.base.BaseVmDbFragment
 import com.example.wapp.R
 import com.example.wapp.databinding.FragmentProjectChildBinding
 import com.example.wapp.demo.MyApp
 import com.example.wapp.demo.adapter.AriticleAdapter
+import com.example.wapp.demo.bean.ArticleResponse
+import com.example.wapp.demo.bean.enums.CollectType
 import com.example.wapp.demo.constant.Constant
+import com.example.wapp.demo.ext.nav
 import com.example.wapp.demo.viewmodel.ProjectViewModel
 import com.example.wapp.demo.widget.DefineLoadMoreView
 import com.kingja.loadsir.callback.SuccessCallback
@@ -29,7 +34,6 @@ import me.hgj.jetpackmvvm.demo.app.weight.loadCallBack.LoadingCallback
  * Created by jsxiaoshui on 2021-11-03
  */
 class ProjectChildFragment : BaseVmDbFragment<ProjectViewModel, FragmentProjectChildBinding>() {
-    lateinit var loadService: LoadService<Any>
     private var cid = 0
     private var isNew = false
     private val articleAdapter by lazy {
@@ -96,6 +100,17 @@ class ProjectChildFragment : BaseVmDbFragment<ProjectViewModel, FragmentProjectC
         })
         swipeRefresh.setOnRefreshListener {
             mViewModel.getProjectData(isRefresh = true,cid = cid,isNew = isNew)
+        }
+
+        articleAdapter.setOnItemClickListener { adapter, view, position ->
+            val item=adapter.data.get(position) as ArticleResponse
+            val bundle=Bundle()
+            bundle.putString(Constant.ARTICLE_TITLE,item.title)
+            bundle.putString(Constant.URL,item.link)
+            bundle.putInt(Constant.ARTICLE_ID,item.id)
+            bundle.putInt(Constant.COLLECT_TYPE, CollectType.Article.type)
+            bundle.putBoolean(Constant.IS_COLLECT,false)
+            nav().navigate(R.id.action_Main_to_WebFragment,bundle)
         }
     }
 

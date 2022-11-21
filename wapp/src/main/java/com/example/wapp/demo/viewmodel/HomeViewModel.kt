@@ -2,7 +2,7 @@ package com.example.wapp.demo.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import com.example.oapp.base.BaseViewModel
-import com.example.wapp.demo.bean.AriticleResponse
+import com.example.wapp.demo.bean.ArticleResponse
 import com.example.wapp.demo.bean.BannerResponse
 import com.example.wapp.demo.bean.ListDataUiState
 import com.example.wapp.demo.http.apiService
@@ -13,8 +13,8 @@ import com.example.wapp.demo.http.httpRequestManager
  */
 class HomeViewModel:BaseViewModel() {
     var pageNo=0
-    var homeDataState:MutableLiveData<ListDataUiState<AriticleResponse>> = MutableLiveData()
-    var bannerDataState:MutableLiveData<ListDataUiState<BannerResponse>> = MutableLiveData()
+    var homeDataState = MutableLiveData<ListDataUiState<ArticleResponse>>()
+    var bannerDataState = MutableLiveData<ListDataUiState<BannerResponse>>()
 
     /**
      * 获取置顶列表和首页列表数据
@@ -28,7 +28,8 @@ class HomeViewModel:BaseViewModel() {
             success = {
                 pageNo++
                 val listDataUiState=ListDataUiState(
-                    isSuccess = true,
+                    isSuccess = it.getStatus(),
+                    errorMsg = it.getResponseMes(),
                     isRefresh = isRefresh,
                     isEmpty = it.getResponseData().datas.isEmpty(),
                     hasMore = it.getResponseData().hasMore(),
@@ -40,9 +41,9 @@ class HomeViewModel:BaseViewModel() {
             error ={
                 val listDataUiState=ListDataUiState(
                     isSuccess = false,
-                    errorMsg= it.errorMsg,
+                    errorMsg = it.errorMsg,
                     isRefresh = isRefresh,
-                    listData = arrayListOf<AriticleResponse>()
+                    listData = arrayListOf<ArticleResponse>()
                 )
                 homeDataState.value=listDataUiState
             }

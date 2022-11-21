@@ -126,9 +126,7 @@ class SettingFragment : PreferenceFragmentCompat(),
                         )
                     )
                     getActionButton(WhichButton.NEGATIVE).updateTextColor(
-                        SettingUtil.getColor(
-                            activity
-                        )
+                        SettingUtil.getColor(activity)
                     )
                 }
             }

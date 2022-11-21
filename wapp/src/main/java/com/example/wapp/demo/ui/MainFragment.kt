@@ -13,6 +13,7 @@ import com.example.wapp.databinding.FragmentMainBinding
 import com.example.wapp.demo.constant.DemoConstant
 import com.example.wapp.demo.ext.init
 import com.example.wapp.demo.ext.initMain
+import com.example.wapp.demo.ext.interceptLongClick
 import com.example.wapp.demo.hxchat.ChatPresenter
 import com.example.wapp.demo.hxchat.LiveDataBus
 import com.example.wapp.demo.permission.PermissionsManager
@@ -59,6 +60,7 @@ class MainFragment :BaseVmDbFragment<MainViewModel,FragmentMainBinding>() {
                 }
             }
        }
+        mainBottom.interceptLongClick(R.id.menu_main, R.id.menu_project, R.id.menu_system,R.id.menu_public,R.id.menu_me)
         /****
          * 收到以下各种消息通知之后，刷新消息个数
          */
@@ -127,9 +129,6 @@ class MainFragment :BaseVmDbFragment<MainViewModel,FragmentMainBinding>() {
                 tv_msg?.visibility = View.GONE
             }
         },500)
-
-
-
     }
 
     /**

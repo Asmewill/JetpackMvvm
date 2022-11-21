@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelStoreOwner
 
 open class BaseApp : Application(), ViewModelStoreOwner {
 
+
     private lateinit var mAppViewModelStore: ViewModelStore
 
     private var mFactory: ViewModelProvider.Factory? = null

@@ -2,7 +2,7 @@ package com.example.wapp.demo.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import com.example.oapp.base.BaseViewModel
-import com.example.wapp.demo.bean.AriticleResponse
+import com.example.wapp.demo.bean.ArticleResponse
 import com.example.wapp.demo.bean.ListDataUiState
 import com.example.wapp.demo.bean.NavigationResponse
 import com.example.wapp.demo.bean.SystemResponse
@@ -13,8 +13,8 @@ import com.example.wapp.demo.http.apiService
  */
 class SquareViewModel:BaseViewModel() {
     var pageNo=0
-    var squareLiveData: MutableLiveData<ListDataUiState<AriticleResponse>> = MutableLiveData()
-    var askLiveData: MutableLiveData<ListDataUiState<AriticleResponse>> = MutableLiveData()
+    var squareLiveData: MutableLiveData<ListDataUiState<ArticleResponse>> = MutableLiveData()
+    var askLiveData: MutableLiveData<ListDataUiState<ArticleResponse>> = MutableLiveData()
     var systemLiveData: MutableLiveData<ListDataUiState<SystemResponse>> = MutableLiveData()
     var navigatorLiveData: MutableLiveData<ListDataUiState<NavigationResponse>> = MutableLiveData()
     fun getSquareData(isRefresh:Boolean){
@@ -40,9 +40,9 @@ class SquareViewModel:BaseViewModel() {
             error = {
                 val listDataUiState=ListDataUiState(
                     isSuccess = false,
-                    errorMsg= it.errorMsg,
+                    errorMsg = it.errorMsg,
                     isRefresh = isRefresh,
-                    listData = arrayListOf<AriticleResponse>()
+                    listData = arrayListOf<ArticleResponse>()
                 )
                 squareLiveData.value=listDataUiState
             }
@@ -72,9 +72,9 @@ class SquareViewModel:BaseViewModel() {
             error = {
                 val listDataUiState=ListDataUiState(
                     isSuccess = false,
-                    errorMsg= it.errorMsg,
+                    errorMsg = it.errorMsg,
                     isRefresh = isRefresh,
-                    listData = arrayListOf<AriticleResponse>()
+                    listData = arrayListOf<ArticleResponse>()
                 )
                 askLiveData.value=listDataUiState
             }
@@ -98,7 +98,7 @@ class SquareViewModel:BaseViewModel() {
             error = {
                 val listDataUiState=ListDataUiState(
                     isSuccess = false,
-                    errorMsg= it.errorMsg,
+                    errorMsg = it.errorMsg,
                     isRefresh = isRefresh,
                     listData = arrayListOf<SystemResponse>()
                 )
@@ -125,7 +125,7 @@ class SquareViewModel:BaseViewModel() {
             error = {
                 val listDataUiState=ListDataUiState(
                     isSuccess = false,
-                    errorMsg= it.errorMsg,
+                    errorMsg = it.errorMsg,
                     isRefresh = isRefresh,
                     listData = arrayListOf<NavigationResponse>()
                 )

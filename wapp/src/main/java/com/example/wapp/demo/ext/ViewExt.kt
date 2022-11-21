@@ -1,9 +1,11 @@
 package com.example.wapp.demo.ext
 
 import android.os.Build.VERSION_CODES.N
+import android.os.Bundle
 import android.text.Html
 import android.text.Spanned
 import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
@@ -63,6 +65,21 @@ fun ViewPager2.initMain(fragment:Fragment):ViewPager2{
         }
     }
     this.registerOnPageChangeCallback(object:ViewPager2.OnPageChangeCallback(){
+        override fun onPageSelected(position: Int) {
+            super.onPageSelected(position)
+        }
+
+        override fun onPageScrolled(
+            position: Int,
+            positionOffset: Float,
+            positionOffsetPixels: Int
+        ) {
+            super.onPageScrolled(position, positionOffset, positionOffsetPixels)
+        }
+
+        override fun onPageScrollStateChanged(state: Int) {
+            super.onPageScrollStateChanged(state)
+        }
 
     })
    return this
@@ -188,5 +205,33 @@ fun BaseQuickAdapter<*,*>.setAdapterAnimation(mode:Int){
 fun Any?.toJson():String{
     return Gson().toJson(this)
 }
+/**
+ * 拦截BottomNavigation长按事件 防止长按时出现Toast ---- 追求完美的群友提的bug
+ * @receiver BottomNavigationViewEx
+ * @param ids IntArray
+ */
+fun BottomNavigationViewEx.interceptLongClick(vararg ids:Int) {
+    val bottomNavigationMenuView: ViewGroup = (this.getChildAt(0) as ViewGroup)
+    for (index in ids.indices){
+        bottomNavigationMenuView.getChildAt(index).findViewById<View>(ids[index]).setOnLongClickListener {
+            true
+        }
+    }
+}
+
+/**
+ * 防止短时间内多次快速跳转Fragment出现的bug
+ * @param resId 跳转的action Id
+ * @param bundle 传递的参数
+ * @param interval 多少毫秒内不可重复点击 默认0.5秒
+ */
+fun NavController.navigateAction(resId: Int, bundle: Bundle? = null, interval: Long = 500) {
+    try {
+        navigate(resId, bundle)
+    }catch (ignore:Exception){
+        //防止出现 当 fragment 中 action 的 duration设置为 0 时，连续点击两个不同的跳转会导致如下崩溃 #issue53
+    }
+}
+
 
 

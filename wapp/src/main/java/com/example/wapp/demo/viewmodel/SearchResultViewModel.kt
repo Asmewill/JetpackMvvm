@@ -2,7 +2,7 @@ package com.example.wapp.demo.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import com.example.oapp.base.BaseViewModel
-import com.example.wapp.demo.bean.AriticleResponse
+import com.example.wapp.demo.bean.ArticleResponse
 import com.example.wapp.demo.bean.ListDataUiState
 import com.example.wapp.demo.http.apiService
 
@@ -12,7 +12,7 @@ import com.example.wapp.demo.http.apiService
 class SearchResultViewModel : BaseViewModel() {
     private var pageNo=0
 
-    val searchResultLiveData=MutableLiveData<ListDataUiState<AriticleResponse>>()
+    val searchResultLiveData=MutableLiveData<ListDataUiState<ArticleResponse>>()
 
     fun getSearchDataByKey(searchKey:String ,isRefresh:Boolean) {
         if(isRefresh){
@@ -24,7 +24,7 @@ class SearchResultViewModel : BaseViewModel() {
              },
             success = {
                pageNo++
-                val listDataUiState=ListDataUiState<AriticleResponse>(
+                val listDataUiState=ListDataUiState<ArticleResponse>(
                     isSuccess = true,
                     isRefresh = isRefresh,
                     isEmpty = it.getResponseData().isEmpty(),
@@ -38,9 +38,9 @@ class SearchResultViewModel : BaseViewModel() {
             error = {
                 val listDataUiState=ListDataUiState(
                     isSuccess = false,
-                    errorMsg= it.errorMsg,
+                    errorMsg = it.errorMsg,
                     isRefresh = isRefresh,
-                    listData = arrayListOf<AriticleResponse>()
+                    listData = arrayListOf<ArticleResponse>()
                 )
                searchResultLiveData.value=listDataUiState
             })

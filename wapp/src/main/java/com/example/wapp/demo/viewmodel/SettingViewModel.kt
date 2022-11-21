@@ -1,13 +1,11 @@
 package com.example.wapp.demo.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.blankj.utilcode.util.Utils
 import com.example.oapp.base.BaseViewModel
 import com.example.wapp.demo.bean.ListDataUiState
 import com.hyphenate.EMCallBack
 import com.hyphenate.chat.EMClient
-import com.hyphenate.easeui.domain.EaseUser
 
 /**
  * Created by jsxiaoshui on 2021-11-15

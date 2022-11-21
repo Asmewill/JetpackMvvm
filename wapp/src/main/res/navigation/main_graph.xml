@@ -43,6 +43,9 @@
         <action
             android:id="@+id/action_Main_to_ChatFragment"
             app:destination="@id/ChatFragment" />
+        <action
+            android:id="@+id/action_Main_to_WebFragment"
+            app:destination="@id/WebFragment" />
 
     </fragment>
     <fragment
@@ -60,6 +63,9 @@
     <fragment
         android:id="@+id/SearchResultFragment"
         android:name="com.example.wapp.demo.ui.fragment.SearchResultFragment">
+        <action
+            android:id="@+id/action_SearchResultFragment_to_WebFragment"
+            app:destination="@id/WebFragment" />
     </fragment>
 
     <fragment
@@ -78,11 +84,24 @@
     </fragment>
     <fragment
         android:id="@+id/CollectFragment"
-        android:name="com.example.wapp.demo.ui.fragment.CollectFragment"/>
+        android:name="com.example.wapp.demo.ui.fragment.CollectFragment">
+        <action
+            android:id="@+id/action_CollectArticleFragment_to_WebFragment"
+            app:destination="@id/WebFragment" />
+
+    </fragment>
 
     <fragment
         android:id="@+id/MyPointFragment"
-        android:name="com.example.wapp.demo.ui.fragment.MyPointFragment"/>
+        android:name="com.example.wapp.demo.ui.fragment.MyPointFragment">
+        <action
+            android:id="@+id/action_MyPointFragment_to_WebFragment"
+            app:destination="@id/WebFragment" />
+        <action
+            android:id="@+id/action_MyPointFragment_to_PointRecordFragment"
+            app:destination="@id/PointRecordFragment" />
+
+    </fragment>
 
     <fragment
         android:id="@+id/ArticleFragment"
@@ -119,5 +138,17 @@
     <fragment
         android:id="@+id/ImageGridFragment"
         android:name="com.example.wapp.demo.ui.fragment.ImageGridFragment"/>
+
+    <fragment
+        android:id="@+id/WebFragment"
+        android:name="com.example.wapp.demo.ui.fragment.WebFragment">
+        <action
+            android:id="@+id/action_WEbFragment_to_LoginFragment"
+            app:destination="@id/LoginFragment" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/PointRecordFragment"
+        android:name="com.example.wapp.demo.ui.fragment.PointRecordFragment"/>
 
 </navigation>

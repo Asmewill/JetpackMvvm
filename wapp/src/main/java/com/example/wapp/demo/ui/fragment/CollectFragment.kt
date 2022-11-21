@@ -36,7 +36,7 @@ class CollectFragment:BaseVmDbFragment<CollectViewModel,FragmentCollectBinding>(
     private var commonNavigator= CommonNavigator(MyApp.instance)
     init {
         fragments.add(CollectArticleFragment())
-        fragments.add(CollectArticleFragment())
+        fragments.add(CollectUrlFragment())
     }
     override fun layoutId(): Int {
        return R.layout.fragment_collect

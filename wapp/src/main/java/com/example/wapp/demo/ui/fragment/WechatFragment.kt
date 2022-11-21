@@ -39,7 +39,6 @@ class WechatFragment:BaseVmDbFragment<WechatViewModel,FragmentWechatBinding>() {
     private val commonNavigator by lazy {
         CommonNavigator(MyApp.instance)
     }
-    lateinit var loadService: LoadService<Any>
     private var fragments= arrayListOf<Fragment>()
     private var mDataList= arrayListOf<String>()
 

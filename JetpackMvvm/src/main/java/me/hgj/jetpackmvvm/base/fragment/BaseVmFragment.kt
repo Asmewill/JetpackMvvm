@@ -58,7 +58,7 @@ abstract class BaseVmFragment<VM : BaseViewModel> : Fragment() {
         mViewModel = createViewModel()
         initView(savedInstanceState)
         createObserver()
-        registorDefUIChange()
+        registerDefUIChange()
         initData()
     }
 
@@ -128,7 +128,7 @@ abstract class BaseVmFragment<VM : BaseViewModel> : Fragment() {
     /**
      * 注册 UI 事件
      */
-    private fun registorDefUIChange() {
+    private fun registerDefUIChange() {
         mViewModel.loadingChange.showDialog.observeInFragment(this, Observer {
             showLoading(it)
         })

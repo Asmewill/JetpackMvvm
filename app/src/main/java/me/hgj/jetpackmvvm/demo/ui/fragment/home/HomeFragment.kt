@@ -2,10 +2,12 @@ package me.hgj.jetpackmvvm.demo.ui.fragment.home
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.ConvertUtils
+import com.kingja.loadsir.callback.Callback
 import com.kingja.loadsir.core.LoadService
 import com.kingja.loadsir.core.LoadSir
 import com.yanzhenjie.recyclerview.SwipeRecyclerView
@@ -66,15 +68,15 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
 //            requestHomeViewModel.getHomeData(true)
 //        }
         loadsir= LoadSir.getDefault().register(swipeRefresh) {
-                        loadsir.showLoading()
+            loadsir.showLoading()
             requestHomeViewModel.getBannerData()
             requestHomeViewModel.getHomeData(true)
         }
-       // loadsir.showSuccess()
+        // loadsir.showSuccess()
         //初始化 toolbar
         toolbar.run {
-            init("首页1")
-            inflateMenu(R.menu.home_menu)
+            this.init("首页")
+            this.inflateMenu(R.menu.home_menu)
             setOnMenuItemClickListener {
                 when (it.itemId) {
                     R.id.home_search -> {
@@ -84,10 +86,15 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
                 true
             }
         }
+        //屏蔽搜索按钮的长按点击事件----【屏蔽搜索透明弹窗】
+        toolbar.findViewById<View>(R.id.home_search).setOnLongClickListener{
+            true
+        }
         //初始化recyclerView
         recyclerView.init(LinearLayoutManager(context), articleAdapter).let {
             //因为首页要添加轮播图，所以我设置了firstNeedTop字段为false,即第一条数据不需要设置间距
             it.addItemDecoration(SpaceItemDecoration(0, ConvertUtils.dp2px(8f), false))
+            //初始化footView
             footView = it.initFooter(SwipeRecyclerView.LoadMoreListener {
                 requestHomeViewModel.getHomeData(false)
             })

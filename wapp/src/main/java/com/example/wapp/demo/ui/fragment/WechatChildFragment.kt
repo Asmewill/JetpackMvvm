@@ -29,7 +29,6 @@ import me.hgj.jetpackmvvm.demo.app.weight.loadCallBack.LoadingCallback
  * Created by jsxiaoshui on 2021-11-03
  */
 class WechatChildFragment : BaseVmDbFragment<WechatViewModel, FragmentProjectChildBinding>() {
-    lateinit var loadService: LoadService<Any>
     private var cid = 0
     private val articleAdapter by lazy {
        AriticleAdapter(mutableListOf())

@@ -17,5 +17,7 @@ data class ListDataUiState<T>(
     //是第一页且没有数据
     val isFirstEmpty:Boolean=false,
     //列表数据
-    val listData:ArrayList<T> = arrayListOf()
+    val listData:ArrayList<T> = arrayListOf(),
+    //直接作为所有值
+    val response: BaseResponse<T> ?=null
 )

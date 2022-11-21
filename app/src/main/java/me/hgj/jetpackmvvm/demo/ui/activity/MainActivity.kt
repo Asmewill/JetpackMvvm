@@ -25,7 +25,6 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
     var exitTime = 0L
     override fun layoutId() = R.layout.activity_main
 
-
     override fun initView(savedInstanceState: Bundle?) {
         //进入首页检查更新
         Beta.checkUpgrade(false, true)

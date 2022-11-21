@@ -6,10 +6,16 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.ToastUtils
+import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.example.oapp.base.BaseVmDbFragment
 import com.example.wapp.R
 import com.example.wapp.databinding.FragmentSquareListBinding
 import com.example.wapp.demo.adapter.NavigatorAdapter
+import com.example.wapp.demo.bean.ArticleResponse
+import com.example.wapp.demo.bean.enums.CollectType
+import com.example.wapp.demo.constant.Constant
+import com.example.wapp.demo.ext.nav
 import com.example.wapp.demo.viewmodel.SquareViewModel
 import com.kingja.loadsir.callback.SuccessCallback
 import com.kingja.loadsir.core.LoadService
@@ -25,7 +31,6 @@ import me.hgj.jetpackmvvm.demo.app.weight.loadCallBack.LoadingCallback
  * Created by jsxiaoshui on 2021-11-08
  */
 class NavigationFragment:BaseVmDbFragment<SquareViewModel,FragmentSquareListBinding>() {
-    lateinit var loadService: LoadService<Any>
     private val navigatorAdapter by lazy {
         NavigatorAdapter()
     }
@@ -71,9 +76,17 @@ class NavigationFragment:BaseVmDbFragment<SquareViewModel,FragmentSquareListBind
         swipeRefresh.setOnRefreshListener {
             mViewModel.getNavigationData(true)
         }
-
+        navigatorAdapter.setOnItemClickListener { adapter, view, position ->
+            val item=adapter.data.get(position) as ArticleResponse
+            val bundle=Bundle()
+            bundle.putString(Constant.ARTICLE_TITLE,item.title)
+            bundle.putString(Constant.URL,item.link)
+            bundle.putInt(Constant.ARTICLE_ID,item.id)
+            bundle.putInt(Constant.COLLECT_TYPE, CollectType.Article.type)
+            bundle.putBoolean(Constant.IS_COLLECT,false)
+            nav().navigate(R.id.action_Main_to_WebFragment,bundle)
+        }
     }
-
     override fun initData() {
 
     }

@@ -1,7 +1,6 @@
 package com.example.wapp.demo.viewmodel
 
 import androidx.lifecycle.MutableLiveData
-import com.blankj.utilcode.util.ToastUtils
 import com.blankj.utilcode.util.Utils
 import com.example.oapp.base.BaseViewModel
 import com.example.wapp.demo.bean.ListDataUiState
@@ -47,7 +46,7 @@ class LoginRegisterViewModel:BaseViewModel() {
 
     fun register(userName:String,pwd:String){
         request(
-            block={
+            block ={
                 apiService.register(userName,pwd,pwd)
             },
             success = {
@@ -88,7 +87,7 @@ class LoginRegisterViewModel:BaseViewModel() {
             error = {
                 val listDataUiState=ListDataUiState(
                     isSuccess = false,
-                    errorMsg=it.message.toString(),
+                    errorMsg =it.message.toString(),
                     listData = arrayListOf<String>()
                 )
                 registerHxLiveData.value=listDataUiState
@@ -116,7 +115,7 @@ class LoginRegisterViewModel:BaseViewModel() {
                     override fun onError(code: Int, error: String) {
                         val listDataUiState=ListDataUiState(
                             isSuccess = false,
-                            errorMsg=error,
+                            errorMsg =error,
                             listData = arrayListOf<EaseUser>()
                         )
                         Utils.runOnUiThread{

@@ -109,7 +109,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".demo.ui.MainActivity"
-             android:launchMode="singleTask"/>
+             android:launchMode="singleTask"
+            />
         <!--环信原生SDK相关-->
         <!--展示大图-->
         <activity android:name="com.hyphenate.easeui.ui.EaseShowBigImageActivity"

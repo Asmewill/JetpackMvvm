@@ -2,14 +2,12 @@ package com.example.wapp.demo.ui.fragment
 
 import android.content.Intent
 import android.net.Uri
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.NavHostFragment
 import com.blankj.utilcode.util.ToastUtils
 import com.example.oapp.base.BaseVmDbFragment
 import com.example.wapp.R
 import com.example.wapp.databinding.FragmentMineBinding
-import com.example.wapp.demo.ext.nav
 import com.example.wapp.demo.utils.CacheUtil
 import com.example.wapp.demo.viewmodel.EventViewModel
 import com.example.wapp.demo.viewmodel.MineViewModel

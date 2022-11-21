@@ -10,6 +10,10 @@ import com.example.wapp.R
 import com.example.wapp.databinding.FragmentSquareListBinding
 import com.example.wapp.demo.MyApp
 import com.example.wapp.demo.adapter.AriticleAdapter
+import com.example.wapp.demo.bean.ArticleResponse
+import com.example.wapp.demo.bean.enums.CollectType
+import com.example.wapp.demo.constant.Constant
+import com.example.wapp.demo.ext.nav
 import com.example.wapp.demo.viewmodel.SquareViewModel
 import com.example.wapp.demo.widget.DefineLoadMoreView
 import com.kingja.loadsir.callback.SuccessCallback
@@ -27,7 +31,6 @@ import me.hgj.jetpackmvvm.demo.app.weight.loadCallBack.LoadingCallback
  * Created by jsxiaoshui on 2021-11-08
  */
 class AskFragment:BaseVmDbFragment<SquareViewModel,FragmentSquareListBinding>() {
-    lateinit var loadService: LoadService<Any>
     private val footView by lazy {
         DefineLoadMoreView(MyApp.instance)
     }
@@ -85,6 +88,16 @@ class AskFragment:BaseVmDbFragment<SquareViewModel,FragmentSquareListBinding>() 
         })
         swipeRefresh.setOnRefreshListener {
             mViewModel.getAskData(true)
+        }
+        articleAdapter.setOnItemClickListener { adapter, view, position ->
+            val item=adapter.data.get(position) as ArticleResponse
+            val bundle=Bundle()
+            bundle.putString(Constant.ARTICLE_TITLE,item.title)
+            bundle.putString(Constant.URL,item.link)
+            bundle.putInt(Constant.ARTICLE_ID,item.id)
+            bundle.putInt(Constant.COLLECT_TYPE, CollectType.Article.type)
+            bundle.putBoolean(Constant.IS_COLLECT,false)
+            nav().navigate(R.id.action_Main_to_WebFragment,bundle)
         }
     }
 

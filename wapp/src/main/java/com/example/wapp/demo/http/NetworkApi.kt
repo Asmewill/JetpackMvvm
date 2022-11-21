@@ -36,8 +36,8 @@ class NetworkApi : BaseNetworkApi() {
             this.addInterceptor(MyHeadInterceptor())
             //超时时间 连接、读、写
             this.connectTimeout(10, TimeUnit.SECONDS)
-            this.readTimeout(5, TimeUnit.SECONDS)
-            this.writeTimeout(5, TimeUnit.SECONDS)
+            this.readTimeout(10, TimeUnit.SECONDS)
+            this.writeTimeout(10, TimeUnit.SECONDS)
 
         }
         return  builder

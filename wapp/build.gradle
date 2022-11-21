@@ -10,7 +10,7 @@ android {
     buildToolsVersion "30.0.3"
     signingConfigs {
         config {
-            storeFile file('D:/AndroidRel/MyCode/JetpackMvvm/wapp/wapp.jks')
+            storeFile file('../wapp/wapp.jks')
             storePassword 'abcd1234'
             keyAlias 'key'
             keyPassword 'abcd1234'

@@ -33,11 +33,10 @@ import me.hgj.jetpackmvvm.ext.view.gone
  * 描述　:积分排行
  */
 class IntegralFragment : BaseFragment<IntegralViewModel, FragmentIntegralBinding>() {
-    private var rank: IntegralResponse? = null
 
+    private var rank: IntegralResponse? = null
     //适配器
     private lateinit var integralAdapter: IntegralAdapter
-
     //界面状态管理者
     private lateinit var loadsir: LoadService<Any>
 

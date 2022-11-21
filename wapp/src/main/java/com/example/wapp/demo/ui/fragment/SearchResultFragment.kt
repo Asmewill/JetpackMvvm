@@ -1,12 +1,19 @@
 package com.example.wapp.demo.ui.fragment
 
+import android.os.Bundle
+import android.view.View
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.example.oapp.base.BaseVmDbFragment
 import com.example.wapp.R
 import com.example.wapp.databinding.FragmentSearchResultBinding
 import com.example.wapp.demo.MyApp
 import com.example.wapp.demo.adapter.AriticleAdapter
+import com.example.wapp.demo.bean.ArticleResponse
+import com.example.wapp.demo.bean.enums.CollectType
+import com.example.wapp.demo.constant.Constant
 import com.example.wapp.demo.ext.*
 import com.example.wapp.demo.viewmodel.SearchResultViewModel
 import com.example.wapp.demo.widget.DefineLoadMoreView
@@ -25,9 +32,7 @@ import me.hgj.jetpackmvvm.demo.app.weight.loadCallBack.LoadingCallback
 /**
  * Created by jsxiaoshui on 2021-10-25
  */
-class SearchResultFragment :
-    BaseVmDbFragment<SearchResultViewModel, FragmentSearchResultBinding>() {
-    lateinit var loadService: LoadService<Any>
+class SearchResultFragment : BaseVmDbFragment<SearchResultViewModel, FragmentSearchResultBinding>() {
     private val articleAdapter by lazy { AriticleAdapter(arrayListOf(), true) }
     private var searchKey = ""
     override fun layoutId(): Int {
@@ -35,6 +40,11 @@ class SearchResultFragment :
     }
 
     override fun initView() {
+        //注册LoadingService
+        loadService = LoadSir.getDefault().register(swipeRefresh) {
+            loadService.showCallback(LoadingCallback::class.java)
+            mViewModel.getSearchDataByKey(searchKey, true)
+        }
         searchKey = arguments?.getString("searchKey").toString()
         toolbar.initClose(searchKey) {
             nav().navigateUp()
@@ -56,12 +66,19 @@ class SearchResultFragment :
         swipeRefresh.init {
             mViewModel.getSearchDataByKey(searchKey, true)
         }
-        //注册LoadingService
-        loadService = LoadSir.getDefault().register(swipeRefresh) {
-            loadService.showCallback(LoadingCallback::class.java)
-            mViewModel.getSearchDataByKey(searchKey, true)
+        articleAdapter.setOnItemClickListener { adapter, view, position ->
+            val item=adapter.data.get(position) as ArticleResponse
+            val bundle= Bundle()
+            bundle.putString(Constant.ARTICLE_TITLE,item.title)
+            bundle.putString(Constant.URL,item.link)
+            bundle.putInt(Constant.ARTICLE_ID,item.id)
+            bundle.putInt(Constant.COLLECT_TYPE, CollectType.Article.type)
+            bundle.putBoolean(Constant.IS_COLLECT,false)
+            try {
+                nav().navigate(R.id.action_SearchResultFragment_to_WebFragment,bundle)
+            }catch (e:Exception){
+            }
         }
-
     }
 
     override fun initData() {

@@ -3,8 +3,10 @@ package com.example.oapp.base
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.wapp.demo.bean.ApiResponse
+import com.example.wapp.demo.bean.BannerResponse
 import com.example.wapp.demo.bean.BaseResponse
 import com.example.wapp.demo.bean.exception.AppException
+import com.example.wapp.demo.ui.fragment.LoginFragment
 import com.example.wapp.demo.utils.ExceptionHandle
 import com.hyphenate.chat.EMClient
 import com.kunminx.architecture.ui.callback.UnPeekLiveData

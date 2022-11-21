@@ -2,12 +2,10 @@ package com.example.wapp.demo.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import com.example.oapp.base.BaseViewModel
-import com.example.wapp.demo.bean.AriticleResponse
+import com.example.wapp.demo.bean.ArticleResponse
 import com.example.wapp.demo.bean.ClassifyResponse
 import com.example.wapp.demo.bean.ListDataUiState
-import com.example.wapp.demo.http.HttpRequestManager
 import com.example.wapp.demo.http.apiService
-import com.example.wapp.demo.http.httpRequestManager
 
 /**
  * Created by jsxiaoshui on 2021/8/20
@@ -15,7 +13,7 @@ import com.example.wapp.demo.http.httpRequestManager
 class ProjectViewModel:BaseViewModel() {
 
      var pageNo=0
-     var projectLiveData: MutableLiveData<ListDataUiState<AriticleResponse>> = MutableLiveData()
+     var projectLiveData: MutableLiveData<ListDataUiState<ArticleResponse>> = MutableLiveData()
      var titleLiveData: MutableLiveData<ListDataUiState<ClassifyResponse>> = MutableLiveData()
      fun getProjectTitle(){
          request(
@@ -71,8 +69,8 @@ class ProjectViewModel:BaseViewModel() {
                 val listDataUiState=ListDataUiState(
                     isSuccess = false,
                     isRefresh = isRefresh,
-                    errorMsg=it.errorMsg,
-                    listData = arrayListOf<AriticleResponse>()
+                    errorMsg =it.errorMsg,
+                    listData = arrayListOf<ArticleResponse>()
                 )
                 projectLiveData.value=listDataUiState
             }

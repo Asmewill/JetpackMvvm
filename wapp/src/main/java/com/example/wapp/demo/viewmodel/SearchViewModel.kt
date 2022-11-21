@@ -4,10 +4,8 @@ import androidx.lifecycle.MutableLiveData
 import com.example.oapp.base.BaseViewModel
 import com.example.wapp.demo.bean.ListDataUiState
 import com.example.wapp.demo.bean.SearchResponse
-import com.example.wapp.demo.http.NetworkApi
 import com.example.wapp.demo.http.apiService
 import com.example.wapp.demo.utils.CacheUtil
-import okhttp3.Cache
 
 /**
  * Created by jsxiaoshui on 2021/8/23
@@ -25,7 +23,7 @@ class SearchViewModel:BaseViewModel() {
             success = {
                       val  listDataUiState=ListDataUiState(
                           isSuccess = true,
-                          listData=it.getResponseData()
+                          listData =it.getResponseData()
                       )
                 searchDataState.value=listDataUiState
             },

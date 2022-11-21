@@ -15,11 +15,13 @@ import com.example.wapp.demo.ext.dismissLoadingExt
 import com.example.wapp.demo.ext.getVmClazz
 import com.example.wapp.demo.ext.showLoadingExt
 import com.hyphenate.chat.EMClient
+import com.kingja.loadsir.core.LoadService
 
 /**
  * Created by jsxiaoshui on 2021/7/22
  */
 abstract class BaseVmFragment<VM:BaseViewModel>:Fragment() {
+    protected lateinit var loadService: LoadService<Any>
     private var isFirst: Boolean=true;
     lateinit var mViewModel:VM
     lateinit var mActivity: AppCompatActivity

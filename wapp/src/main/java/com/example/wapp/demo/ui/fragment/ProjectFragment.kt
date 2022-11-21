@@ -32,7 +32,6 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.Li
  * Created by jsxiaoshui on 2021/8/20
  */
 class ProjectFragment:BaseVmDbFragment<ProjectViewModel,FragmentProjectBinding>() {
-    lateinit var loadService: LoadService<Any>
     private var fragments= arrayListOf<Fragment>()
     private var commonNavigator=CommonNavigator(MyApp.instance)
     private var mDataList= arrayListOf<String>()

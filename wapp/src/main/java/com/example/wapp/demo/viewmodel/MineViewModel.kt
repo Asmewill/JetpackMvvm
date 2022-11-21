@@ -7,7 +7,6 @@ import com.example.wapp.demo.bean.ListDataUiState
 import com.example.wapp.demo.bean.PointBean
 import com.example.wapp.demo.http.apiService
 import com.example.wapp.demo.utils.ColorUtil
-import com.kunminx.architecture.ui.callback.UnPeekLiveData
 
 /**
  * Created by jsxiaoshui on 2021/8/20
@@ -21,7 +20,6 @@ class MineViewModel:BaseViewModel() {
 
     var imageUrl=ObservableField<String>(ColorUtil.randomImage())
 
-    var testString = UnPeekLiveData<String>()
     var pointLiveData: MutableLiveData<ListDataUiState<PointBean>> = MutableLiveData()
 
     fun getPointAndRank(){
@@ -38,7 +36,7 @@ class MineViewModel:BaseViewModel() {
             error = {
                 val listDataUiState=ListDataUiState(
                     isSuccess = false,
-                    errorMsg= it.errorMsg,
+                    errorMsg = it.errorMsg,
                     listData = arrayListOf<PointBean>()
                 )
                 pointLiveData.value=listDataUiState

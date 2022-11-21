@@ -30,14 +30,15 @@ import com.google.android.flexbox.JustifyContent
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_search.*
 import okhttp3.Cache
+import java.lang.Exception
 
 /**
  * Created by jsxiaoshui on 2021/8/23
  */
 class SearchFragment : BaseVmDbFragment<SearchViewModel, FragmentSearchBinding>() {
-    private val searchHotAdapter by lazy(initializer = {
+    private val searchHotAdapter by lazy{
         SearchHotAdapter()
-    })
+    }
     private val searchHistoryAdapter by lazy {
         SearchHistoryAdapter(this)
     }
@@ -67,17 +68,26 @@ class SearchFragment : BaseVmDbFragment<SearchViewModel, FragmentSearchBinding>(
         )
         searchHotAdapter.setOnItemClickListener { adapter, view, position ->
             val query:String= (adapter.data[position] as SearchResponse).name
-            nav().navigate(R.id.action_searchFragment_to_searchResultFragment, Bundle().apply {
-                this.putString("searchKey", query)
-            })
+            //try-catch防止短时间内多次快速跳转Fragment出现的bug
+            try {
+                nav().navigate(R.id.action_searchFragment_to_searchResultFragment, Bundle().apply {
+                    this.putString("searchKey", query)
+                })
+            }catch (e:Exception){
 
+            }
         }
         search_historyRv.init(LinearLayoutManager(mActivity), searchHistoryAdapter, true)
         searchHistoryAdapter.setOnItemClickListener { adapter, view, position ->
             val query:String= adapter.data[position] as String
-            nav().navigate(R.id.action_searchFragment_to_searchResultFragment, Bundle().apply {
-                this.putString("searchKey", query)
-            })
+            //try-catch防止短时间内多次快速跳转Fragment出现的bug
+            try {
+                nav().navigate(R.id.action_searchFragment_to_searchResultFragment, Bundle().apply {
+                    this.putString("searchKey", query)
+                })
+            }catch (e:Exception){
+            }
+
         }
 
 

@@ -1,5 +1,6 @@
 package com.example.wapp.demo.ui.fragment
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -10,7 +11,10 @@ import com.example.wapp.databinding.FragmentHomeBinding
 import com.example.wapp.demo.adapter.AriticleAdapter
 import com.example.wapp.demo.adapter.HomeBannerAdapter
 import com.example.wapp.demo.adapter.HomeBannerViewHolder
+import com.example.wapp.demo.bean.ArticleResponse
 import com.example.wapp.demo.bean.BannerResponse
+import com.example.wapp.demo.bean.enums.CollectType
+import com.example.wapp.demo.constant.Constant
 import com.example.wapp.demo.ext.init
 import com.example.wapp.demo.ext.initFloatBtn
 import com.example.wapp.demo.ext.initFooter
@@ -19,7 +23,6 @@ import com.example.wapp.demo.http.apiService
 import com.example.wapp.demo.viewmodel.HomeViewModel
 import com.example.wapp.demo.widget.DefineLoadMoreView
 import com.kingja.loadsir.callback.SuccessCallback
-import com.kingja.loadsir.core.LoadService
 import com.kingja.loadsir.core.LoadSir
 import com.yanzhenjie.recyclerview.SwipeRecyclerView
 import com.zhpan.bannerview.BannerViewPager
@@ -31,13 +34,14 @@ import kotlinx.coroutines.launch
 import me.hgj.jetpackmvvm.demo.app.weight.loadCallBack.EmptyCallback
 import com.example.wapp.demo.loadcallback.ErrorCallback
 import me.hgj.jetpackmvvm.demo.app.weight.loadCallBack.LoadingCallback
+import java.lang.Exception
 import java.util.*
 
 /**
  * Created by jsxiaoshui on 2021/8/20
  */
 class HomeFragment : BaseVmDbFragment<HomeViewModel, FragmentHomeBinding>() {
-    lateinit var loadService: LoadService<Any>
+
     private lateinit var footView: DefineLoadMoreView
     private lateinit var headerView:View
     private val articleAdapter by lazy {
@@ -49,7 +53,13 @@ class HomeFragment : BaseVmDbFragment<HomeViewModel, FragmentHomeBinding>() {
     }
 
     override fun initView() {
-        mDataBind.root.toolbar?.run {
+        //注册LoadingService
+        loadService = LoadSir.getDefault().register(swipeRefresh) {
+            loadService.showCallback(LoadingCallback::class.java)
+            mViewModel.getBannerData()
+            mViewModel.getHomeData(true)
+        }
+        toolbar?.run {
             this.init("首页")
             this.inflateMenu(R.menu.home_menu)
             this.setOnMenuItemClickListener {
@@ -75,19 +85,22 @@ class HomeFragment : BaseVmDbFragment<HomeViewModel, FragmentHomeBinding>() {
         }
         articleAdapter.run {
             this.setOnItemClickListener { adapter, view, position ->
-                mViewModel.getHomeData(true)
+                val item=adapter.data.get(position-1) as ArticleResponse
+                val bundle=Bundle()
+                bundle.putString(Constant.ARTICLE_TITLE,item.title)
+                bundle.putString(Constant.URL,item.link)
+                bundle.putInt(Constant.ARTICLE_ID,item.id)
+                bundle.putInt(Constant.COLLECT_TYPE,CollectType.Article.type)
+                bundle.putBoolean(Constant.IS_COLLECT,false)
+                //try-catch防止重复点击导致跳转多次
+                try {
+                    nav().navigate(R.id.action_Main_to_WebFragment,bundle)
+                }catch (e:Exception){}
             }
-        }
-        //注册LoadingService
-        loadService = LoadSir.getDefault().register(swipeRefresh) {
-            loadService.showCallback(LoadingCallback::class.java)
-            mViewModel.getBannerData()
-            mViewModel.getHomeData(true)
         }
     }
 
     override fun lazyLoad() {
-        super.lazyLoad()
         loadService.showCallback(LoadingCallback::class.java)
         mViewModel.getBannerData()
         mViewModel.getHomeData(true)
@@ -98,15 +111,23 @@ class HomeFragment : BaseVmDbFragment<HomeViewModel, FragmentHomeBinding>() {
     }
 
     override fun createObserver() {
-        mViewModel.bannerDataState.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+        mViewModel.bannerDataState.observe(viewLifecycleOwner, androidx.lifecycle.Observer {listDataUistate->
              if(recyclerView.headerCount==0){
                   headerView=LayoutInflater.from(context).inflate(R.layout.include_banner,null).apply {
                     this.findViewById<BannerViewPager<BannerResponse,HomeBannerViewHolder>>(R.id.banner_view).apply {
                         this.adapter=HomeBannerAdapter()
                         this.setLifecycleRegistry(lifecycle)
-                        this.setOnPageClickListener {
+                        this.setOnPageClickListener {position->
+                            val item=listDataUistate.listData.get(position)
+                            val bundle=Bundle()
+                            bundle.putString(Constant.ARTICLE_TITLE,item.title)
+                            bundle.putString(Constant.URL,item.url)
+                            bundle.putInt(Constant.ARTICLE_ID,item.id)
+                            bundle.putInt(Constant.COLLECT_TYPE,CollectType.Article.type)
+                            bundle.putBoolean(Constant.IS_COLLECT,false)
+                            nav().navigate(R.id.action_Main_to_WebFragment,bundle)
                         }
-                        create(it.listData)
+                        create(listDataUistate.listData)
                     }
                  }
                  recyclerView.addHeaderView(headerView)

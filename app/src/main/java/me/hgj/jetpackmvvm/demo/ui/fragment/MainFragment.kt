@@ -37,6 +37,8 @@ class MainFragment : BaseFragment<MainViewModel, FragmentMainBinding>() {
             }
         }
         mainBottom.interceptLongClick(R.id.menu_main,R.id.menu_project,R.id.menu_system,R.id.menu_public,R.id.menu_me)
+        
+
     }
 
     override fun createObserver() {

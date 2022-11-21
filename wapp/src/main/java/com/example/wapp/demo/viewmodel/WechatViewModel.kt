@@ -2,7 +2,7 @@ package com.example.wapp.demo.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import com.example.oapp.base.BaseViewModel
-import com.example.wapp.demo.bean.AriticleResponse
+import com.example.wapp.demo.bean.ArticleResponse
 import com.example.wapp.demo.bean.ClassifyResponse
 import com.example.wapp.demo.bean.ListDataUiState
 import com.example.wapp.demo.http.apiService
@@ -15,7 +15,7 @@ class WechatViewModel:BaseViewModel() {
 
     var publicLiveData= MutableLiveData<ListDataUiState<ClassifyResponse>>()
     var pageNo=0
-    var publicDataLiveData= MutableLiveData<ListDataUiState<AriticleResponse>>()
+    var publicDataLiveData= MutableLiveData<ListDataUiState<ArticleResponse>>()
     fun getPublicTitle(){
         request(
             block = {
@@ -31,7 +31,7 @@ class WechatViewModel:BaseViewModel() {
             error = {
                 val listDataUiState=ListDataUiState(
                     isSuccess = false,
-                    errorMsg= it.errorMsg,
+                    errorMsg = it.errorMsg,
                     listData = arrayListOf<ClassifyResponse>()
                 )
                 publicLiveData.value=listDataUiState
@@ -49,7 +49,7 @@ class WechatViewModel:BaseViewModel() {
             },
             success = {
                 pageNo++
-                 val listDataUiState=ListDataUiState<AriticleResponse>(
+                 val listDataUiState=ListDataUiState<ArticleResponse>(
                      isSuccess = true,
                      isRefresh = isRefresh,
                      isEmpty = it.getResponseData().datas.isEmpty(),
@@ -62,9 +62,9 @@ class WechatViewModel:BaseViewModel() {
             error = {
                 val listDataUiState=ListDataUiState(
                     isSuccess = false,
-                    errorMsg= it.errorMsg,
+                    errorMsg = it.errorMsg,
                     isRefresh = isRefresh,
-                    listData = arrayListOf<AriticleResponse>()
+                    listData = arrayListOf<ArticleResponse>()
                 )
                 publicDataLiveData.value=listDataUiState
 
