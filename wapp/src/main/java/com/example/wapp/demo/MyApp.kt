@@ -2,6 +2,9 @@ package com.example.wapp.demo
 
 import android.app.Application
 import android.content.Context
+import android.os.Handler
+import android.os.Looper
+import com.blankj.utilcode.util.Utils
 import com.example.wapp.demo.hxchat.UserActivityLifecycleCallbacks
 import com.example.wapp.demo.loadcallback.ErrorCallback
 import com.hyphenate.chat.EMClient
@@ -17,17 +20,21 @@ import me.hgj.jetpackmvvm.demo.app.weight.loadCallBack.*
  * Created by jsxiaoshui on 2021/8/17
  */
 class MyApp : Application() {
-     val mLifecycleCallbacks: UserActivityLifecycleCallbacks = UserActivityLifecycleCallbacks()
+    val mLifecycleCallbacks: UserActivityLifecycleCallbacks = UserActivityLifecycleCallbacks()
     var isSDKInit = false //SDK是否初始化
+
     companion object{
         lateinit var instance :MyApp
+        lateinit var  mHandler:Handler
     }
     override fun onCreate() {
         super.onCreate()
+        mHandler= Handler(Looper.getMainLooper())
         instance=this
         MMKV.initialize(filesDir.absolutePath+"/mmkv")
         initLoadSir()
         initHx()
+        Utils.init(this)  //blankj.utilcode
     }
 
     private fun initLoadSir() {
@@ -41,7 +48,6 @@ class MyApp : Application() {
             .addCallback(EmptyCallback2())
             //.setDefaultCallback(LoadingCallback::class.java)//设置默认加载状态页
             .commit()
-
     }
 
     private fun initHx(){

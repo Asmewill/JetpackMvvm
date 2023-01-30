@@ -115,7 +115,7 @@ class ImageGridViewModel:BaseViewModel() {
                     isSuccess = true,
                     listData = tempList
                 )
-                Utils.runOnUiThread{
+                MyApp.mHandler.post {
                     videoLiveData.value=listDataUiState
                 }
             }

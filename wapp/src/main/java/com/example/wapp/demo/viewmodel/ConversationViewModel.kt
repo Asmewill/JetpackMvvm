@@ -64,7 +64,7 @@ class ConversationViewModel:BaseViewModel() {
                             isSuccess = true,
                             listData = infoList
                         )
-                        Utils.runOnUiThread{
+                        MyApp.mHandler.post {
                             conversationLiveData.value=listDataUiState
                         }
                         // callBack.onSuccess(createLiveData(infoList))
@@ -77,7 +77,7 @@ class ConversationViewModel:BaseViewModel() {
                             errorMsg = errorMsg ,
                             listData = arrayListOf<EaseConversationInfo>()
                         )
-                        Utils.runOnUiThread{
+                        MyApp.mHandler.post {
                             conversationLiveData.value=listDataUiState
                         }
                     }
@@ -98,7 +98,7 @@ class ConversationViewModel:BaseViewModel() {
                             isSuccess = true,
                             listData = arrayListOf("")
                         )
-                        Utils.runOnUiThread{
+                        MyApp.mHandler.post {
                             addContactLiveData.value=listDataUiState
                         }
 
@@ -110,7 +110,7 @@ class ConversationViewModel:BaseViewModel() {
                             errorMsg = error,
                             listData = arrayListOf("")
                         )
-                        Utils.runOnUiThread{
+                        MyApp.mHandler.post {
                             addContactLiveData.value=listDataUiState
                         }
                     }
@@ -145,7 +145,7 @@ class ConversationViewModel:BaseViewModel() {
                     isSuccess = true,
                     listData = tempList
                 )
-                Utils.runOnUiThread{
+                MyApp.mHandler.post {
                     systemLiveData.value=listDataUiState
                 }
                 //inviteMsgObservable.setSource(MutableLiveData<T>(emMessages))
@@ -215,7 +215,7 @@ class ConversationViewModel:BaseViewModel() {
                     isSuccess = true,
                     listData = arrayListOf(message)
                 )
-                Utils.runOnUiThread{
+                MyApp.mHandler.post {
                     agreeLiveData.value=listDataUiState
                     //LiveDataBus通知
                     LiveDataBus.get().with(DemoConstant.NOTIFY_CHANGE).postValue(EaseEvent.create(DemoConstant.NOTIFY_CHANGE, EaseEvent.TYPE.NOTIFY))
@@ -228,7 +228,7 @@ class ConversationViewModel:BaseViewModel() {
                     errorMsg = e.message.toString(),
                     listData = arrayListOf("")
                 )
-                Utils.runOnUiThread{
+                MyApp.mHandler.post {
                     agreeLiveData.value=listDataUiState
                 }
             }
@@ -285,7 +285,7 @@ class ConversationViewModel:BaseViewModel() {
                     isSuccess = true,
                     listData = arrayListOf(message)
                 )
-                Utils.runOnUiThread{
+                MyApp.mHandler.post {
                     refuseLiveData.value=listDataUiState
                     //LiveDataBus通知
                     LiveDataBus.get().with(DemoConstant.NOTIFY_CHANGE).postValue(EaseEvent.create(DemoConstant.NOTIFY_CHANGE, EaseEvent.TYPE.NOTIFY))
@@ -297,7 +297,7 @@ class ConversationViewModel:BaseViewModel() {
                     errorMsg = e.message.toString(),
                     listData = arrayListOf("")
                 )
-                Utils.runOnUiThread{
+                MyApp.mHandler.post {
                     refuseLiveData.value=listDataUiState
                 }
             }
@@ -345,7 +345,7 @@ class ConversationViewModel:BaseViewModel() {
                         isSuccess = true,
                         listData = tempList
                     )
-                    Utils.runOnUiThread{
+                    MyApp.mHandler.post {
                         contactLiveData.value=listDataUiState
                     }
                 } catch (e: HyphenateException) {
@@ -355,7 +355,7 @@ class ConversationViewModel:BaseViewModel() {
                         errorMsg = e.message.toString(),
                         listData = arrayListOf<EaseUser>()
                     )
-                    Utils.runOnUiThread{
+                    MyApp.mHandler.post {
                         contactLiveData.value=listDataUiState
                     }
                 }

@@ -3,6 +3,7 @@ package com.example.wapp.demo.viewmodel
 import androidx.lifecycle.MutableLiveData
 import com.blankj.utilcode.util.Utils
 import com.example.oapp.base.BaseViewModel
+import com.example.wapp.demo.MyApp
 import com.example.wapp.demo.bean.ListDataUiState
 import com.example.wapp.demo.bean.UserInfo
 import com.example.wapp.demo.http.apiService
@@ -107,7 +108,7 @@ class LoginRegisterViewModel:BaseViewModel() {
                             isSuccess = true,
                             listData = arrayListOf<EaseUser>(user)
                         )
-                        Utils.runOnUiThread{
+                        MyApp.mHandler.post {
                             loginHxLiveData.value=listDataUiState
                         }
 
@@ -118,7 +119,7 @@ class LoginRegisterViewModel:BaseViewModel() {
                             errorMsg =error,
                             listData = arrayListOf<EaseUser>()
                         )
-                        Utils.runOnUiThread{
+                        MyApp.mHandler.post {
                             loginHxLiveData.value=listDataUiState
                         }
                     }

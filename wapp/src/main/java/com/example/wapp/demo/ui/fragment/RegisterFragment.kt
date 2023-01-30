@@ -16,12 +16,10 @@ import com.example.wapp.demo.navigation.NavHostFragment
 import com.example.wapp.demo.utils.CacheUtil
 import com.example.wapp.demo.viewmodel.EventViewModel
 import com.example.wapp.demo.viewmodel.LoginRegisterViewModel
-import com.hyphenate.chat.EMClient
+
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_register.*
-import java.lang.Exception
-import kotlin.concurrent.thread
-import com.blankj.utilcode.util.Utils.runOnUiThread as runOnUiThread1
+
 
 
 /**

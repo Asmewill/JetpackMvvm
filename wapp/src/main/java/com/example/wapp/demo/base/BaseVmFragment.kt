@@ -46,7 +46,9 @@ abstract class BaseVmFragment<VM:BaseViewModel>:Fragment() {
         createObserver()
         initData()
     }
-
+    /***
+     * 懒加载调用
+     */
     override fun onResume() {
         super.onResume()
          if(lifecycle.currentState==Lifecycle.State.STARTED&&isFirst){

@@ -113,6 +113,9 @@ class ProjectFragment:BaseVmDbFragment<ProjectViewModel,FragmentProjectBinding>(
         })
     }
 
+    /***
+     * 懒加载调用
+     */
     override fun lazyLoad() {
         super.lazyLoad()
         loadService.showCallback(LoadingCallback::class.java)

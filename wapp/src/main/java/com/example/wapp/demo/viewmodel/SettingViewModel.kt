@@ -3,6 +3,7 @@ package com.example.wapp.demo.viewmodel
 import androidx.lifecycle.MutableLiveData
 import com.blankj.utilcode.util.Utils
 import com.example.oapp.base.BaseViewModel
+import com.example.wapp.demo.MyApp
 import com.example.wapp.demo.bean.ListDataUiState
 import com.hyphenate.EMCallBack
 import com.hyphenate.chat.EMClient
@@ -21,7 +22,7 @@ class SettingViewModel:BaseViewModel(){
                             isSuccess = true,
                             listData = arrayListOf<Any>()
                         )
-                        Utils.runOnUiThread{
+                        MyApp.mHandler.post {
                             loginOutHxLiveData.value=listDataUiState
                         }
                     }
@@ -36,7 +37,7 @@ class SettingViewModel:BaseViewModel(){
                             errorMsg = error,
                             listData = arrayListOf<Any>()
                         )
-                        Utils.runOnUiThread{
+                        MyApp.mHandler.post {
                             loginOutHxLiveData.value=listDataUiState
                         }
                     }

@@ -40,8 +40,7 @@ class SplashActivity : BaseVmDbActivity<BaseViewModel, ActivitySplashBinding>() 
     //https://github.com/Blankj/AndroidUtilCode/blob/master/lib/utilcode/README-CN.md
     override fun initView() {
         mDataBind.click = ProxyClick()
-        mViewPager =
-            findViewById<BannerViewPager<SplashBean, SplashBannerAdapter.BannerViewHolder>>(R.id.banner_view)
+        mViewPager = findViewById<BannerViewPager<SplashBean, SplashBannerAdapter.BannerViewHolder>>(R.id.banner_view)
         var is_first_enter: Boolean =
             SPUtils.getInstance().getBoolean(Constant.IS_FIRST_ENTER, true)
         if (is_first_enter) {
@@ -68,7 +67,6 @@ class SplashActivity : BaseVmDbActivity<BaseViewModel, ActivitySplashBinding>() 
             Handler().postDelayed({
                 ProxyClick().toMain()
             }, 1000)
-
         }
     }
 
@@ -92,9 +90,12 @@ class SplashActivity : BaseVmDbActivity<BaseViewModel, ActivitySplashBinding>() 
         val mesList = mutableListOf("在这里\n你可以听到周围人的心声", "在这里\nTA会在下一秒遇见你", "在这里\n不再错过可以改变你一生的人")
         val drawableList = getDrawableList()
         val beanList = mutableListOf<SplashBean>()
+        //知道角标
         for (index in mesList.indices) {
             beanList.add(SplashBean(drawableList[index], mesList[index]))
         }
+
+
         return beanList
     }
 
@@ -103,6 +104,7 @@ class SplashActivity : BaseVmDbActivity<BaseViewModel, ActivitySplashBinding>() 
      */
     private fun getDrawableList(): MutableList<Int> {
         val mDrawableList = mutableListOf<Int>()
+        //0,1,2
         for (i in 0..2) {
             val drawable = resources.getIdentifier("guide$i", "drawable", packageName)
             mDrawableList.add(drawable)

@@ -82,7 +82,7 @@ class LoginFragment: BaseVmDbFragment<LoginRegisterViewModel, FragmentLoginBindi
                 EventViewModel.userInfoLiveData.value=it.listData[0]
                 NavHostFragment.findNavController(this).navigateUp()
             }else{
-                ToastUtils.showShort(it.errorMsg)
+               ToastUtils.showLong(it.errorMsg)
             }
         })
         mViewModel.loginHxLiveData.observe(mActivity, Observer {
