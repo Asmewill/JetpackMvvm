@@ -1,5 +1,4 @@
 package com.example.wapp.demo.ui
-
 import android.content.Intent
 import android.os.Handler
 import android.view.View
@@ -17,9 +16,6 @@ import com.example.wapp.demo.constant.Constant
 import com.example.wapp.demo.ext.gone
 import com.example.wapp.demo.ext.visible
 import com.zhpan.bannerview.BannerViewPager
-
-
-
 /**
  * Created by jsxiaoshui on 2021/8/17
  */

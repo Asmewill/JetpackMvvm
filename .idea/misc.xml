@@ -3,9 +3,17 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/AndroidRel/StudySpace/JetpackMvvm/app/src/main/res/layout/fragment_list.xml" value="0.3536458333333333" />
         <entry key="..\:/AndroidRel/StudySpace/JetpackMvvm/app/src/main/res/layout/fragment_main.xml" value="0.3536458333333333" />
+        <entry key="..\:/AndroidRel/StudySpace/JetpackMvvm/app/src/main/res/layout/include_recyclerview.xml" value="0.3536458333333333" />
+        <entry key="..\:/AndroidRel/StudySpace/JetpackMvvm/app/src/main/res/layout/include_toolbar.xml" value="0.3536458333333333" />
+        <entry key="..\:/AndroidRel/StudySpace/JetpackMvvm/app/src/main/res/layout/item_integral.xml" value="0.3536458333333333" />
         <entry key="..\:/AndroidRel/StudySpace/JetpackMvvm/wapp/src/main/res/drawable/item_imgselector.xml" value="0.3697916666666667" />
+        <entry key="..\:/AndroidRel/StudySpace/JetpackMvvm/wapp/src/main/res/layout/activity_main.xml" value="0.3536458333333333" />
+        <entry key="..\:/AndroidRel/StudySpace/JetpackMvvm/wapp/src/main/res/layout/activity_splash.xml" value="0.3482051282051282" />
         <entry key="..\:/AndroidRel/StudySpace/JetpackMvvm/wapp/src/main/res/layout/fragment_home.xml" value="0.3536458333333333" />
+        <entry key="..\:/AndroidRel/StudySpace/JetpackMvvm/wapp/src/main/res/layout/fragment_login.xml" value="0.3536458333333333" />
+        <entry key="..\:/AndroidRel/StudySpace/JetpackMvvm/wapp/src/main/res/layout/fragment_main.xml" value="0.3536458333333333" />
         <entry key="..\:/AndroidRel/StudySpace/JetpackMvvm/wapp/src/main/res/layout/fragment_project.xml" value="0.3494791666666667" />
         <entry key="..\:/AndroidRel/StudySpace/JetpackMvvm/wapp/src/main/res/layout/fragment_search.xml" value="0.3390625" />
         <entry key="..\:/AndroidRel/StudySpace/JetpackMvvm/wapp/src/main/res/layout/item_article.xml" value="0.3536458333333333" />

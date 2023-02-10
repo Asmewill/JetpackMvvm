@@ -38,6 +38,7 @@ class IntegralAdapter(data: ArrayList<IntegralResponse>) : BaseQuickAdapter<Inte
             holder.setText(R.id.item_integral_name, username)
             holder.setText(R.id.item_integral_count, coinCount.toString())
         }
+
     }
 }
 
