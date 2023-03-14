@@ -22,6 +22,7 @@ import com.kingja.loadsir.callback.Callback
 import com.kingja.loadsir.callback.SuccessCallback
 import com.kingja.loadsir.core.LoadSir
 import kotlinx.android.synthetic.main.fragment_home.*
+import me.hgj.jetpackmvvm.demo.app.weight.loadCallBack.EmptyCallback
 import me.hgj.jetpackmvvm.demo.app.weight.loadCallBack.LoadingCallback
 import java.lang.Exception
 
@@ -96,13 +97,11 @@ class CollectUrlFragment:BaseVmDbFragment<CollectViewModel,FragmentCollectUrlBin
             swipeRefresh.isRefreshing=false
             when(it.isSuccess){
                 true->{//请求成功
-                    if(it.response!!.getStatus()){
-                        loadService.showCallback(SuccessCallback::class.java)
+                    loadService.showCallback(SuccessCallback::class.java)
+                    if(it.response!!.getResponseData().isNotEmpty()){
                         collectUrlAdapter.setList(it.response.getResponseData())
                     }else{
-                        if(!TextUtils.isEmpty(it.response.getResponseMes())){
-                            ToastUtils.showLong(it.response.getResponseMes())
-                        }
+                        loadService.showCallback(EmptyCallback::class.java)
                     }
                 }
                 false->{//报错，异常

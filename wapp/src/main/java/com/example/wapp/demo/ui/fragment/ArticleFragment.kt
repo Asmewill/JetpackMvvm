@@ -20,6 +20,17 @@ class ArticleFragment:BaseVmDbFragment<ArticleViewModel,FragmentArticleBinding>(
         toolbar.initClose(titleStr = "我的文章",onBack={
             NavHostFragment.findNavController(this).navigateUp()
         })
+        toolbar?.run {
+            inflateMenu(R.menu.todo_menu)
+            setOnMenuItemClickListener {
+                when(it.itemId){
+                    R.id.todo_add->{
+
+                    }
+                }
+              true
+            }
+        }
 
     }
 

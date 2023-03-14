@@ -34,7 +34,6 @@ import me.hgj.jetpackmvvm.demo.app.weight.loadCallBack.LoadingCallback
  */
 class PointRecordFragment:BaseVmDbFragment<PointRecordViewModel,FragmentPointRecordBinding>() {
     private val pointRecordViewModel :PointRecordViewModel  by viewModels()
-
     private val pointRecordAdapter by lazy {
         PointRecordAdapter(this)
     }

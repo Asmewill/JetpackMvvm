@@ -124,9 +124,9 @@ fun SwipeRecyclerView.initFooter(loadMoreListener:SwipeRecyclerView.LoadMoreList
         footView.onLoading()
         loadMoreListener.onLoadMore()
     })
-     this.addFooterView(footView)
-     this.setLoadMoreView(footView)
-     this.setLoadMoreListener(loadMoreListener)
+    this.addFooterView(footView)
+    this.setLoadMoreView(footView)
+    this.setLoadMoreListener(loadMoreListener)
     return  footView
 }
 

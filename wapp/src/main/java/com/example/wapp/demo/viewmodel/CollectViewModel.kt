@@ -89,6 +89,8 @@ class CollectViewModel:BaseViewModel() {
             success = {
                 val listDataUiState=ListDataUiState<ApiPagerResponse<ArrayList<ArticleResponse>>>(
                     isSuccess = true,
+                    isEmpty = it.getResponseData().datas.isEmpty(),
+                    hasMore = it.getResponseData().hasMore(),
                     response = it
                 )
                 articleListLiveData.value=listDataUiState
@@ -111,7 +113,7 @@ class CollectViewModel:BaseViewModel() {
             },
             success = {
                 val listDataUiState=ListDataUiState<ArrayList<UrlBean>>(
-                    isSuccess = true,
+                    isSuccess = it.getStatus(),
                     response = it
                 )
                 urlListLiveData.value=listDataUiState

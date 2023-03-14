@@ -46,6 +46,9 @@
         <action
             android:id="@+id/action_Main_to_WebFragment"
             app:destination="@id/WebFragment" />
+        <action
+            android:id="@+id/action_Main_to_DemoFragment"
+            app:destination="@id/DemoFragment" />
 
     </fragment>
     <fragment
@@ -150,5 +153,14 @@
     <fragment
         android:id="@+id/PointRecordFragment"
         android:name="com.example.wapp.demo.ui.fragment.PointRecordFragment"/>
-
+    <fragment
+        android:id="@+id/DemoFragment"
+        android:name="com.example.wapp.demo.ui.fragment.DemoFragment">
+        <action
+            android:id="@+id/action_DemoFragment_to_RoomFragment"
+            app:destination="@id/RoomFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/RoomFragment"
+        android:name="com.example.wapp.demo.ui.fragment.RoomFragment"/>
 </navigation>

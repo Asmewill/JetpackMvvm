@@ -61,6 +61,19 @@ class MainFragment :BaseVmDbFragment<MainViewModel,FragmentMainBinding>() {
             }
        }
         mainBottom.interceptLongClick(R.id.menu_main, R.id.menu_project, R.id.menu_system,R.id.menu_public,R.id.menu_me)
+
+        mainBottom.let {
+
+        }
+        mainBottom.run {
+
+        }
+        mainBottom.also {
+
+        }
+        mainBottom.apply {
+
+        }
         /****
          * 收到以下各种消息通知之后，刷新消息个数
          */
@@ -150,7 +163,6 @@ class MainFragment :BaseVmDbFragment<MainViewModel,FragmentMainBinding>() {
         PermissionsManager.getInstance()
             .requestAllManifestPermissionsIfNecessary(mActivity, object : PermissionsResultAction() {
                 override fun onGranted() {
-
 
                 }
                 override fun onDenied(permission: String?) {

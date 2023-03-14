@@ -19,6 +19,9 @@ import me.hgj.jetpackmvvm.demo.app.weight.loadCallBack.*
 /**
  * Created by jsxiaoshui on 2021/8/17
  */
+
+
+
 class MyApp : Application() {
     val mLifecycleCallbacks: UserActivityLifecycleCallbacks = UserActivityLifecycleCallbacks()
     var isSDKInit = false //SDK是否初始化

@@ -27,6 +27,7 @@ import com.kingja.loadsir.core.LoadSir
 import com.yanzhenjie.recyclerview.OnItemClickListener
 import com.yanzhenjie.recyclerview.SwipeRecyclerView
 import kotlinx.android.synthetic.main.fragment_home.*
+import me.hgj.jetpackmvvm.demo.app.weight.loadCallBack.EmptyCallback
 import me.hgj.jetpackmvvm.demo.app.weight.loadCallBack.LoadingCallback
 import java.lang.Exception
 
@@ -35,7 +36,7 @@ import java.lang.Exception
  * 收藏--文章
  */
 class CollectArticleFragment: BaseVmDbFragment<CollectViewModel, FragmentCollectArticleBinding>() {
-    private var pageNo: Int=1
+    private var pageNo: Int=0
     private val collectViewModel:CollectViewModel by viewModels()
     private val collectArticleAdapter by lazy {
         CollectArticleAdapter(mutableListOf())
@@ -47,7 +48,7 @@ class CollectArticleFragment: BaseVmDbFragment<CollectViewModel, FragmentCollect
 
     override fun initView() {
         loadService= LoadSir.getDefault().register(swipeRefresh, Callback.OnReloadListener {
-            pageNo=1
+            pageNo=0
             loadService.showCallback(LoadingCallback::class.java)
             collectViewModel.collectArticleList(pageNo)
         })
@@ -122,9 +123,13 @@ class CollectArticleFragment: BaseVmDbFragment<CollectViewModel, FragmentCollect
             when(it.isSuccess){
                 true->{
                     loadService.showCallback(SuccessCallback::class.java)
-                    recyclerView.loadMoreFinish(it.response!!.getResponseData().isEmpty(),it.response!!.getResponseData().curPage<it.response!!.getResponseData().pageCount)
-                    if(it.response!!.getResponseData().curPage==0){
-                        collectArticleAdapter.setList(it.response.getResponseData().datas)
+                    recyclerView.loadMoreFinish(it.isEmpty,it.hasMore)
+                    if(it.response!!.getResponseData().curPage==1){
+                        if(it.response.getResponseData().datas.isNotEmpty()){
+                            collectArticleAdapter.setList(it.response.getResponseData().datas)
+                        }else{
+                            loadService.showCallback(EmptyCallback::class.java)
+                        }
                     }else{
                         collectArticleAdapter.addData(it.response.getResponseData().datas)
                     }
