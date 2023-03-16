@@ -39,6 +39,8 @@ class DemoFragment:BaseVmDbFragment<DemoViewModel,FragmentDemoBinding>() {
         fun roomDataBase(){
             NavHostFragment.findNavController(this@DemoFragment).navigate(R.id.action_DemoFragment_to_RoomFragment)
         }
-
+        fun toConstraintLayout(){
+            NavHostFragment.findNavController(this@DemoFragment).navigate(R.id.action_DemoFragment_to_ConstraintFragment)
+        }
     }
 }

@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <!--ConstraintLayout中可以对宽高设置比例，前提是至少有一个约束维度设置为0dp，
+        这样比例才会生效，该属性可使用两种设置：1.浮点值，表示宽度和高度之间的比率-->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:background="@color/blue">
+            <TextView
+                android:id="@+id/A"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:text="A"
+                android:gravity="center"
+                android:textSize="25sp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:background="@color/btn_pressed_green_solid"
+                app:layout_constraintDimensionRatio="1:2"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <!--
+           Chains(链)也是一个非常好用的特性，它是将许多个控件在水平或者垂直方向，形成一条链，
+           用于平衡这些控件的位置，那么如何形成一条链呢？形成一条链要求链中的控件在水平或者垂直方向，
+           首尾互相约束，这样就可以形成一条链，水平方向互相约束形成的就是一条水平链，反之则是垂直链，
+           下面看示例：
+           A、B、C，三个控件在水平方向上首尾互相约束，这样就形成了一条水平链，他们默认的模式是spread，
+           均分剩余空间，我们可以使用layout_constraintHorizontal_chainStyle和layout_constraintVertical_chainStyle
+           分别对水平和垂直链设置模式，模式可选的值有：spread、packed、spread_inside
+
+           spread（默认）：均分剩余空间
+           spread_inside：两侧的控件贴近两边，剩余的控件均分剩余空间
+           packed：所有控件贴紧居中
+           -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_marginTop="5dp"
+            android:background="@color/btn_pressed_green_solid">
+            <!-- 链头设置 app:layout_constraintHorizontal_chainStyle="spread_inside"  -->
+            <TextView
+                android:id="@+id/B"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:background="@color/blue"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/C"
+                app:layout_constraintHorizontal_chainStyle="spread"
+                android:text="B"
+                android:gravity="center"
+                android:textSize="25sp" />
+            <!--  形成一条链要求链中的控件在水平或者垂直方向，首尾互相约束  -->
+            <TextView
+                android:id="@+id/C"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:background="@color/blue"
+                app:layout_constraintLeft_toRightOf="@+id/B"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/D"
+                android:text="C"
+                android:gravity="center"
+                android:textSize="25sp" />
+            <TextView
+                android:id="@+id/D"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:background="@color/blue"
+                app:layout_constraintLeft_toRightOf="@+id/C"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:text="D"
+                android:gravity="center"
+                android:textSize="25sp" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_marginTop="5dp"
+            android:background="@color/btn_pressed_green_solid">
+            <!-- 链头设置 app:layout_constraintHorizontal_chainStyle="spread_inside"  -->
+            <TextView
+                android:id="@+id/B1"
+                android:layout_width="0dp"
+                android:layout_height="80dp"
+                android:background="@color/blue"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/C1"
+                app:layout_constraintHorizontal_weight="3"
+                android:text="B"
+                android:gravity="center"
+                android:textSize="25sp" />
+            <!--  形成一条链要求链中的控件在水平或者垂直方向，首尾互相约束  -->
+            <TextView
+                android:id="@+id/C1"
+                android:layout_width="0dp"
+                android:layout_height="80dp"
+                android:background="@color/red"
+                app:layout_constraintLeft_toRightOf="@+id/B1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/D1"
+                app:layout_constraintHorizontal_weight="2"
+                android:text="C"
+                android:gravity="center"
+                android:textSize="25sp" />
+            <TextView
+                android:id="@+id/D1"
+                android:layout_width="0dp"
+                android:layout_height="80dp"
+                android:background="@color/blue"
+                app:layout_constraintLeft_toRightOf="@+id/C1"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:text="D"
+                android:gravity="center"
+                android:textSize="25sp" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <!--Guideline是一条参考线，可以帮助开发者进行辅助定位，并且实际上它并不会真正显示在布局中，
+            像是数学几何中的辅助线一样，使用起来十分方便，出场率很高，Guideline也可以用来做一些百分
+            比分割之类的需求，有着很好的屏幕适配效果，Guideline有水平和垂直方向之分，位置可以使用针
+            对父级的百分比或者针对父级位置的距离-->
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="5dp"
+            android:background="@color/btn_pressed_green_solid">
+            <!-- Guideline（参考线）-->
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.5"/>
+            <!--上图中设置了一条水平方向位置在父级垂直方向0.5（50%）的Guideline，控件A的顶部依赖于Guideline，
+            这样无论布局如何更改，Guideline的位置始终都会是父级垂直方向50%的位置，控件A的位置也不会偏离预设-->
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="80dp"
+                android:background="@color/red"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/guideline1"
+                android:gravity="center"
+                android:text="E"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+
+</ScrollView>
+

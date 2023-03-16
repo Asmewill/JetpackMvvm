@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <!--
+        1.设置view的大小除了传统的wrap_content、指定尺寸、match_parent外，
+        ConstraintLayout还可以设置为0dp（MATCH_CONSTRAINT），
+        并且0dp的作用会根据设置的类型而产生不同的作用，
+        进行设置类型的属性是layout_constraintWidth_default
+        和layout_constraintHeight_default，取值可为spread、percent、wrap
+        2. 可以看到，view的宽度适应了所有有效的约束空间，
+        左右留出了margin的设置值50dp，这种效果就就是：
+        自身view的大小充满可以配置的剩余空间，因为左右约束的都是父布局，
+        所以view可配置的空间是整个父布局的宽度，又因为设置了margin，
+        所以会留出margin的大小，因为spread是默认值，所以可以不写
+         app:layout_constraintWidth_default="spread"-->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="@color/blue">
+            <TextView
+                android:id="@+id/C"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="50dp"
+                android:layout_marginEnd="50dp"
+                android:background="@color/btn_pressed_green_solid"
+                android:gravity="center"
+                android:text="A"
+                android:textColor="@color/black"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_default="spread" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!--百分比布局
+        percent模式的意思是自身view的尺寸是父布局尺寸的一定比例，
+        上图所展示的是宽度是父布局宽度的0.5（50%，取值是0-1的小数），
+        该模式需要配合layout_constraintWidth_percent使用，
+        但是写了layout_constraintWidth_percent后，
+        layout_constraintWidth_default="percent"
+        其实就可以省略掉了。-->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="@color/em_switch_color_checked">
+            <TextView
+                android:id="@+id/D"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:background="@color/btn_pressed_green_solid"
+                android:gravity="center"
+                android:text="A"
+                android:textColor="@color/black"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintHeight_percent="0.2" />
+            <TextView
+                android:id="@+id/E"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:background="@color/btn_pressed_green_solid"
+                android:layout_marginTop="1dp"
+                android:gravity="center"
+                android:text="B"
+                android:textColor="@color/black"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/D"
+                app:layout_constraintHeight_percent="0.8" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/em_switch_color_checked">
+            <!--  宽度设置为wrap_content  -->
+            <TextView
+                android:id="@+id/A"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:layout_marginLeft="100dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="100dp"
+                android:background="@color/btn_pressed_green_solid"
+                android:gravity="center"
+                android:text="AAAAAAAAAAAAAAAAAAAAAA"
+                android:textColor="@color/black"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                app:layout_constrainedWidth="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/B"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:layout_marginStart="100dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="100dp"
+                android:background="@color/btn_pressed_green_solid"
+                android:gravity="center"
+                android:text="AAAAAAAAAAAAAAAAAAAAAAAAA"
+                android:textColor="@color/black"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                app:layout_constrainedWidth="false"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/A" />
+            <!--  宽度设置为0dp wrap模式  -->
+            <TextView
+                android:id="@+id/G"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="100dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="100dp"
+                android:background="@color/btn_pressed_green_solid"
+                android:gravity="center"
+                android:text="BBBBBBBBBBBBBBBBBBBBBBB"
+                android:textColor="@color/black"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/B"
+                app:layout_constraintWidth_default="wrap" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+
+
+</ScrollView>
+

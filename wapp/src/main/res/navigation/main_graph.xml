@@ -159,8 +159,14 @@
         <action
             android:id="@+id/action_DemoFragment_to_RoomFragment"
             app:destination="@id/RoomFragment" />
+        <action
+            android:id="@+id/action_DemoFragment_to_ConstraintFragment"
+            app:destination="@id/ConstraintFragment" />
     </fragment>
     <fragment
         android:id="@+id/RoomFragment"
         android:name="com.example.wapp.demo.ui.fragment.RoomFragment"/>
+    <fragment
+        android:id="@+id/ConstraintFragment"
+        android:name="com.example.wapp.demo.ui.fragment.ConstraintFragment"/>
 </navigation>
