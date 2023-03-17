@@ -1,3 +1,4 @@
 rootProject.name='JetpackMvvmDemo'
 include ':app', ':JetpackMvvm'
 include ':wapp'
+include ':oapp'
