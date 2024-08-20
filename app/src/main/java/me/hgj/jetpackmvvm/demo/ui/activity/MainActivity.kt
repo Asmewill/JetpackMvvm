@@ -35,17 +35,17 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
                 if (nav.currentDestination != null && nav.currentDestination!!.id != R.id.mainfragment) {
                     //如果当前界面不是主页，那么直接调用返回即可
                     nav.navigateUp()
-                } else {
-                    //是主页
-                    if (System.currentTimeMillis() - exitTime > 2000) {
-                        ToastUtils.showShort("再按一次退出程序")
-                        exitTime = System.currentTimeMillis()
-                    } else {
-                        finish()
-                    }
-                }
+                } else
             }
-            })
+            }){
+            //是主页
+            if (System.currentTimeMillis() - exitTime > 2000) {
+                ToastUtils.showShort("再按一次退出程序")
+                exitTime = System.currentTimeMillis()
+            } else {
+                finish()
+            }
+        }
         appViewModel.appColor.value?.let {
             window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
             supportActionBar?.setBackgroundDrawable(ColorDrawable(it))

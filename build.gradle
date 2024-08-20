@@ -2,6 +2,19 @@
 buildscript {
     ext.kotlin_version = '1.7.0'
     repositories {
+        maven {
+            allowInsecureProtocol = true
+            url 'http://maven.aliyun.com/nexus/content/groups/public/'
+        }
+        maven {
+            allowInsecureProtocol = true
+            url 'http://maven.aliyun.com/nexus/content/repositories/jcenter'
+        }
+        maven {
+            allowInsecureProtocol = true
+            url 'http://maven.aliyun.com/nexus/content/repositories/google'
+        }
+
         google()
         jcenter()
         maven {
@@ -15,7 +28,7 @@ buildscript {
         maven { url 'http://developer.huawei.com/repo'} //如果需要使用华为推送HMS，则需要加上此句
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.1.1'
+        classpath "com.android.tools.build:gradle:4.0.2"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.21"
         classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
         // NOTE: Do not place your application dependencies here; they belong
@@ -25,10 +38,25 @@ buildscript {
 
 allprojects {
     repositories {
+        maven {
+            allowInsecureProtocol = true
+            url 'http://maven.aliyun.com/nexus/content/groups/public/'
+        }
+        maven {
+            allowInsecureProtocol = true
+            url 'http://maven.aliyun.com/nexus/content/repositories/jcenter'
+        }
+        maven {
+            allowInsecureProtocol = true
+            url 'http://maven.aliyun.com/nexus/content/repositories/google'
+        }
         google()
         jcenter()
         maven {
             url 'https://jitpack.io'
+        }
+        maven {
+            url 'https://dl.bintray.com/novoda-oss/snapshots/'
         }
         //环信
         mavenCentral()
