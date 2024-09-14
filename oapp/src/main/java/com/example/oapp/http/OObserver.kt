@@ -1,5 +1,7 @@
 package com.example.oapp.http
 
+import com.example.oapp.bean.HttpResult
+import com.example.oapp.bean.LoginBean
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
 
