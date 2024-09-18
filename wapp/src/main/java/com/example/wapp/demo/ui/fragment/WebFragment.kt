@@ -25,7 +25,6 @@ import com.example.wapp.demo.utils.CacheUtil
 import com.example.wapp.demo.viewmodel.CollectViewModel
 import com.hyphenate.easeui.widget.EaseAlertDialog
 import com.just.agentweb.AgentWeb
-import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_web.*
 
 /**

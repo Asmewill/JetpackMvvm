@@ -17,7 +17,7 @@ import com.example.wapp.demo.utils.CacheUtil
 import com.example.wapp.demo.viewmodel.EventViewModel
 import com.example.wapp.demo.viewmodel.LoginRegisterViewModel
 
-import kotlinx.android.synthetic.main.fragment_home.*
+
 import kotlinx.android.synthetic.main.fragment_register.*
 
 

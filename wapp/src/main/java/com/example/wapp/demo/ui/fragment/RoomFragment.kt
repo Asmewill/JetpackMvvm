@@ -11,7 +11,6 @@ import com.example.wapp.demo.ext.nav
 import com.example.wapp.demo.room.AppDataBase
 import com.example.wapp.demo.room.User
 import com.example.wapp.demo.viewmodel.DemoViewModel
-import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_room.*
 
 /**

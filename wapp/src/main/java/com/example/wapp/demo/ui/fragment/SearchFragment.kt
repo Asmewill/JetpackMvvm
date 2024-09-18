@@ -27,7 +27,6 @@ import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayout
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
-import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_search.*
 import okhttp3.Cache
 import java.lang.Exception

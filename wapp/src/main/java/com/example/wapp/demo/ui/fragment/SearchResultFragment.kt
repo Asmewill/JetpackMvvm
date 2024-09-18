@@ -21,9 +21,7 @@ import com.kingja.loadsir.callback.SuccessCallback
 import com.kingja.loadsir.core.LoadService
 import com.kingja.loadsir.core.LoadSir
 import com.yanzhenjie.recyclerview.SwipeRecyclerView
-import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.fragment_home.floatbtn
-import kotlinx.android.synthetic.main.fragment_home.swipeRefresh
+
 import kotlinx.android.synthetic.main.fragment_search_result.*
 import me.hgj.jetpackmvvm.demo.app.weight.loadCallBack.EmptyCallback
 import com.example.wapp.demo.loadcallback.ErrorCallback
