@@ -45,7 +45,6 @@ class RoomFragment:BaseVmDbFragment<DemoViewModel,FragmentRoomBinding>() {
            var userList= AppDataBase.getInstance().userDao().getUsers().toMutableList()
             roomListAdapter.setNewInstance(userList)
         }
-
     }
 
     override fun initData() {

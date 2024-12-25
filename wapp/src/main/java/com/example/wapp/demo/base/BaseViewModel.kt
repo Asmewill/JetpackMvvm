@@ -35,6 +35,13 @@ open class BaseViewModel : ViewModel() {
                 if(isShowLoading){
                     loadingDialog.showLoading.value=loadingMsg
                 }
+                //接口定义，Retrofit从2.6.0版本开始支持协程*/
+                //我们使用 Retrofit 请求网络，我们标记 suspend 之后再协程里面直接使用，它就是异步的
+                 //其实 Retrofit 是比较特殊的情况，他的 ApiService 虽然标记了 suspend ,看起来我们是直接使用了，
+                // 但是其实内部 Retrofit 的动态代理的时候会找到你是否标记了 suspend ，然后它会对 suspend 做单独的处理 。
+                // 我不太会讲源码，大家如果有兴趣可以全局搜索一下 SuspendForResponse 类 和 awaitResponse 类，
+                // 看看 Retrofit 怎么把 suspend 转换为协程处理的,这里我就不贴 Retrofit 的源码了。
+
                 block()
             }.onSuccess {
                 success(it)

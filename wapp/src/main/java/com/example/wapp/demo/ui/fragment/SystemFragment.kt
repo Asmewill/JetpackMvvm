@@ -11,6 +11,8 @@ import com.example.wapp.R
 import com.example.wapp.databinding.FragmentSquareListBinding
 import com.example.wapp.demo.adapter.SystemAdapter
 import com.example.wapp.demo.bean.ArticleResponse
+import com.example.wapp.demo.bean.ListDataUiState
+import com.example.wapp.demo.bean.SystemResponse
 import com.example.wapp.demo.bean.enums.CollectType
 import com.example.wapp.demo.constant.Constant
 import com.example.wapp.demo.ext.nav
@@ -122,6 +124,12 @@ class SystemFragment:BaseVmDbFragment<SquareViewModel,FragmentSquareListBinding>
                 }else{
                   recyclerView.loadMoreError(0,it.errorMsg)
                 }
+            }
+        })
+
+        mViewModel.systemLiveData.observe(mActivity,object:Observer<ListDataUiState<SystemResponse>>{
+            override fun onChanged(t: ListDataUiState<SystemResponse>?) {
+
             }
         })
     }

@@ -3,6 +3,8 @@ package com.example.wapp.demo.ui.fragment
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.ToastUtils
 import com.example.oapp.base.BaseVmDbFragment
@@ -33,6 +35,10 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import me.hgj.jetpackmvvm.demo.app.weight.loadCallBack.EmptyCallback
 import com.example.wapp.demo.loadcallback.ErrorCallback
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.async
 import me.hgj.jetpackmvvm.demo.app.weight.loadCallBack.LoadingCallback
 import java.lang.Exception
 import java.util.*
@@ -40,7 +46,7 @@ import java.util.*
 /**
  * Created by jsxiaoshui on 2021/8/20
  */
-class HomeFragment : BaseVmDbFragment<HomeViewModel, FragmentHomeBinding>() {
+class HomeFragment : BaseVmDbFragment<HomeViewModel, FragmentHomeBinding>() ,CoroutineScope by MainScope() {
 
     private lateinit var footView: DefineLoadMoreView
     private lateinit var headerView:View
@@ -50,9 +56,13 @@ class HomeFragment : BaseVmDbFragment<HomeViewModel, FragmentHomeBinding>() {
 
     override fun layoutId(): Int {
         return R.layout.fragment_home
+
     }
 
     override fun initView() {
+
+
+
         //注册LoadingService
         loadService = LoadSir.getDefault().register(swipeRefresh) {
             loadService.showCallback(LoadingCallback::class.java)
@@ -168,9 +178,9 @@ class HomeFragment : BaseVmDbFragment<HomeViewModel, FragmentHomeBinding>() {
             }
         })
     }
-
+    var job1:Job? =null;
     fun testXieChengRequest(){
-        GlobalScope.launch(Dispatchers.Main) {
+         job1 =  GlobalScope.launch() {
             runCatching {
                 //login是个suspend函数
                 val result = apiService.getBanner()
@@ -180,5 +190,37 @@ class HomeFragment : BaseVmDbFragment<HomeViewModel, FragmentHomeBinding>() {
 
             }
         }
+
+        GlobalScope.async {
+
+        }
+        //在主线程上执行 (Dispatchers.Main)。
+        //使用 SupervisorJob 来管理生命周期和错误处理
+        MainScope().launch {//此协程块默认是在UI线程中启动协程
+
+        }
+        mViewModel.viewModelScope.launch(Dispatchers.Default) {
+
+        }
+        mViewModel.viewModelScope.launch(Dispatchers.Main) {
+
+        }
+
+        lifecycleScope.launch{
+
+        }
+
+        var job:Job=CoroutineScope(Dispatchers.IO).async {
+
+        }
+
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+         job1?.cancel() //取消任务
+         job1=null //清空引用，有助于避免内存泄漏
+
+    }
+
 }

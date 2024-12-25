@@ -18,7 +18,6 @@ abstract class BaseVmDbActivity<VM :BaseViewModel,DB: ViewDataBinding> :BaseVmAc
     override fun initDataBind() {
         mDataBind= DataBindingUtil.setContentView(this,layoutId())
         mDataBind.lifecycleOwner=this
-
     }
     override fun isUseDB(): Boolean {
         return true
