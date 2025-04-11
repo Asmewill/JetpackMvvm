@@ -2,6 +2,7 @@ package com.example.oapp.utils
 
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.os.Build
 import android.preference.PreferenceManager
 import androidx.core.content.ContextCompat
 import com.example.oapp.MyApp
@@ -23,7 +24,9 @@ object SettingUtil {
     }
 
     fun putNoPhotoMode(isNoPhotoMode:Boolean) {
-        setting.edit().putBoolean("switch_noPhotoMode",isNoPhotoMode).apply()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
+            setting.edit().putBoolean("switch_noPhotoMode",isNoPhotoMode).apply()
+        }
     }
 
     /**
@@ -34,7 +37,9 @@ object SettingUtil {
     }
 
     fun putShowTopArticle(isShowTop:Boolean) {
-        setting.edit().putBoolean("switch_show_top",isShowTop).apply()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
+            setting.edit().putBoolean("switch_show_top",isShowTop).apply()
+        }
     }
 
     /**
@@ -61,20 +66,26 @@ object SettingUtil {
      * 设置导航栏颜色
      */
     fun setNavBar(checked: Boolean) {
-        setting.edit().putBoolean("nav_bar", checked).apply()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
+            setting.edit().putBoolean("nav_bar", checked).apply()
+        }
     }
 
     /**
      * 设置主题颜色
      */
     fun setColor(color: Int) {
-        setting.edit().putInt("color", color).apply()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
+            setting.edit().putInt("color", color).apply()
+        }
     }
     /**
      * 设置夜间模式
      */
     fun setIsNightMode(flag: Boolean) {
-        setting.edit().putBoolean("switch_nightMode", flag).apply()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
+            setting.edit().putBoolean("switch_nightMode", flag).apply()
+        }
     }
 
     /**
@@ -96,7 +107,9 @@ object SettingUtil {
     }
 
     fun setNightStartHour(nightStartHour: String) {
-        setting.edit().putString("night_startHour", nightStartHour).apply()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
+            setting.edit().putString("night_startHour", nightStartHour).apply()
+        }
     }
 
     fun getNightStartMinute(): String {
@@ -104,7 +117,9 @@ object SettingUtil {
     }
 
     fun setNightStartMinute(nightStartMinute: String) {
-        setting.edit().putString("night_startMinute", nightStartMinute).apply()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
+            setting.edit().putString("night_startMinute", nightStartMinute).apply()
+        }
     }
 
     fun getDayStartHour(): String {
@@ -112,7 +127,9 @@ object SettingUtil {
     }
 
     fun setDayStartHour(dayStartHour: String) {
-        setting.edit().putString("day_startHour", dayStartHour).apply()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
+            setting.edit().putString("day_startHour", dayStartHour).apply()
+        }
     }
 
     fun getDayStartMinute(): String {
@@ -120,7 +137,9 @@ object SettingUtil {
     }
 
     fun setDayStartMinute(dayStartMinute: String) {
-        setting.edit().putString("day_startMinute", dayStartMinute).apply()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
+            setting.edit().putString("day_startMinute", dayStartMinute).apply()
+        }
     }
 
     /***

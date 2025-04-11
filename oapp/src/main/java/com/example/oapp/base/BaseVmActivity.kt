@@ -90,20 +90,24 @@ abstract class BaseVmActivity<VM : BaseViewModel>:AppCompatActivity() {
      * 只有Open的方法才可以被重写
      */
     open fun initColor() {
+        //获取主题色
         mThemeColor=if(!SettingUtil.getIsNightMode()){
             SettingUtil.getColor()
         }else{
             resources.getColor(R.color.colorPrimary)
         }
+        //设置状态栏主题色值
         StatusBarUtil.setColor(this,mThemeColor,0)
+        //设置ActionBar颜色为主题色
         if(this.supportActionBar!=null){
             this.supportActionBar?.setBackgroundDrawable(ColorDrawable(mThemeColor))
         }
+        //虚拟导航栏的颜色
         if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.LOLLIPOP){
             if(SettingUtil.getNavBar()){
                 window.navigationBarColor=mThemeColor
             }else{
-                window.navigationBarColor= Color.BLACK
+                window.navigationBarColor = Color.BLACK
             }
         }
     }

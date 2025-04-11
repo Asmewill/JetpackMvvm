@@ -114,7 +114,7 @@ dependencies {
     //底部bottomBar
     implementation 'com.github.ittianyu:BottomNavigationViewEx:2.0.4'
     //RevealLayout
-    implementation 'com.github.goweii:RevealLayout:1.1.1'
+    implementation 'com.github.goweii:RevealLayout:1.2.0'
     //微信开源项目，替代SP
     implementation 'com.tencent:mmkv:1.0.22'
     //轮播图
@@ -177,5 +177,8 @@ dependencies {
 //    A failure occurred while executing org.jetbrains.kotlin.gradle.internal.KaptExecution    > java.lang.reflect.InvocationTargetException (no error message)
 //    将Gradle JDK设置到版本11即可解决
     //https://blog.csdn.net/qq_27752085/article/details/121861825
+
+
+
 
 }

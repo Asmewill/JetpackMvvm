@@ -46,7 +46,7 @@ abstract  class BaseActivity :AppCompatActivity(){
      @Subscribe(threadMode = ThreadMode.MAIN)
       fun baseEvent(event:BaseEvent){
 
-     }
+      }
 
     /***
      * 只有Open的方法才可以被重写
@@ -57,10 +57,13 @@ abstract  class BaseActivity :AppCompatActivity(){
         }else{
             resources.getColor(R.color.colorPrimary)
         }
+        //状态栏颜色
         StatusBarUtil.setColor(this,mThemeColor,0)
+        //ActionBar顔色
         if(this.supportActionBar!=null){
             this.supportActionBar?.setBackgroundDrawable(ColorDrawable(mThemeColor))
         }
+        //虚拟导航栏的颜色
         if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.LOLLIPOP){
             if(SettingUtil.getNavBar()){
                 window.navigationBarColor=mThemeColor
