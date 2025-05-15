@@ -85,7 +85,7 @@ class LookInfoFragment : BaseFragment<LookInfoViewModel, FragmentLookinfoBinding
             }
             setOnItemClickListener { adapter, view, position ->
                 nav().navigateAction(R.id.action_to_webFragment, Bundle().apply {
-                    putParcelable(
+                    putSerializable(
                         "ariticleData",
                         articleAdapter.data[position - this@LookInfoFragment.recyclerView.headerCount]
                     )

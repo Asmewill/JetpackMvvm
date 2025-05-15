@@ -34,7 +34,7 @@ class SystemArrFragment : BaseFragment<TreeViewModel, FragmentSystemBinding>() {
 
     override fun initView(savedInstanceState: Bundle?)  {
         arguments?.let {
-            data = it.getParcelable("data")!!
+            data = (it.getSerializable("data") as SystemResponse?)!!
             index = it.getInt("index")
         }
         toolbar.initClose(data.name) {

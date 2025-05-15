@@ -46,11 +46,11 @@ abstract class BaseVmActivity<VM : BaseViewModel>:AppCompatActivity() {
      */
     private fun registerUiChange() {
         //显示弹窗
-        mViewModel.loadingDialog.showLoading.observeInActivity(this, Observer {
+        mViewModel.showLoadingLiveData.observeInActivity(this, Observer {
             showLoading(it)
         })
         //关闭弹窗
-        mViewModel.loadingDialog.dismissDialog.observeInActivity(this, Observer {
+        mViewModel.dismissDialogLiveData.observeInActivity(this, Observer {
             dismissLoading()
         })
     }

@@ -52,11 +52,11 @@ abstract class BaseFragment:Fragment() {
     protected fun addLoadingObserve(vararg viewModels: BaseViewModel) {
         viewModels.forEach { viewModel ->
             //显示弹窗
-            viewModel.loadingDialog.showLoading.observeInFragment(this, Observer {
+            viewModel.showLoadingLiveData.observeInFragment(this, Observer {
                 showLoading(it)
             })
             //关闭弹窗
-            viewModel.loadingDialog.dismissDialog.observeInFragment(this, Observer {
+            viewModel.dismissDialogLiveData.observeInFragment(this, Observer {
                 dismissLoading()
             })
         }

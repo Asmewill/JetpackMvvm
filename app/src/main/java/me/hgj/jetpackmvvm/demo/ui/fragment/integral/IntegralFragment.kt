@@ -47,7 +47,7 @@ class IntegralFragment : BaseFragment<IntegralViewModel, FragmentIntegralBinding
 
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.vm = mViewModel
-        rank = arguments?.getParcelable("rank")
+        rank = arguments?.getSerializable("rank") as IntegralResponse?
         rank.notNull({
             mViewModel.rank.set(rank)
         }, {
@@ -61,7 +61,7 @@ class IntegralFragment : BaseFragment<IntegralViewModel, FragmentIntegralBinding
                     R.id.integral_guize -> {
                         nav().navigateAction(R.id.action_to_webFragment,
                             Bundle().apply {
-                                putParcelable(
+                                putSerializable(
                                     "bannerdata",
                                     BannerResponse(
                                         title = "积分规则",

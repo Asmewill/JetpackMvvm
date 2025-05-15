@@ -4,12 +4,11 @@ import android.annotation.SuppressLint
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 import me.hgj.jetpackmvvm.demo.app.util.DatetimeUtil
+import java.io.Serializable
 
 /**
  * 项目分类
  */
-@SuppressLint("ParcelCreator")
-@Parcelize
 data class TodoResponse(
     var completeDate: Long,
     var completeDateStr: String,
@@ -22,7 +21,7 @@ data class TodoResponse(
     var title: String,
     var type: Int,
     var userId: Int
-) : Parcelable {
+) : Serializable {
     fun isDone(): Boolean {
         //判断是否已完成或者已过期
         return if (status == 1) {

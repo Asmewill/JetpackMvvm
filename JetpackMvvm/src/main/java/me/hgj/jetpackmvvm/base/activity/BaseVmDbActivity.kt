@@ -13,7 +13,7 @@ import me.hgj.jetpackmvvm.base.viewmodel.BaseViewModel
  */
 abstract class BaseVmDbActivity<VM : BaseViewModel, DB : ViewDataBinding> : BaseVmActivity<VM>() {
 
-    lateinit var mDatabind: DB
+    lateinit var mDatabind: DB              //ActivityTestBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         userDataBinding(true)

@@ -104,7 +104,7 @@ class MeFragment : BaseFragment<MeViewModel, FragmentMeBinding>() {
             nav().jumpByLogin {
                 it.navigateAction(R.id.action_mainfragment_to_integralFragment,
                     Bundle().apply {
-                        putParcelable("rank", rank)
+                        putSerializable("rank", rank)
                     }
                 )
             }
@@ -126,7 +126,7 @@ class MeFragment : BaseFragment<MeViewModel, FragmentMeBinding>() {
         /** 玩Android开源网站 */
         fun about() {
             nav().navigateAction(R.id.action_to_webFragment, Bundle().apply {
-                putParcelable(
+                putSerializable(
                     "bannerdata",
                     BannerResponse(
                         title = "玩Android网站",

@@ -116,7 +116,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
             }
             setOnItemClickListener { adapter, view, position ->
                 nav().navigateAction(R.id.action_to_webFragment, Bundle().apply {
-                    putParcelable(
+                    putSerializable(
                         "ariticleData",
                         articleAdapter.data[position - this@HomeFragment.recyclerView.headerCount]
                     )
@@ -170,7 +170,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
                                         adapter = HomeBannerAdapter()
                                         setLifecycleRegistry(lifecycle)
                                         setOnPageClickListener {
-                                            nav().navigateAction(R.id.action_to_webFragment, Bundle().apply {putParcelable("bannerdata", data[it])})
+                                            nav().navigateAction(R.id.action_to_webFragment, Bundle().apply {putSerializable("bannerdata", data[it])})
                                         }
                                         create(data)
                                     }

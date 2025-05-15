@@ -13,14 +13,9 @@ import kotlinx.coroutines.withContext
  * Created by jsxiaoshui on 2021/7/22
  */
 open class BaseViewModel:ViewModel() {
+    val showLoadingLiveData by lazy { UnPeekLiveData<String>() }
+    val dismissDialogLiveData by lazy { UnPeekLiveData<String>() }
 
-
-     val loadingDialog by lazy { UILoading() }
-
-     inner class UILoading{
-         val showLoading by lazy { UnPeekLiveData<String>() }
-         val dismissDialog by lazy { UnPeekLiveData<String>() }
-     }
      //高阶函数
     fun <T> request(
         block: suspend () -> HttpResult<T>,
@@ -33,14 +28,14 @@ open class BaseViewModel:ViewModel() {
         return viewModelScope.launch {
             runCatching  {
                 if(isShowDialog){
-                  loadingDialog.showLoading.value=loadingMessage
+                    showLoadingLiveData.value=loadingMessage
                 }
                 block()
             }.onSuccess {
-                loadingDialog.dismissDialog.value="close"
+                dismissDialogLiveData.value="close"
                 success(it)
             }.onFailure {
-                loadingDialog.dismissDialog.value="close"
+                dismissDialogLiveData.value="close"
                 error(it)
             }
         }

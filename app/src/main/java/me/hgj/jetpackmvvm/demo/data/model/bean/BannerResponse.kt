@@ -3,12 +3,12 @@ package me.hgj.jetpackmvvm.demo.data.model.bean
 import android.annotation.SuppressLint
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
+import java.io.Serializable
 
 /**
  * 轮播图
  */
-@SuppressLint("ParcelCreator")
-@Parcelize
+
 data class BannerResponse(
     var desc: String = "",
     var id: Int = 0,
@@ -18,6 +18,6 @@ data class BannerResponse(
     var title: String = "",
     var type: Int = 0,
     var url: String = ""
-) : Parcelable
+) : Serializable
 
 

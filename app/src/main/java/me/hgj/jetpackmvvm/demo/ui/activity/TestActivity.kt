@@ -38,7 +38,6 @@ class TestActivity : BaseActivity<BaseViewModel, ActivityTestBinding>() {
                 "海王收到了点击事件，并准备发一个红包".logd()
             }
         }
-
     }
 
     override fun createObserver() {

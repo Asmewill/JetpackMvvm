@@ -52,39 +52,49 @@ class WebFragment : BaseFragment<WebViewModel, FragmentWebBinding>() {
         setHasOptionsMenu(true)
         arguments?.run {
             //点击文章进来的
-            getParcelable<AriticleResponse>("ariticleData")?.let {
-                mViewModel.ariticleId = it.id
-                mViewModel.showTitle = it.title
-                mViewModel.collect = it.collect
-                mViewModel.url = it.link
-                mViewModel.collectType = CollectType.Ariticle.type
+            getSerializable("ariticleData")?.let {
+                (it as me.hgj.jetpackmvvm.demo.data.model.bean.AriticleResponse).let {
+                    mViewModel.ariticleId = it.id
+                    mViewModel.showTitle = it.title
+                    mViewModel.collect = it.collect
+                    mViewModel.url = it.link
+                    mViewModel.collectType = CollectType.Ariticle.type
+                }
             }
+
             //点击首页轮播图进来的
-            getParcelable<BannerResponse>("bannerdata")?.let {
-                mViewModel.ariticleId = it.id
-                mViewModel.showTitle = it.title
-                //从首页轮播图 没法判断是否已经收藏过，所以直接默认没有收藏
-                mViewModel.collect = false
-                mViewModel.url = it.url
-                mViewModel.collectType = CollectType.Url.type
+            getSerializable("bannerdata")?.let {
+                (it as BannerResponse).let {
+                    mViewModel.ariticleId = it.id
+                    mViewModel.showTitle = it.title
+                    //从首页轮播图 没法判断是否已经收藏过，所以直接默认没有收藏
+                    mViewModel.collect = false
+                    mViewModel.url = it.url
+                    mViewModel.collectType = CollectType.Url.type
+                }
+
             }
             //从收藏文章列表点进来的
-            getParcelable<CollectResponse>("collect")?.let {
-                mViewModel.ariticleId = it.originId
-                mViewModel.showTitle = it.title
-                //从收藏列表过来的，肯定 是 true 了
-                mViewModel.collect = true
-                mViewModel.url = it.link
-                mViewModel.collectType = CollectType.Ariticle.type
+            getSerializable("collect") ?.let {
+                (it as CollectResponse).let {
+                    mViewModel.ariticleId = it.originId
+                    mViewModel.showTitle = it.title
+                    //从收藏列表过来的，肯定 是 true 了
+                    mViewModel.collect = true
+                    mViewModel.url = it.link
+                    mViewModel.collectType = CollectType.Ariticle.type
+                }
             }
             //点击收藏网址列表进来的
-            getParcelable<CollectUrlResponse>("collectUrl")?.let {
-                mViewModel.ariticleId = it.id
-                mViewModel.showTitle = it.name
-                //从收藏列表过来的，肯定 是 true 了
-                mViewModel.collect = true
-                mViewModel.url = it.link
-                mViewModel.collectType = CollectType.Url.type
+             getSerializable("collectUrl")?.let {
+                (it as CollectUrlResponse).let {
+                    mViewModel.ariticleId = it.id
+                    mViewModel.showTitle = it.name
+                    //从收藏列表过来的，肯定 是 true 了
+                    mViewModel.collect = true
+                    mViewModel.url = it.link
+                    mViewModel.collectType = CollectType.Url.type
+                }
             }
         }
         toolbar.run {

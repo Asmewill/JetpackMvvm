@@ -188,7 +188,7 @@ class SettingFragment : PreferenceFragmentCompat(),
             )
             view?.let {
                 nav().navigateAction(R.id.action_to_webFragment, Bundle()
-                    .apply { putParcelable("bannerdata", data) })
+                    .apply { putSerializable("bannerdata", data) })
             }
             false
         }

@@ -57,7 +57,7 @@ class NavigationFragment : BaseFragment<TreeViewModel, IncludeListBinding>() {
         navigationAdapter.setNavigationAction { item, view ->
             nav().navigateAction(R.id.action_to_webFragment,
                 Bundle().apply {
-                    putParcelable("ariticleData", item)
+                    putSerializable("ariticleData", item)
                 }
             )
         }

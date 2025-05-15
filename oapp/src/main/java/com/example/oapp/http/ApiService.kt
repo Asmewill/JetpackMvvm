@@ -19,7 +19,7 @@ interface ApiService {
      *
      */
     @GET("article/top/json")
-    fun getTopArticles():Observable<HttpResult<ArrayList<HomeData.DatasBean>>>
+     fun getTopArticles():Observable<HttpResult<ArrayList<HomeData.DatasBean>>>
     /***
      *获取普通文章
      */
@@ -178,6 +178,9 @@ interface ApiService {
      */
     @GET("article/list/{page}/json")
     suspend fun getKnowledgeList(@Path("page") page: Int, @Query("cid") cid: Int): HttpResult<KnowItemListBean>
+
+    @GET("article/top/json")
+    suspend  fun getHomeList():HttpResult<ArrayList<HomeData.DatasBean>>
 
 
 }

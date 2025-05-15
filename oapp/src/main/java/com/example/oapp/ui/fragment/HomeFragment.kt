@@ -252,7 +252,7 @@ class HomeFragment : BaseFragment() {
                             if (pageNo <= 0) {//第一页
                                 loadService.showCallback(SuccessCallback::class.java)
                                 dataBean?.data?.datas?.let { beanList ->
-                                    if (topList != null && topList.size > 0) {
+                                    if (topList != null && topList.size >= 0) {
                                         topList.addAll(beanList)
                                         homeAdapter.setNewData(topList)
                                     } else {

@@ -82,7 +82,7 @@ class PlazaFragment : BaseFragment<TreeViewModel, IncludeListBinding>() {
             }
             setOnItemClickListener { _, view, position ->
                 nav().navigateAction(R.id.action_to_webFragment, Bundle().apply {
-                    putParcelable("ariticleData", articleAdapter.data[position])
+                    putSerializable("ariticleData", articleAdapter.data[position])
                 })
             }
             addChildClickViewIds(R.id.item_home_author, R.id.item_project_author)

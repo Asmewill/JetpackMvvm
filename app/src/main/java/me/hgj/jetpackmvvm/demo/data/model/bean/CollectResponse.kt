@@ -3,9 +3,9 @@ package me.hgj.jetpackmvvm.demo.data.model.bean
 import android.annotation.SuppressLint
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
+import java.io.Serializable
 
-@SuppressLint("ParcelCreator")
-@Parcelize
+
 data class CollectResponse(var chapterId: Int,
                            var author: String,
                            var chapterName: String,
@@ -21,4 +21,4 @@ data class CollectResponse(var chapterId: Int,
                            var title: String,
                            var userId: Int,
                            var visible: Int,
-                           var zan: Int):Parcelable
+                           var zan: Int):Serializable

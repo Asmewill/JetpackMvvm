@@ -61,7 +61,7 @@ class CollectUrlFragment : BaseFragment<RequestCollectViewModel, IncludeListBind
             }
             setOnItemClickListener { _, view, position ->
                 nav().navigateAction(R.id.action_to_webFragment, Bundle().apply {
-                    putParcelable("collectUrl", articleAdapter.data[position])
+                    putSerializable("collectUrl", articleAdapter.data[position])
                 })
             }
         }

@@ -81,7 +81,7 @@ class AriticleFragment : BaseFragment<AriticleViewModel, FragmentListBinding>() 
         articleAdapter.run {
             setOnItemClickListener { adapter, view, position ->
                 nav().navigateAction(R.id.action_to_webFragment, Bundle().apply {
-                    putParcelable("ariticleData", articleAdapter.data[position])
+                    putSerializable("ariticleData", articleAdapter.data[position])
                 })
             }
             addChildClickViewIds(R.id.item_share_del)

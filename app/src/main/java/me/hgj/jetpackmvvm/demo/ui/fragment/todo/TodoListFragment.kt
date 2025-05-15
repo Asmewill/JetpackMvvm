@@ -88,7 +88,7 @@ class TodoListFragment : BaseFragment<TodoViewModel, FragmentListBinding>() {
             setOnItemClickListener { _, _, position ->
                 nav().navigateAction(R.id.action_todoListFragment_to_addTodoFragment,
                     Bundle().apply {
-                        putParcelable("todo", articleAdapter.data[position])
+                        putSerializable("todo", articleAdapter.data[position])
                     })
             }
             addChildClickViewIds(R.id.item_todo_setting)
@@ -118,7 +118,7 @@ class TodoListFragment : BaseFragment<TodoViewModel, FragmentListBinding>() {
                                                 //编辑
                                                 nav().navigateAction(R.id.action_todoListFragment_to_addTodoFragment,
                                                     Bundle().apply {
-                                                        putParcelable(
+                                                        putSerializable(
                                                             "todo",
                                                             articleAdapter.data[position]
                                                         )

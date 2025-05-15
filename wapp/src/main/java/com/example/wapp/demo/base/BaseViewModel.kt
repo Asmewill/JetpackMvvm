@@ -9,6 +9,7 @@ import com.example.wapp.demo.bean.exception.AppException
 import com.example.wapp.demo.ui.fragment.LoginFragment
 import com.example.wapp.demo.utils.ExceptionHandle
 import com.hyphenate.chat.EMClient
+
 import com.kunminx.architecture.ui.callback.UnPeekLiveData
 import kotlinx.coroutines.*
 
@@ -16,12 +17,8 @@ import kotlinx.coroutines.*
  * Created by jsxiaoshui on 2021/7/22
  */
 open class BaseViewModel : ViewModel() {
-    val loadingDialog by lazy { UILoading() }
-
-    inner class UILoading {
-        val showLoading by lazy { UnPeekLiveData<String>() }
-        val dismissDialog by lazy { UnPeekLiveData<String>() }
-    }
+    val showLoadingLiveData by lazy { UnPeekLiveData<String>() }
+    val dismissDialogLiveData by lazy { UnPeekLiveData<String>() }
 
     fun <T> request(
         block: suspend () -> ApiResponse<T>,
@@ -33,7 +30,7 @@ open class BaseViewModel : ViewModel() {
         return viewModelScope.launch {
             runCatching {
                 if(isShowLoading){
-                    loadingDialog.showLoading.value=loadingMsg
+                    showLoadingLiveData.value=loadingMsg
                 }
                 //接口定义，Retrofit从2.6.0版本开始支持协程*/
                 //我们使用 Retrofit 请求网络，我们标记 suspend 之后再协程里面直接使用，它就是异步的
@@ -45,10 +42,10 @@ open class BaseViewModel : ViewModel() {
                 block()
             }.onSuccess {
                 success(it)
-                loadingDialog.dismissDialog.value="close"
+                dismissDialogLiveData.value="close"
             }.onFailure {
                 error(ExceptionHandle.handleException(it))
-                loadingDialog.dismissDialog.value="close"
+                dismissDialogLiveData.value="close"
             }
         }
     }
@@ -66,17 +63,17 @@ open class BaseViewModel : ViewModel() {
         return viewModelScope.launch {
             runCatching {
                 if(isShowLoading){
-                    loadingDialog.showLoading.value=loadingMsg
+                    dismissDialogLiveData.value=loadingMsg
                 }
                 withContext(Dispatchers.IO) {
                     block()
                 }
             }.onSuccess {
                 success()
-                loadingDialog.dismissDialog.value="close"
+                dismissDialogLiveData.value="close"
             }.onFailure {
                 error(it)
-                loadingDialog.dismissDialog.value="close"
+                dismissDialogLiveData.value="close"
             }
         }
     }

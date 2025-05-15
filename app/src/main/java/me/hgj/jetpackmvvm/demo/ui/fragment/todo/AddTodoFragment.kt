@@ -44,7 +44,7 @@ class AddTodoFragment : BaseFragment<TodoViewModel, FragmentAddtodoBinding>() {
         mDatabind.vm = mViewModel
         mDatabind.click = ProxyClick()
         arguments?.let {
-            todoResponse = it.getParcelable("todo")
+            todoResponse = it.getSerializable("todo") as TodoResponse?
             todoResponse?.let { todo ->
                 mViewModel.todoTitle.set(todo.title)
                 mViewModel.todoContent.set(todo.content)

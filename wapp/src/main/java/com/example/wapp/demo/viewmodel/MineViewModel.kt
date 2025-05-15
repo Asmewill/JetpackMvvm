@@ -10,6 +10,7 @@ import com.example.wapp.demo.utils.ColorUtil
 
 /**
  * Created by jsxiaoshui on 2021/8/20
+ *
  */
 class MineViewModel:BaseViewModel() {
     var name=ObservableField<String>("请先登录~")

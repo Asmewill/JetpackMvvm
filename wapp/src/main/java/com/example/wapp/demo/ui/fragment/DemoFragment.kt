@@ -25,6 +25,7 @@ class DemoFragment:BaseVmDbFragment<DemoViewModel,FragmentDemoBinding>() {
        toolbar.initClose(titleStr = "示例"){
            NavHostFragment.findNavController(this).navigateUp()
        }
+
     }
     override fun initData() {
         mDataBind.click=ProxyClick()

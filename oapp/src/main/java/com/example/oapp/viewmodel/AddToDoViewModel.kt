@@ -17,7 +17,7 @@ class AddToDoViewModel:BaseViewModel() {
 
     fun saveTodoPlane(type:Int, title:String, content:String, prority:String, date:String){
         request(
-            block = {HttpRetrofit.apiService.addToDo(type,title,content,date,prority)},
+            block = {    HttpRetrofit.apiService.addToDo(type,title,content,date,prority) },
             success = {
                       val listDataUiState=ListDataUiState<ToDoBean.DatasBean>(
                           dataBean =it

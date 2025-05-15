@@ -3,12 +3,12 @@ package me.hgj.jetpackmvvm.demo.data.model.bean
 import android.annotation.SuppressLint
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
+import java.io.Serializable
 
 /**
  * 积分记录
  */
-@SuppressLint("ParcelCreator")
-@Parcelize
+
 data class IntegralHistoryResponse(
         var coinCount: Int,
         var date: Long,
@@ -17,6 +17,6 @@ data class IntegralHistoryResponse(
         var type: Int,
         var reason: String,
         var userId: Int,
-        var userName: String) : Parcelable
+        var userName: String) : Serializable
 
 

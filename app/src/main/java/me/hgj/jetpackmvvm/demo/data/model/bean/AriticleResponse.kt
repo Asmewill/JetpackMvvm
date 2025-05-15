@@ -3,12 +3,11 @@ package me.hgj.jetpackmvvm.demo.data.model.bean
 import android.annotation.SuppressLint
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
+import java.io.Serializable
 
 /**
  * 文章
  */
-@SuppressLint("ParcelCreator")
-@Parcelize
 data class AriticleResponse (
     var apkLink: String,
     var author: String,//作者
@@ -34,4 +33,4 @@ data class AriticleResponse (
     var type: Int,
     var userId: Int,
     var visible: Int,
-    var zan: Int) : Parcelable
+    var zan: Int) : Serializable

@@ -60,7 +60,7 @@ class SystemFragment : BaseFragment<TreeViewModel, IncludeListBinding>() {
                 if(systemAdapter.data[position].children.isNotEmpty()){
                     nav().navigateAction(R.id.action_mainfragment_to_systemArrFragment,
                         Bundle().apply {
-                            putParcelable("data", systemAdapter.data[position])
+                            putSerializable("data", systemAdapter.data[position])
                         }
                     )
                 }
@@ -68,7 +68,7 @@ class SystemFragment : BaseFragment<TreeViewModel, IncludeListBinding>() {
             setChildClick { item: SystemResponse, view, position ->
                 nav().navigateAction(R.id.action_mainfragment_to_systemArrFragment,
                         Bundle().apply {
-                            putParcelable("data", item)
+                            putSerializable("data", item)
                             putInt("index", position)
                         }
                     )
