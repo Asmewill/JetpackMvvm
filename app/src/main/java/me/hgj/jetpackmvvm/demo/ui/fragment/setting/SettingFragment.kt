@@ -229,13 +229,23 @@ class SettingFragment : PreferenceFragmentCompat(),
         preferenceScreen.sharedPreferences.unregisterOnSharedPreferenceChangeListener(this)
     }
 
-    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         if (key == "color") {
             colorPreview?.setView()
         }
         if (key == "top") {
-            CacheUtil.setIsNeedTop(sharedPreferences.getBoolean("top", true))
+            sharedPreferences?.let {
+                CacheUtil.setIsNeedTop(it.getBoolean("top", true))
+            }
+
         }
     }
+
+//    override fun onSharedPreferenceChanged(
+//        p0: SharedPreferences?,
+//        p1: String?,
+//    ) {
+//        TODO("Not yet implemented")
+//    }
 }
 

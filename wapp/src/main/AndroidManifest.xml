@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.wapp">
+    xmlns:tools="http://schemas.android.com/tools">
     <!-- 允许程序改变网络连接状态 -->
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <!-- 从扩展存储读取权限 -->
@@ -92,6 +91,7 @@
 
     <application
         android:name=".demo.MyApp"
+        android:requestLegacyExternalStorage="true"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -101,6 +101,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".demo.ui.SplashActivity"
+            android:exported="true"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -150,7 +151,8 @@
             android:permission="android.permission.BIND_JOB_SERVICE"
             android:exported="true" />
         <!-- 声明SDK所需的receiver -->
-        <receiver android:name="com.hyphenate.chat.EMMonitorReceiver">
+        <receiver android:name="com.hyphenate.chat.EMMonitorReceiver"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.PACKAGE_REMOVED"/>
                 <data android:scheme="package"/>

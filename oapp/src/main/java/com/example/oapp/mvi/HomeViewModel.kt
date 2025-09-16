@@ -25,6 +25,8 @@ class HomeViewModel : BaseViewModel() {
             is HomeIntent.GetHomeListMore->{ //上拉
                 page++
                 getHomeList(page)
+            }else->{
+
             }
         }
     }

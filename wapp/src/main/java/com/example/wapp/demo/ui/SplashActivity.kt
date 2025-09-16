@@ -55,7 +55,7 @@ class SplashActivity : BaseVmDbActivity<BaseViewModel, ActivitySplashBinding>() 
                         }
                     }
                 })
-            }.create(getSplashBeanList())
+            }?.create(getSplashBeanList())
             SPUtils.getInstance().put(Constant.IS_FIRST_ENTER, false)
         } else {
             mDataBind.welcomeImage.visibility = View.VISIBLE

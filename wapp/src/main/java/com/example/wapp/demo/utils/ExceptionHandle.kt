@@ -6,8 +6,6 @@ import com.example.wapp.demo.bean.exception.Error
 import com.google.gson.JsonParseException
 import org.json.JSONException
 import retrofit2.HttpException
-import shark.GcRoot
-import java.lang.Exception
 import java.net.ConnectException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException

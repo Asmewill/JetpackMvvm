@@ -45,6 +45,7 @@ import java.util.Map;
 
 import me.hgj.jetpackmvvm.R;
 
+
 /**
  * Navigator that navigates through {@link FragmentTransaction fragment transactions}. Every
  * destination using this Navigator must set a valid Fragment class name with
@@ -322,7 +323,7 @@ public class FragmentNavigator extends Navigator<FragmentNavigator.Destination> 
         public void onInflate(@NonNull Context context, @NonNull AttributeSet attrs) {
             super.onInflate(context, attrs);
             TypedArray a = context.getResources().obtainAttributes(attrs,
-                    R.styleable.FragmentNavigator);
+                   R.styleable.FragmentNavigator);
             String className = a.getString(R.styleable.FragmentNavigator_android_name);
             if (className != null) {
                 setClassName(className);

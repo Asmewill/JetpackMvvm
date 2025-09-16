@@ -1,11 +1,9 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="me.hgj.jetpackmvvm" >
-
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <application>
         <provider
-            android:authorities="${applicationId}.KtxInstaller"
+            android:authorities="me.hgj.jetpackmvvm.KtxInstaller"
             android:name="me.hgj.jetpackmvvm.base.Ktx"
-            android:exported="false"/>
+            android:exported="true"/>
     </application>
 </manifest>

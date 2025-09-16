@@ -10,7 +10,6 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.WhichButton
 import com.afollestad.materialdialogs.actions.getActionButton
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
-import com.blankj.utilcode.util.ToastUtils
 import me.hgj.jetpackmvvm.demo.R
 import me.hgj.jetpackmvvm.demo.app.util.CacheUtil
 import me.hgj.jetpackmvvm.demo.app.util.SettingUtil
@@ -134,7 +133,7 @@ fun Fragment.joinQQGroup(key: String): Boolean {
         true
     } catch (e: Exception) {
         // 未安装手Q或安装的版本不支持
-        ToastUtils.showShort("未安装手机QQ或安装的版本不支持")
+      //  ToastUtils.showShort("未安装手机QQ或安装的版本不支持")
         false
     }
 }

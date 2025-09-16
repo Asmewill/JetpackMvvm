@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="me.hgj.jetpackmvvm.demo">
-
-    <uses-sdk tools:overrideLibrary="me.hgj.jetpackmvvm" />
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- IM SDK required start -->
     <!-- 允许程序振动 -->
@@ -54,11 +50,12 @@
         android:networkSecurityConfig="@xml/network_security_config"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:ignore="GoogleAppIndexingWarning,LockedOrientationActivity">
+        >
         <activity
             android:name=".ui.activity.WelcomeActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/FullscreenThemse">
+            android:theme="@style/FullscreenThemse"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -82,6 +79,13 @@
             android:name="com.tencent.bugly.beta.ui.BetaActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|locale"
             android:theme="@android:style/Theme.Translucent" />
+        <service
+            android:name="com.blankj.utilcode.util.MessengerUtils$ServerService"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="${applicationId}.messenger" />
+            </intent-filter>
+        </service>
 
         <!-- Arms 配置 -->
         <meta-data
