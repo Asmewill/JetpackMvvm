@@ -1,7 +1,9 @@
 package me.hgj.jetpackmvvm.demo.ui.adapter
 
+import android.os.Build
 import android.util.TypedValue
 import android.widget.ImageView
+import androidx.annotation.RequiresApi
 import androidx.cardview.widget.CardView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
@@ -24,6 +26,7 @@ class TodoAdapter(data: ArrayList<TodoResponse>) : BaseQuickAdapter<TodoResponse
         setAdapterAnimation(SettingUtil.getListMode())
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun convert(holder: BaseViewHolder, item: TodoResponse) {
         //赋值
         item.run {
@@ -45,7 +48,7 @@ class TodoAdapter(data: ArrayList<TodoResponse>) : BaseQuickAdapter<TodoResponse
                     //未完成
                     holder.setVisible(R.id.item_todo_status, false)
                     TypedValue().apply {
-                        context.theme.resolveAttribute(R.attr.selectableItemBackground, this, true)
+                        context.theme.resolveAttribute(androidx.preference.R.attr.selectableItemBackground, this, true)
                     }.run {
                         holder.getView<CardView>(R.id.item_todo_cardview).foreground = context.getDrawable(resourceId)
                     }

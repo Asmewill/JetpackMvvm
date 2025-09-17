@@ -1,13 +1,9 @@
 package me.hgj.jetpackmvvm.demo.ui.fragment.demo
 
 import android.os.Bundle
+import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
 import com.liulishuo.filedownloader.FileDownloader
-import kotlinx.android.synthetic.main.fragment_demo.*
-import kotlinx.android.synthetic.main.fragment_download.*
-import kotlinx.android.synthetic.main.fragment_download_library.*
-import kotlinx.android.synthetic.main.include_toolbar.*
-import kotlinx.android.synthetic.main.layout_custom_progress_dialog_view.*
 import me.hgj.jetpackmvvm.base.appContext
 import me.hgj.jetpackmvvm.demo.R
 import me.hgj.jetpackmvvm.demo.app.base.BaseFragment
@@ -33,7 +29,7 @@ class DownLoadLibraryFragment : BaseFragment<DownloadLibraryViewModel, FragmentD
         mDatabind.click = ProxyClick()
         //第三方下载库注册， 可以直接放在application里面注册
         FileDownloader.setup(appContext)
-        toolbar.initClose("三方库下载") {
+        mDatabind.root.findViewById<Toolbar>(R.id.toolbar).initClose("三方库下载") {
             nav().navigateUp()
         }
     }
@@ -47,16 +43,16 @@ class DownLoadLibraryFragment : BaseFragment<DownloadLibraryViewModel, FragmentD
                 }
                 is DownloadResultState.Progress -> {
                     //下载中
-                    downloadLibraryProgressBar.progress = it.progress
+                    mDatabind.downloadLibraryProgressBar.progress = it.progress
                     "下载中 ${it.soFarBytes}/${it.totalBytes}".logd()
-                    downloadLibraryProgress.text = "${it.progress}%"
-                    downloadLibrarySize.text = "${FileTool.bytes2kb(it.soFarBytes)}/${FileTool.bytes2kb(it.totalBytes)}"
+                    mDatabind.downloadLibraryProgress.text = "${it.progress}%"
+                    mDatabind.downloadLibrarySize.text = "${FileTool.bytes2kb(it.soFarBytes)}/${FileTool.bytes2kb(it.totalBytes)}"
                 }
                 is DownloadResultState.Success -> {
                     //下载成功
-                    downloadLibraryProgressBar.progress = 100
-                    downloadLibraryProgress.text = "100%"
-                    downloadLibrarySize.text ="${FileTool.bytes2kb(it.totalBytes)}/${FileTool.bytes2kb(it.totalBytes)}"
+                    mDatabind.downloadLibraryProgressBar.progress = 100
+                    mDatabind. downloadLibraryProgress.text = "100%"
+                    mDatabind.downloadLibrarySize.text ="${FileTool.bytes2kb(it.totalBytes)}/${FileTool.bytes2kb(it.totalBytes)}"
                     showMessage("下载成功--文件地址：${it.filePath}")
                 }
                 is DownloadResultState.Pause -> {

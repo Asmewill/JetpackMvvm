@@ -12,9 +12,6 @@ import com.afollestad.materialdialogs.list.listItems
 import com.blankj.utilcode.util.ConvertUtils
 import com.kingja.loadsir.core.LoadService
 import com.yanzhenjie.recyclerview.SwipeRecyclerView
-import kotlinx.android.synthetic.main.include_list.*
-import kotlinx.android.synthetic.main.include_recyclerview.*
-import kotlinx.android.synthetic.main.include_toolbar.*
 import me.hgj.jetpackmvvm.demo.R
 import me.hgj.jetpackmvvm.demo.app.base.BaseFragment
 import me.hgj.jetpackmvvm.demo.app.eventViewModel
@@ -47,7 +44,7 @@ class TodoListFragment : BaseFragment<TodoViewModel, FragmentListBinding>() {
     override fun layoutId() = R.layout.fragment_list
 
     override fun initView(savedInstanceState: Bundle?) {
-        toolbar.run {
+       mDatabind.toolbar.run {
             initClose("TODO") {
                 nav().navigateUp()
             }
@@ -62,7 +59,7 @@ class TodoListFragment : BaseFragment<TodoViewModel, FragmentListBinding>() {
             }
         }
         //状态页配置 swipeRefresh参数表示你要包裹的布局
-        loadsir = loadServiceInit(swipeRefresh) {
+        loadsir = loadServiceInit(mDatabind.swipeRefresh) {
             //点击错误重试时触发的操作
             loadsir.showLoading()
             //请求数据
@@ -70,17 +67,17 @@ class TodoListFragment : BaseFragment<TodoViewModel, FragmentListBinding>() {
         }
 
         //初始化recyclerView
-        recyclerView.init(LinearLayoutManager(context), articleAdapter).let {
+       mDatabind.recyclerView.init(LinearLayoutManager(context), articleAdapter).let {
             it.addItemDecoration(SpaceItemDecoration(0, ConvertUtils.dp2px(8f)))
             it.initFooter(SwipeRecyclerView.LoadMoreListener {
                 //触发加载更多时请求数据
                 requestViewModel.getTodoData(false)
             })
             //初始化FloatingActionButton
-            it.initFloatBtn(floatbtn)
+            it.initFloatBtn(mDatabind.floatbtn)
         }
         //初始化 SwipeRefreshLayout
-        swipeRefresh.init {
+        mDatabind.swipeRefresh.init {
             //触发刷新监听时请求数据
             requestViewModel.getTodoData(true)
         }
@@ -150,7 +147,7 @@ class TodoListFragment : BaseFragment<TodoViewModel, FragmentListBinding>() {
     override fun createObserver() {
         requestViewModel.todoDataState.observe(viewLifecycleOwner, Observer {
             //设值 新写了个拓展函数，搞死了这个恶心的重复代码
-            loadListData(it, articleAdapter, loadsir, recyclerView,swipeRefresh)
+            loadListData(it, articleAdapter, loadsir, mDatabind.recyclerView,mDatabind.swipeRefresh)
         })
         requestViewModel.delDataState.observe(viewLifecycleOwner, Observer {
             if (it.isSuccess) {
@@ -164,7 +161,7 @@ class TodoListFragment : BaseFragment<TodoViewModel, FragmentListBinding>() {
         })
         requestViewModel.doneDataState.observe(viewLifecycleOwner, Observer {
             if (it.isSuccess) {
-                swipeRefresh.isRefreshing = true
+                mDatabind.swipeRefresh.isRefreshing = true
                 requestViewModel.getTodoData(true)
             } else {
                 showMessage(it.errorMsg)
@@ -177,7 +174,7 @@ class TodoListFragment : BaseFragment<TodoViewModel, FragmentListBinding>() {
                 loadsir.showLoading()
             } else {
                 //有数据时，swipeRefresh 显示刷新状态
-                swipeRefresh.isRefreshing = true
+                mDatabind.swipeRefresh.isRefreshing = true
             }
             //请求数据
             requestViewModel.getTodoData(true)

@@ -1,5 +1,6 @@
 package me.hgj.jetpackmvvm.demo.app.weight.preference
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
@@ -8,6 +9,7 @@ import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.view.View
 import androidx.annotation.ColorInt
+import androidx.annotation.DimenRes
 import androidx.core.content.ContextCompat
 import com.afollestad.materialdialogs.color.R.dimen
 import com.afollestad.materialdialogs.color.R.drawable
@@ -25,10 +27,10 @@ class MyColorCircleView(
     private val strokePaint = Paint()
     private val fillPaint = Paint()
 
-    private val borderWidth = dimenPx(
-            dimen.color_circle_view_border
-    )
-
+    private val borderWidth = dimenPx(dimen.color_circle_view_border)
+    fun dimenPx(@DimenRes res: Int): Int {
+        return context.resources.getDimensionPixelSize(res)
+    }
     private var transparentGrid: Drawable? = null
 
     init {

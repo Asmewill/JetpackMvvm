@@ -1,7 +1,7 @@
 package me.hgj.jetpackmvvm.demo.ui.fragment.demo
 
 import android.os.Bundle
-import kotlinx.android.synthetic.main.include_toolbar.*
+import androidx.appcompat.widget.Toolbar
 import me.hgj.jetpackmvvm.demo.R
 import me.hgj.jetpackmvvm.demo.app.base.BaseFragment
 import me.hgj.jetpackmvvm.demo.app.ext.initClose
@@ -20,8 +20,7 @@ class DemoFragment : BaseFragment<DemoViewModel, FragmentDemoBinding>() {
 
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.click = ProxyClick()
-
-        toolbar.initClose("示例") {
+        mDatabind.root.findViewById<Toolbar>(R.id.toolbar).initClose("示例") {
             nav().navigateUp()
         }
     }

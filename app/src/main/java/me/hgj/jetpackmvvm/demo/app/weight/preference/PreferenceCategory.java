@@ -52,7 +52,7 @@ public class PreferenceCategory extends PreferenceGroup {
 
     @SuppressLint("RestrictedApi")
     public PreferenceCategory(Context context, AttributeSet attrs) {
-        this(context, attrs, TypedArrayUtils.getAttr(context, R.attr.preferenceCategoryStyle,
+        this(context, attrs, TypedArrayUtils.getAttr(context, androidx.preference.R.attr.preferenceCategoryStyle,
                 android.R.attr.preferenceCategoryStyle));
     }
 
@@ -87,7 +87,7 @@ public class PreferenceCategory extends PreferenceGroup {
             // PreferenceFragmentCompat with an AppCompat theme, and to set the category title
             // accordingly.
             final TypedValue value = new TypedValue();
-            if (!getContext().getTheme().resolveAttribute(R.attr.colorAccent, value, true)) {
+            if (!getContext().getTheme().resolveAttribute(androidx.appcompat.R.attr.colorAccent, value, true)) {
                 // Return if the attribute could not be resolved
                 return;
             }
@@ -96,7 +96,7 @@ public class PreferenceCategory extends PreferenceGroup {
                 return;
             }
             final int fallbackColor = ContextCompat.getColor(getContext(),
-                    R.color.preference_fallback_accent_color);
+                    R.color.accent);
             // If the current color is not the fallback color we hardcode in the layout XML,
             // then this has already been handled by developers and we shouldn't override the
             // color.

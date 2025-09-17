@@ -12,9 +12,6 @@ import com.kingja.loadsir.core.LoadService
 import com.kingja.loadsir.core.LoadSir
 import com.yanzhenjie.recyclerview.SwipeRecyclerView
 import com.zhpan.bannerview.BannerViewPager
-import kotlinx.android.synthetic.main.include_list.*
-import kotlinx.android.synthetic.main.include_recyclerview.*
-import kotlinx.android.synthetic.main.include_toolbar.*
 import me.hgj.jetpackmvvm.demo.R
 import me.hgj.jetpackmvvm.demo.app.appViewModel
 import me.hgj.jetpackmvvm.demo.app.base.BaseFragment
@@ -67,14 +64,14 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
 //            requestHomeViewModel.getBannerData()
 //            requestHomeViewModel.getHomeData(true)
 //        }
-        loadsir= LoadSir.getDefault().register(swipeRefresh) {
+        loadsir = LoadSir.getDefault().register(mDatabind.swipeRefresh) {
             loadsir.showLoading()
             requestHomeViewModel.getBannerData()
             requestHomeViewModel.getHomeData(true)
         }
         // loadsir.showSuccess()
         //初始化 toolbar
-        toolbar.run {
+        mDatabind.toolbar.run {
             this.init("首页")
             this.inflateMenu(R.menu.home_menu)
             setOnMenuItemClickListener {
@@ -87,11 +84,11 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
             }
         }
         //屏蔽搜索按钮的长按点击事件----【屏蔽搜索透明弹窗】
-        toolbar.findViewById<View>(R.id.home_search).setOnLongClickListener{
+        mDatabind.toolbar.findViewById<View>(R.id.home_search).setOnLongClickListener {
             true
         }
         //初始化recyclerView
-        recyclerView.init(LinearLayoutManager(context), articleAdapter).let {
+        mDatabind.recyclerView.init(LinearLayoutManager(context), articleAdapter).let {
             //因为首页要添加轮播图，所以我设置了firstNeedTop字段为false,即第一条数据不需要设置间距
             it.addItemDecoration(SpaceItemDecoration(0, ConvertUtils.dp2px(8f), false))
             //初始化footView
@@ -99,10 +96,10 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
                 requestHomeViewModel.getHomeData(false)
             })
             //初始化FloatingActionButton
-            it.initFloatBtn(floatbtn)
+            it.initFloatBtn(mDatabind.floatbtn)
         }
         //初始化 SwipeRefreshLayout
-        swipeRefresh.init {
+        mDatabind.swipeRefresh.init {
             //触发刷新监听时请求数据
             requestHomeViewModel.getHomeData(true)
         }
@@ -118,7 +115,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
                 nav().navigateAction(R.id.action_to_webFragment, Bundle().apply {
                     putSerializable(
                         "ariticleData",
-                        articleAdapter.data[position - this@HomeFragment.recyclerView.headerCount]
+                        articleAdapter.data[position - this@HomeFragment.mDatabind.recyclerView.headerCount]
                     )
                 })
             }
@@ -131,7 +128,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
                             Bundle().apply {
                                 putInt(
                                     "id",
-                                    articleAdapter.data[position - this@HomeFragment.recyclerView.headerCount].userId
+                                    articleAdapter.data[position - this@HomeFragment.mDatabind.recyclerView.headerCount].userId
                                 )
                             })
                     }
@@ -158,25 +155,42 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
             //监听首页文章列表请求的数据变化
             homeDataState.observe(viewLifecycleOwner, Observer {
                 //设值 新写了个拓展函数，搞死了这个恶心的重复代码
-                loadListData(it, articleAdapter, loadsir, recyclerView, swipeRefresh)
+                loadListData(
+                    it,
+                    articleAdapter,
+                    loadsir,
+                    mDatabind.recyclerView,
+                    mDatabind.swipeRefresh
+                )
             })
             //监听轮播图请求的数据变化
             bannerData.observe(viewLifecycleOwner, Observer { resultState ->
                 parseState(resultState, { data ->
                     //请求轮播图数据成功，添加轮播图到headview ，如果等于0说明没有添加过头部，添加一个
-                    if (recyclerView.headerCount == 0) {
-                        val headview = LayoutInflater.from(context).inflate(R.layout.include_banner, null).apply {
-                                    findViewById<BannerViewPager<BannerResponse, HomeBannerViewHolder>>(R.id.banner_view).apply {
+                    if (mDatabind.recyclerView.headerCount == 0) {
+                        val headview =
+                            LayoutInflater.from(context).inflate(R.layout.include_banner, null)
+                                .apply {
+                                    findViewById<BannerViewPager<BannerResponse, HomeBannerViewHolder>>(
+                                        R.id.banner_view
+                                    ).apply {
                                         adapter = HomeBannerAdapter()
                                         setLifecycleRegistry(lifecycle)
                                         setOnPageClickListener {
-                                            nav().navigateAction(R.id.action_to_webFragment, Bundle().apply {putSerializable("bannerdata", data[it])})
+                                            nav().navigateAction(
+                                                R.id.action_to_webFragment,
+                                                Bundle().apply {
+                                                    putSerializable(
+                                                        "bannerdata",
+                                                        data[it]
+                                                    )
+                                                })
                                         }
                                         create(data)
                                     }
                                 }
-                        recyclerView.addHeaderView(headview)
-                        recyclerView.scrollToPosition(0)
+                        mDatabind.recyclerView.addHeaderView(headview)
+                        mDatabind.recyclerView.scrollToPosition(0)
                     }
                 })
             })
@@ -217,7 +231,14 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
             })
             //监听全局的主题颜色改变
             appColor.observeInFragment(this@HomeFragment) {
-                setUiTheme(it, toolbar, floatbtn, swipeRefresh, loadsir, footView)
+                setUiTheme(
+                    it,
+                    mDatabind.toolbar,
+                    mDatabind.floatbtn,
+                    mDatabind.swipeRefresh,
+                    loadsir,
+                    footView
+                )
             }
             //监听全局的列表动画改编
             appAnimation.observeInFragment(this@HomeFragment) {

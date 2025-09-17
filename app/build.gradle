@@ -2,14 +2,13 @@ apply plugin: 'com.android.application'
 
 apply plugin: 'kotlin-android'
 
-apply plugin: 'kotlin-android-extensions'//引入该插件可直接使用xml中定义的ID
-
+//apply plugin: 'kotlin-android-extensions'//引入该插件可直接使用xml中定义的ID
+apply plugin: 'org.jetbrains.kotlin.plugin.parcelize'
 apply plugin: 'kotlin-kapt'
 
 android {
     namespace "me.hgj.jetpackmvvm.demo"
-    compileSdkVersion 34
-    buildToolsVersion "30.0.2"
+    compileSdkVersion 35
     defaultConfig {
         applicationId "me.hgj.jetpackmvvm.demo"
         minSdkVersion 21
@@ -28,9 +27,9 @@ android {
     }
 
     //使用Kotlin实验特性
-    androidExtensions {
-        experimental = true
-    }
+//    androidExtensions {
+//        experimental = true
+//    }
     buildTypes {
         debug {
             minifyEnabled false

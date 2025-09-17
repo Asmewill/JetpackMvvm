@@ -7,9 +7,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.ConvertUtils
 import com.kingja.loadsir.core.LoadService
 import com.yanzhenjie.recyclerview.SwipeRecyclerView
-import kotlinx.android.synthetic.main.include_list.*
-import kotlinx.android.synthetic.main.include_recyclerview.*
-import kotlinx.android.synthetic.main.include_toolbar.*
 import me.hgj.jetpackmvvm.demo.R
 import me.hgj.jetpackmvvm.demo.app.base.BaseFragment
 import me.hgj.jetpackmvvm.demo.app.eventViewModel
@@ -41,7 +38,7 @@ class AriticleFragment : BaseFragment<AriticleViewModel, FragmentListBinding>() 
     override fun layoutId() = R.layout.fragment_list
 
     override fun initView(savedInstanceState: Bundle?) {
-        toolbar.run {
+        mDatabind.toolbar.run {
             initClose("我分享的文章") {
                 nav().navigateUp()
             }
@@ -56,24 +53,24 @@ class AriticleFragment : BaseFragment<AriticleViewModel, FragmentListBinding>() 
             }
         }
         //状态页配置
-        loadsir = loadServiceInit(swipeRefresh) {
+        loadsir = loadServiceInit(mDatabind.swipeRefresh) {
             //点击重试时触发的操作
             loadsir.showLoading()
             requestViewModel.getShareData(true)
         }
 
         //初始化recyclerView
-        recyclerView.init(LinearLayoutManager(context), articleAdapter).let {
+       mDatabind.recyclerView.init(LinearLayoutManager(context), articleAdapter).let {
             it.addItemDecoration(SpaceItemDecoration(0, ConvertUtils.dp2px(8f)))
             it.initFooter(SwipeRecyclerView.LoadMoreListener {
                 //触发加载更多时请求数据
                 requestViewModel.getShareData(false)
             })
             //初始化FloatingActionButton
-            it.initFloatBtn(floatbtn)
+            it.initFloatBtn(mDatabind.floatbtn)
         }
         //初始化 SwipeRefreshLayout
-        swipeRefresh.init {
+        mDatabind.swipeRefresh.init {
             //触发刷新监听时请求数据
             requestViewModel.getShareData(true)
         }
@@ -109,7 +106,7 @@ class AriticleFragment : BaseFragment<AriticleViewModel, FragmentListBinding>() 
     override fun createObserver() {
         requestViewModel.shareDataState.observe(viewLifecycleOwner, Observer {
             //设值 新写了个拓展函数，搞死了这个恶心的重复代码
-            loadListData(it, articleAdapter, loadsir, recyclerView,swipeRefresh)
+            loadListData(it, articleAdapter, loadsir, mDatabind.recyclerView,mDatabind.swipeRefresh)
         })
         requestViewModel.delDataState.observe(viewLifecycleOwner, Observer {
             if (it.isSuccess) {
@@ -129,7 +126,7 @@ class AriticleFragment : BaseFragment<AriticleViewModel, FragmentListBinding>() 
                 loadsir.showLoading()
             } else {
                 //有数据时，swipeRefresh 显示刷新状态
-                swipeRefresh.isRefreshing = true
+                mDatabind.swipeRefresh.isRefreshing = true
             }
             requestViewModel.getShareData(true)
         })

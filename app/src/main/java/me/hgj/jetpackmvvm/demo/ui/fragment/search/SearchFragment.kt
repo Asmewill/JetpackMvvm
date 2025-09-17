@@ -15,8 +15,6 @@ import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
-import kotlinx.android.synthetic.main.fragment_search.*
-import kotlinx.android.synthetic.main.include_toolbar.*
 import me.hgj.jetpackmvvm.demo.R
 import me.hgj.jetpackmvvm.demo.app.appViewModel
 import me.hgj.jetpackmvvm.demo.app.base.BaseFragment
@@ -53,16 +51,16 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>() {
 
     override fun initView(savedInstanceState: Bundle?) {
         setMenu()
-        appViewModel.appColor.value?.let { setUiTheme(it, search_text1, search_text2) }
+        appViewModel.appColor.value?.let { setUiTheme(it, mDatabind.searchText1, mDatabind.searchText2) }
         //初始化搜搜历史Recyclerview
-        search_historyRv.init(LinearLayoutManager(context), historyAdapter, false)
+        mDatabind.searchHistoryRv.init(LinearLayoutManager(context), historyAdapter, false)
         //初始化热门Recyclerview
         val layoutManager = FlexboxLayoutManager(context)
         //方向 主轴为水平方向，起点在左端
         layoutManager.flexDirection = FlexDirection.ROW
         //左对齐
         layoutManager.justifyContent = JustifyContent.FLEX_START
-        search_hotRv.init(layoutManager, hotAdapter, false)
+        mDatabind.searchHotRv  .init(layoutManager, hotAdapter, false)
 
         historyAdapter.run {
             setOnItemClickListener { adapter, view, position ->
@@ -99,7 +97,7 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>() {
             }
         }
 
-        search_clear.setOnClickListener {
+       mDatabind.searchClear .setOnClickListener {
             activity?.let {
                 MaterialDialog(it)
                     .cancelable(false)
@@ -137,7 +135,7 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>() {
             })
             //监听历史数据变化
             historyData.observe(viewLifecycleOwner, Observer {
-                historyAdapter.data = it
+                historyAdapter.setList(it)
                 historyAdapter.notifyDataSetChanged()
                 CacheUtil.setSearchHistoryData(it.toJson())
 
@@ -220,7 +218,7 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>() {
 
     private fun setMenu() {
         setHasOptionsMenu(true)
-        toolbar.run {
+       mDatabind.toolbar.run {
             //设置menu 关键代码
             mActivity.setSupportActionBar(this)
             initClose{

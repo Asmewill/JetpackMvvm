@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.kingja.loadsir.core.LoadService
-import kotlinx.android.synthetic.main.include_viewpager.*
 import me.hgj.jetpackmvvm.demo.R
 import me.hgj.jetpackmvvm.demo.app.appViewModel
 import me.hgj.jetpackmvvm.demo.app.base.BaseFragment
@@ -36,16 +35,16 @@ class ProjectFragment : BaseFragment<ProjectViewModel, FragmentViewpagerBinding>
 
     override fun initView(savedInstanceState: Bundle?) {
         //状态页配置
-        loadsir = loadServiceInit(view_pager) {
+        loadsir = loadServiceInit(mDatabind.viewPager) {
             //点击重试时触发的操作
             loadsir.showLoading()
             requestProjectViewModel.getProjectTitleData()
         }
         //初始化viewpager2
-        view_pager.init(this, fragments)
+        mDatabind.viewPager.init(this, fragments)
         //初始化 magic_indicator
-        magic_indicator.bindViewPager2(view_pager, mDataList)
-        appViewModel.appColor.value?.let { setUiTheme(it, viewpager_linear, loadsir) }
+        mDatabind.magicIndicator.bindViewPager2( mDatabind.viewPager, mDataList)
+        appViewModel.appColor.value?.let { setUiTheme(it, mDatabind.viewpagerLinear, loadsir) }
     }
 
     /**
@@ -69,9 +68,9 @@ class ProjectFragment : BaseFragment<ProjectViewModel, FragmentViewpagerBinding>
                 it.forEach { classify ->
                     fragments.add(ProjectChildFragment.newInstance(classify.id, false))
                 }
-                magic_indicator.navigator.notifyDataSetChanged()
-                view_pager.adapter?.notifyDataSetChanged()
-                view_pager.offscreenPageLimit = fragments.size
+               mDatabind.magicIndicator.navigator.notifyDataSetChanged()
+               mDatabind.viewPager.adapter?.notifyDataSetChanged()
+               mDatabind.viewPager.offscreenPageLimit = fragments.size
                 loadsir.showSuccess()
             }, {
                 //请求项目标题失败
@@ -80,7 +79,7 @@ class ProjectFragment : BaseFragment<ProjectViewModel, FragmentViewpagerBinding>
             })
         })
         appViewModel.appColor.observeInFragment(this, Observer {
-            setUiTheme(it, viewpager_linear, loadsir)
+            setUiTheme(it, mDatabind.viewpagerLinear, loadsir)
         })
     }
 }

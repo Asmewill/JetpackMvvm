@@ -1,10 +1,8 @@
 package me.hgj.jetpackmvvm.demo.ui.fragment.demo
 
 import android.os.Bundle
+import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
-import com.liulishuo.filedownloader.FileDownloader
-import kotlinx.android.synthetic.main.fragment_download.*
-import kotlinx.android.synthetic.main.include_toolbar.*
 import me.hgj.jetpackmvvm.demo.R
 import me.hgj.jetpackmvvm.demo.app.base.BaseFragment
 import me.hgj.jetpackmvvm.demo.app.ext.initClose
@@ -28,7 +26,7 @@ class DownLoadFragment : BaseFragment<DownloadViewModel, FragmentDownloadBinding
 
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.click = ProxyClick()
-        toolbar.initClose("框架自带普通下载") {
+        mDatabind.root.findViewById<Toolbar>(R.id.toolbar).initClose("框架自带普通下载") {
             nav().navigateUp()
         }
     }
@@ -42,16 +40,16 @@ class DownLoadFragment : BaseFragment<DownloadViewModel, FragmentDownloadBinding
                 }
                 is DownloadResultState.Progress -> {
                     //下载中
-                    downloadProgressBar.progress = it.progress
+                    mDatabind.downloadProgressBar.progress = it.progress
                     "下载中 ${it.soFarBytes}/${it.totalBytes}".logd()
-                    downloadProgress.text = "${it.progress}%"
-                    downloadSize.text ="${FileTool.bytes2kb(it.soFarBytes)}/${FileTool.bytes2kb(it.totalBytes)}"
+                    mDatabind. downloadProgress.text = "${it.progress}%"
+                    mDatabind.downloadSize.text ="${FileTool.bytes2kb(it.soFarBytes)}/${FileTool.bytes2kb(it.totalBytes)}"
                 }
                 is DownloadResultState.Success -> {
                     //下载成功
-                    downloadProgressBar.progress = 100
-                    downloadProgress.text = "100%"
-                    downloadSize.text ="${FileTool.bytes2kb(it.totalBytes)}/${FileTool.bytes2kb(it.totalBytes)}"
+                    mDatabind.downloadProgressBar.progress = 100
+                    mDatabind. downloadProgress.text = "100%"
+                    mDatabind.downloadSize.text ="${FileTool.bytes2kb(it.totalBytes)}/${FileTool.bytes2kb(it.totalBytes)}"
                     showMessage("下载成功--文件地址：${it.filePath}")
                 }
                 is DownloadResultState.Pause -> {

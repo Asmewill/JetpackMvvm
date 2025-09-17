@@ -2,9 +2,7 @@ package me.hgj.jetpackmvvm.demo.ui.fragment.demo
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentPagerAdapter
 import androidx.fragment.app.FragmentStatePagerAdapter
-import kotlinx.android.synthetic.main.fragment_pager.*
 import me.hgj.jetpackmvvm.demo.R
 import me.hgj.jetpackmvvm.demo.app.base.BaseFragment
 import me.hgj.jetpackmvvm.demo.databinding.FragmentPagerBinding
@@ -24,7 +22,7 @@ class PagerFragment : BaseFragment<MainViewModel, FragmentPagerBinding>() {
     override fun layoutId() = R.layout.fragment_pager
 
     override fun initView(savedInstanceState: Bundle?) {
-        pagerViewpager.adapter = object : FragmentStatePagerAdapter(childFragmentManager,BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+        mDatabind. pagerViewpager.adapter = object : FragmentStatePagerAdapter(childFragmentManager,BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
             override fun getItem(position: Int): Fragment {
                 return when (position) {
                     0 -> {
@@ -46,6 +44,6 @@ class PagerFragment : BaseFragment<MainViewModel, FragmentPagerBinding>() {
                 return 5;
             }
         }
-        pagerViewpager.offscreenPageLimit = 5
+        mDatabind. pagerViewpager.offscreenPageLimit = 5
     }
 }

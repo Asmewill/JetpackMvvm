@@ -7,8 +7,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.ConvertUtils
 import com.kingja.loadsir.core.LoadService
 import com.yanzhenjie.recyclerview.SwipeRecyclerView
-import kotlinx.android.synthetic.main.include_list.*
-import kotlinx.android.synthetic.main.include_recyclerview.*
 import me.hgj.jetpackmvvm.demo.R
 import me.hgj.jetpackmvvm.demo.app.appViewModel
 import me.hgj.jetpackmvvm.demo.app.base.BaseFragment
@@ -61,13 +59,13 @@ class ProjectChildFragment : BaseFragment<ProjectViewModel, IncludeListBinding>(
             cid = it.getInt("cid")
         }
         //状态页配置
-        loadsir = loadServiceInit(swipeRefresh) {
+        loadsir = loadServiceInit(mDatabind.swipeRefresh) {
             //点击重试时触发的操作
             loadsir.showLoading()
             requestProjectViewModel.getProjectData(true, cid, isNew)
         }
         //初始化recyclerView
-        recyclerView.init(LinearLayoutManager(context), articleAdapter).let {
+       mDatabind.recyclerView.init(LinearLayoutManager(context), articleAdapter).let {
             it.addItemDecoration(SpaceItemDecoration(0, ConvertUtils.dp2px(8f)))
 
             footView = it.initFooter(SwipeRecyclerView.LoadMoreListener {
@@ -75,10 +73,10 @@ class ProjectChildFragment : BaseFragment<ProjectViewModel, IncludeListBinding>(
                 requestProjectViewModel.getProjectData(false, cid, isNew)
             })
             //初始化FloatingActionButton
-            it.initFloatBtn(floatbtn)
+            it.initFloatBtn( mDatabind.floatbtn)
         }
         //初始化 SwipeRefreshLayout
-        swipeRefresh.init {
+        mDatabind.swipeRefresh.init {
             //触发刷新监听时请求数据
             requestProjectViewModel.getProjectData(true, cid, isNew)
         }
@@ -118,7 +116,7 @@ class ProjectChildFragment : BaseFragment<ProjectViewModel, IncludeListBinding>(
     override fun createObserver() {
         requestProjectViewModel.projectDataState.observe(viewLifecycleOwner, Observer {
             //设值 新写了个拓展函数，搞死了这个恶心的重复代码
-            loadListData(it, articleAdapter, loadsir, recyclerView, swipeRefresh)
+            loadListData(it, articleAdapter, loadsir,  mDatabind.recyclerView,  mDatabind.swipeRefresh)
         })
         requestCollectViewModel.collectUiState.observe(viewLifecycleOwner, Observer {
             if (it.isSuccess) {
@@ -155,7 +153,7 @@ class ProjectChildFragment : BaseFragment<ProjectViewModel, IncludeListBinding>(
             })
             //监听全局的主题颜色改变
             appColor.observeInFragment(this@ProjectChildFragment, Observer {
-                setUiTheme(it, floatbtn, swipeRefresh, loadsir, footView)
+                setUiTheme(it,  mDatabind.floatbtn,  mDatabind.swipeRefresh, loadsir, footView)
             })
             //监听全局的列表动画改编
             appAnimation.observeInFragment(this@ProjectChildFragment, Observer {
