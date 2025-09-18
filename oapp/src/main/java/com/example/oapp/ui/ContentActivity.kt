@@ -7,6 +7,8 @@ import android.view.View
 
 import android.webkit.WebChromeClient
 import android.webkit.WebView
+import android.widget.TextView
+import androidx.appcompat.widget.Toolbar
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
@@ -17,8 +19,7 @@ import com.example.oapp.constant.Constant
 import com.example.oapp.ext.showToast
 import com.google.android.material.appbar.AppBarLayout
 import com.just.agentweb.AgentWeb
-import kotlinx.android.synthetic.main.activity_content.*
-import kotlinx.android.synthetic.main.toolbar.*
+
 
 /**
  * Created by jsxiaoshui on 2021/6/29
@@ -33,12 +34,18 @@ class ContentActivity:BaseActivity() {
     @JvmField  var url: String?=null
 
     private lateinit var agentWeb:AgentWeb
-
+    lateinit var toolbar: Toolbar
+    lateinit var tv_title: TextView
+    lateinit var cl_main:CoordinatorLayout
     override fun attachLayoutRes(): Int {
         return R.layout.activity_content
     }
 
     override fun initView() {
+        toolbar=findViewById<Toolbar>(R.id.toolbar)
+        tv_title=findViewById<TextView>(R.id.tv_title)
+        cl_main=findViewById<CoordinatorLayout>(R.id.cl_main)
+
         ARouter.getInstance().inject(this)// Start auto inject.
         toolbar?.apply {
             setSupportActionBar(this)
@@ -51,8 +58,6 @@ class ContentActivity:BaseActivity() {
                tv_title.isSelected=true
             }
         ,2000)
-
-
 
     }
 

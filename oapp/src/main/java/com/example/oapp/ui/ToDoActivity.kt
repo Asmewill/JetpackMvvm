@@ -11,8 +11,7 @@ import com.example.oapp.base.BaseViewModel
 import com.example.oapp.base.BaseVmDbActivity
 import com.example.oapp.constant.Constant
 import com.example.oapp.databinding.ActivityTodoBinding
-import kotlinx.android.synthetic.main.activity_todo.*
-import kotlinx.android.synthetic.main.toolbar.*
+
 
 
 /**
@@ -33,23 +32,23 @@ class ToDoActivity: BaseVmDbActivity<BaseViewModel, ActivityTodoBinding>() {
     }
 
     override fun initView() {
-        toolbar?.title="ToDo"
-        setSupportActionBar(toolbar)
+        mDataBind.toolbar?.title="ToDo"
+        setSupportActionBar( mDataBind.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        viewPager?.adapter=toDoPagerAdapter
-        floating_action_btn.setOnClickListener {
+        mDataBind.viewPager?.adapter=toDoPagerAdapter
+       mDataBind.floatingActionBtn.setOnClickListener {
             ARouter.getInstance().build(Constant.PagePath.COMMON)
                 .withString(Constant.PAGE_TYPE,Constant.Type.ADD_TODO_TYPE_KEY)
                 .navigation()
         }
-        bottom_navigation?.let {
+       mDataBind.bottomNavigation?.let {
             it.setOnNavigationItemSelectedListener {menuItem->
                 when(menuItem.itemId){
                     R.id.action_notodo->{
-                        viewPager.currentItem = 0
+                       mDataBind.viewPager.currentItem = 0
                     }
                     R.id.action_completed->{
-                        viewPager.currentItem = 1
+                        mDataBind.viewPager.currentItem = 1
                     }
                 }
                 return@setOnNavigationItemSelectedListener true
@@ -74,6 +73,6 @@ class ToDoActivity: BaseVmDbActivity<BaseViewModel, ActivityTodoBinding>() {
 
     override fun initColor() {
         super.initColor()
-        floating_action_btn.backgroundTintList=ColorStateList.valueOf(mThemeColor)
+        mDataBind.floatingActionBtn.backgroundTintList=ColorStateList.valueOf(mThemeColor)
     }
 }

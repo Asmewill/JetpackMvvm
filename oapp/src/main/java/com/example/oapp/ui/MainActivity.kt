@@ -9,6 +9,8 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.widget.Toolbar
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.FragmentTransaction
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
@@ -30,11 +32,11 @@ import com.example.oapp.utils.Preference
 import com.example.oapp.utils.SettingUtil
 import com.example.oapp.utils.SharedPreUtil
 import com.example.oapp.viewmodel.EventViewModel
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomnavigation.LabelVisibilityMode
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.navigation.NavigationView
 import com.google.gson.Gson
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.nav_header_main.*
-import kotlinx.android.synthetic.main.toolbar.*
 import org.greenrobot.eventbus.Subscribe
 
 /**
@@ -55,6 +57,14 @@ class MainActivity :BaseActivity() {
     private var tv_user_rank:TextView?=null
     private var iv_rank:ImageView?=null
     private var userName:String by Preference(Constant.USER_NAME_KEY,"")
+
+    lateinit var toolbar: Toolbar
+    lateinit var bottom_navigation: BottomNavigationView
+    lateinit var drawer_layout: DrawerLayout
+    lateinit var nav_view: NavigationView
+    lateinit var floating_action_btn: FloatingActionButton
+
+
     override fun attachLayoutRes(): Int {
         return R.layout.activity_main
     }
@@ -75,6 +85,11 @@ class MainActivity :BaseActivity() {
     }
 
     override fun initView() {
+        toolbar=findViewById<Toolbar>(R.id.toolbar)
+        bottom_navigation=findViewById<BottomNavigationView>(R.id.bottom_navigation)
+        drawer_layout=findViewById<DrawerLayout>(R.id.drawer_layout)
+        nav_view=findViewById<NavigationView>(R.id.nav_view)
+        floating_action_btn=findViewById<FloatingActionButton>(R.id.floating_action_btn)
 //         getSupportFragmentManager().beginTransaction()
 //            .add(R.id.container, FlutterActivity.createFragment("/"))
 //            .addToBackStack("flutter")

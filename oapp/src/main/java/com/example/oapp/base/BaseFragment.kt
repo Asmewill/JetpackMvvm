@@ -25,12 +25,14 @@ import com.example.oapp.utils.StatusBarUtil
 abstract class BaseFragment:Fragment() {
      var mThemeColor: Int=SettingUtil.getColor()
     private var loadingDialog: ProgressDialog? = null
+    lateinit var mContentView:View
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(attachlayoutRes(),null)
+        mContentView=inflater.inflate(attachlayoutRes(),null);
+        return mContentView
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -2,12 +2,12 @@ package com.example.oapp.ui
 
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.alibaba.android.arouter.launcher.ARouter
 import com.example.oapp.R
 import com.example.oapp.base.BaseActivity
 import com.example.oapp.constant.Constant
-import com.example.oapp.ext.showToast
-import kotlinx.android.synthetic.main.activity_splash.*
+
 
 
 /**
@@ -16,12 +16,14 @@ import kotlinx.android.synthetic.main.activity_splash.*
 //@Route(path = Constant.PagePath.SPLASH)
 class SplashActivity : BaseActivity() {
     lateinit var alphaAnimation:AlphaAnimation
+    lateinit var layout_splash: ConstraintLayout
 
     override fun attachLayoutRes(): Int {
         return R.layout.activity_splash
     }
 
     override fun initView() {
+        layout_splash=findViewById<ConstraintLayout>(R.id.layout_splash)
         alphaAnimation= AlphaAnimation(0.3f,1.0f)
        var backData= alphaAnimation.run {
             this.setAnimationListener(object:Animation.AnimationListener{

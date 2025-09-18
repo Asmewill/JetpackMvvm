@@ -9,7 +9,9 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
+import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.example.oapp.R
@@ -26,8 +28,7 @@ import com.example.oapp.http.OObserver
 import com.example.oapp.utils.CommonUtil
 import com.zhy.view.flowlayout.FlowLayout
 import com.zhy.view.flowlayout.TagAdapter
-import kotlinx.android.synthetic.main.activity_search.*
-import kotlinx.android.synthetic.main.toolbar_search.*
+import com.zhy.view.flowlayout.TagFlowLayout
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import org.litepal.LitePal
@@ -38,6 +39,11 @@ import org.litepal.LitePal
  */
 @Route(path = Constant.PagePath.SEARCH)
 class SearchActivity:BaseActivity() {
+    lateinit var toolbar: Toolbar
+    lateinit var hot_search_flow_layout: TagFlowLayout
+    lateinit var rv_history_search: RecyclerView
+    lateinit var search_history_clear_all_tv: TextView
+
     private val hotList: ArrayList<HotBean> by lazy {
         ArrayList<HotBean>()
     }
@@ -50,6 +56,12 @@ class SearchActivity:BaseActivity() {
     }
 
     override fun initView() {
+        toolbar=findViewById<Toolbar>(R.id.toolbar)
+        hot_search_flow_layout=findViewById<TagFlowLayout>(R.id.hot_search_flow_layout)
+        rv_history_search=findViewById<RecyclerView>(R.id.rv_history_search)
+        search_history_clear_all_tv=findViewById<TextView>(R.id.search_history_clear_all_tv)
+
+
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         hot_search_flow_layout.setOnTagClickListener { p0, p1, p2 ->

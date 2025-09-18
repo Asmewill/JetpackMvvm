@@ -1,30 +1,35 @@
 package com.example.oapp.ui
 
 import android.annotation.SuppressLint
-import android.content.ClipData
-import android.content.ClipboardManager
 import android.util.TypedValue
+import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.widget.Toolbar
 import cat.ereza.customactivityoncrash.CustomActivityOnCrash
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.oapp.R
 import com.example.oapp.base.BaseActivity
 import com.example.oapp.constant.Constant
-import kotlinx.android.synthetic.main.activity_error.*
-import kotlinx.android.synthetic.main.activity_knowledge.*
+
 
 /**
  * Created by jsxiaoshui on 2021/8/5
  */
 @Route(path = Constant.PagePath.ERROR)
 class ErrorActivity : BaseActivity() {
+    lateinit var toolbar: Toolbar
+    lateinit var errorRestart: Button
+    lateinit var errorSendError: Button
+
     override fun attachLayoutRes(): Int {
         return R.layout.activity_error
     }
 
     override fun initView() {
+        toolbar=findViewById<Toolbar>(R.id.toolbar)
+        errorRestart=findViewById<Button>(R.id.errorRestart)
+        errorSendError=findViewById<Button>(R.id.errorSendError)
         toolbar?.title = "发生错误"
         setSupportActionBar(toolbar)
         val config = CustomActivityOnCrash.getConfigFromIntent(intent)
@@ -55,7 +60,7 @@ class ErrorActivity : BaseActivity() {
             val textView = dialog.findViewById<TextView>(android.R.id.message)
             textView?.setTextSize(
                 TypedValue.COMPLEX_UNIT_PX,
-                resources.getDimension(R.dimen.customactivityoncrash_error_activity_error_details_text_size)
+                resources.getDimension(R.dimen.sp_16)
             )
 
         }

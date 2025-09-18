@@ -22,11 +22,6 @@ import com.example.oapp.viewmodel.CollectViewModel
 import com.kingja.loadsir.callback.SuccessCallback
 import com.kingja.loadsir.core.LoadService
 import com.kingja.loadsir.core.LoadSir
-import kotlinx.android.synthetic.main.activity_point_rank_list.*
-import kotlinx.android.synthetic.main.fragment_collect.*
-import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.fragment_home.recyclerView
-import kotlinx.android.synthetic.main.fragment_home.swipeRefreshLayout
 import me.hgj.jetpackmvvm.demo.app.weight.loadCallBack.*
 
 /**
@@ -57,9 +52,9 @@ class CollectFragment:BaseVmDbFragment<CollectViewModel,FragmentCollectBinding> 
 
 
     override fun initView() {
-        floating_action_btn.backgroundTintList= ColorStateList.valueOf(mThemeColor)
+        mDataBind.floatingActionBtn.backgroundTintList= ColorStateList.valueOf(mThemeColor)
         //设置ErrorCallback和EmptyCallback点击之后的回调逻辑处理
-        loadService= LoadSir.getDefault().register(swipeRefreshLayout) {
+        loadService= LoadSir.getDefault().register(mDataBind.swipeRefreshLayout) {
             loadService.showCallback(LoadingCallback2::class.java)
             pageNo=0
             mViewModel.getCollectList(pageNo)
@@ -83,7 +78,7 @@ class CollectFragment:BaseVmDbFragment<CollectViewModel,FragmentCollectBinding> 
             loading_emptyimg.setImageResource(R.drawable.ic_custom_drawable)
         }
 
-        recyclerView?.let {
+       mDataBind.recyclerView?.let {
             it.layoutManager=LinearLayoutManager(activity)
             it.adapter=collectListAdapter
         }
@@ -98,7 +93,7 @@ class CollectFragment:BaseVmDbFragment<CollectViewModel,FragmentCollectBinding> 
                    .navigation()
         }
         //下拉刷新
-        swipeRefreshLayout.setOnRefreshListener {
+        mDataBind.swipeRefreshLayout.setOnRefreshListener {
             pageNo=0
             mViewModel.getCollectList(pageNo)
         }
@@ -111,7 +106,7 @@ class CollectFragment:BaseVmDbFragment<CollectViewModel,FragmentCollectBinding> 
             pageNo++
             mViewModel.getCollectList(pageNo)
 
-        },recyclerView)
+        },mDataBind.recyclerView)
     }
 
     override fun initData() {
@@ -121,7 +116,7 @@ class CollectFragment:BaseVmDbFragment<CollectViewModel,FragmentCollectBinding> 
 
     override fun createObserver() {
         mViewModel.collectLiveData.observe(this, Observer {
-            swipeRefreshLayout?.isRefreshing=false
+            mDataBind.swipeRefreshLayout?.isRefreshing=false
             when(!it.isException){
                 true->{
                     if(it.dataBean!=null&&it.dataBean?.data?.datas!=null&&
@@ -153,7 +148,7 @@ class CollectFragment:BaseVmDbFragment<CollectViewModel,FragmentCollectBinding> 
                                 })
                             }
                             //强制停止RecycleView的滑动
-                            recyclerView?.let {
+                           mDataBind.recyclerView?.let {
                                 CommonUtil.forceStopRecycleViewScroll(it)
                             }
                         }

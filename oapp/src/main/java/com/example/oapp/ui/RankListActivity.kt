@@ -6,9 +6,11 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.oapp.R
 import com.example.oapp.adapter.RankListAdapter
@@ -24,11 +26,6 @@ import com.kingja.loadsir.callback.SuccessCallback
 import com.kingja.loadsir.core.LoadService
 import com.kingja.loadsir.core.LoadSir
 import com.kingja.loadsir.core.Transport
-import kotlinx.android.synthetic.main.activity_point_rank_list.*
-import kotlinx.android.synthetic.main.activity_point_rank_list.recyclerView
-import kotlinx.android.synthetic.main.activity_point_rank_list.swipeRefreshLayout
-import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.toolbar.*
 import me.hgj.jetpackmvvm.demo.app.weight.loadCallBack.EmptyCallback
 import me.hgj.jetpackmvvm.demo.app.weight.loadCallBack.ErrorCallback
 import me.hgj.jetpackmvvm.demo.app.weight.loadCallBack.LoadingCallback
@@ -39,9 +36,11 @@ import me.hgj.jetpackmvvm.demo.app.weight.loadCallBack.LoadingCallback2
  */
 @Route(path = Constant.PagePath.RANKLIST)
 class RankListActivity : BaseVmDbActivity<RankListViewModel, ActivityPointRankListBinding>() {
-
     var pageNo = 1
     lateinit var loadService: LoadService<Any>
+    lateinit var toolbar: Toolbar
+    lateinit var recyclerView: RecyclerView
+
     private val rankListAdapter by lazy {
         RankListAdapter()
     }
@@ -62,7 +61,7 @@ class RankListActivity : BaseVmDbActivity<RankListViewModel, ActivityPointRankLi
             recyclerView.layoutManager = LinearLayoutManager(this)
             recyclerView.adapter = rankListAdapter
         }
-        swipeRefreshLayout.setOnRefreshListener {
+        mDataBind.swipeRefreshLayout.setOnRefreshListener {
             pageNo = 1
             mViewModel.getHomeRankList(pageNo)
         }
@@ -71,7 +70,7 @@ class RankListActivity : BaseVmDbActivity<RankListViewModel, ActivityPointRankLi
             mViewModel.getHomeRankList(pageNo)
         }, recyclerView)
         //注册LoadingService
-        loadService = LoadSir.getDefault().register(swipeRefreshLayout) {
+        loadService = LoadSir.getDefault().register(mDataBind.swipeRefreshLayout) {
             loadService.showCallback(LoadingCallback2::class.java)
             pageNo = 1
             mViewModel.getHomeRankList(pageNo)
@@ -106,7 +105,7 @@ class RankListActivity : BaseVmDbActivity<RankListViewModel, ActivityPointRankLi
     override fun createObserver() {
         mViewModel.rankListLiveData.observe(this,
             Observer<ListDataUiState<PointBean>> {
-                swipeRefreshLayout?.isRefreshing = false
+                mDataBind.swipeRefreshLayout?.isRefreshing = false
                 when (!it.isException) {
                     true -> {
                         if (it.dataBean != null && it.dataBean?.data?.datas != null &&

@@ -1,5 +1,7 @@
 package com.example.oapp.ui.fragment
 
+import android.widget.LinearLayout
+import androidx.viewpager.widget.ViewPager
 import com.example.oapp.R
 import com.example.oapp.adapter.WeChatPageAdapter
 import com.example.oapp.base.BaseFragment
@@ -13,12 +15,10 @@ import com.example.oapp.http.HttpRetrofit
 import com.example.oapp.http.OObserver
 import com.example.oapp.utils.SettingUtil
 import com.example.oapp.viewmodel.EventViewModel
+import com.google.android.material.tabs.TabLayout
 import com.kingja.loadsir.callback.SuccessCallback
 import com.kingja.loadsir.core.LoadService
 import com.kingja.loadsir.core.LoadSir
-import kotlinx.android.synthetic.main.activity_setting.*
-import kotlinx.android.synthetic.main.fragment_knowledge.*
-import kotlinx.android.synthetic.main.fragment_wechat.*
 import me.hgj.jetpackmvvm.demo.app.weight.loadCallBack.ErrorCallback
 import me.hgj.jetpackmvvm.demo.app.weight.loadCallBack.LoadingCallback
 
@@ -27,11 +27,19 @@ import me.hgj.jetpackmvvm.demo.app.weight.loadCallBack.LoadingCallback
  */
 class WeChatFragment:BaseFragment() {
     lateinit var loadService: LoadService<Any>
+
+    lateinit var ll_content: LinearLayout
+    lateinit var tabLayout: TabLayout
+    lateinit var viewPager: ViewPager
+
     override fun attachlayoutRes(): Int {
         return R.layout.fragment_wechat
     }
 
     override fun initView() {
+        ll_content=mContentView.findViewById<LinearLayout>(R.id.ll_content)
+        tabLayout=mContentView.findViewById<TabLayout>(R.id.tabLayout)
+        viewPager=mContentView.findViewById<ViewPager>(R.id.viewPager)
         createObserver()
         //注册LoadingService
         loadService = LoadSir.getDefault().register(ll_content) {

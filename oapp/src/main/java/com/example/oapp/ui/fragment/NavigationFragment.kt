@@ -1,5 +1,6 @@
 package com.example.oapp.ui.fragment
 
+import android.widget.LinearLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.oapp.R
@@ -16,9 +17,7 @@ import com.example.oapp.http.OObserver
 import com.kingja.loadsir.callback.SuccessCallback
 import com.kingja.loadsir.core.LoadService
 import com.kingja.loadsir.core.LoadSir
-import kotlinx.android.synthetic.main.fragment_navigation.*
-import kotlinx.android.synthetic.main.fragment_navigation.recyclerView
-import kotlinx.android.synthetic.main.fragment_wechat_tab.*
+
 import me.hgj.jetpackmvvm.demo.app.weight.loadCallBack.ErrorCallback
 import me.hgj.jetpackmvvm.demo.app.weight.loadCallBack.LoadingCallback
 import q.rorbin.verticaltablayout.VerticalTabLayout
@@ -31,6 +30,11 @@ class NavigationFragment:BaseFragment() {
     lateinit var loadService: LoadService<Any>
     private var bScroll: Boolean=false
     private var currentPositon: Int=0
+
+    lateinit var normal_view: LinearLayout
+    lateinit var  recyclerView:RecyclerView
+    lateinit var navigation_tab_layout:VerticalTabLayout
+
     private val layoutManager by lazy {
       LinearLayoutManager(activity)
     }
@@ -42,6 +46,11 @@ class NavigationFragment:BaseFragment() {
     }
 
     override fun initView() {
+        normal_view=mContentView.findViewById<LinearLayout>(R.id.normal_view)
+        recyclerView=mContentView.findViewById<RecyclerView>(R.id.recyclerView)
+        navigation_tab_layout= mContentView.findViewById<VerticalTabLayout>(R.id.navigation_tab_layout)
+
+
         //注册LoadingService
         loadService = LoadSir.getDefault().register(normal_view) {
             loadService.showCallback(LoadingCallback::class.java)

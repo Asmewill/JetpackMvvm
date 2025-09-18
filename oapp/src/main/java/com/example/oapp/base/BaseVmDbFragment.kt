@@ -11,7 +11,7 @@ import androidx.databinding.ViewDataBinding
  * Created by jsxiaoshui on 2021/7/22
  */
 abstract  class BaseVmDbFragment<VM:BaseViewModel,DB:ViewDataBinding>:BaseVmFragment<VM>() {
-    lateinit var mDataBind: ViewDataBinding
+    lateinit var mDataBind: DB
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

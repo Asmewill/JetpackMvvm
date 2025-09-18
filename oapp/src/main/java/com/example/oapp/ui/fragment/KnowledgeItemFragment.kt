@@ -22,12 +22,6 @@ import com.example.oapp.viewmodel.KnowledgeItemViewModel
 import com.kingja.loadsir.callback.SuccessCallback
 import com.kingja.loadsir.core.LoadService
 import com.kingja.loadsir.core.LoadSir
-import kotlinx.android.synthetic.main.activity_point_rank_list.*
-import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.fragment_home.recyclerView
-import kotlinx.android.synthetic.main.fragment_home.swipeRefreshLayout
-import kotlinx.android.synthetic.main.fragment_know_tree.*
-import kotlinx.android.synthetic.main.fragment_wechat.*
 import me.hgj.jetpackmvvm.demo.app.weight.loadCallBack.EmptyCallback
 import me.hgj.jetpackmvvm.demo.app.weight.loadCallBack.ErrorCallback
 import me.hgj.jetpackmvvm.demo.app.weight.loadCallBack.LoadingCallback
@@ -65,17 +59,17 @@ class KnowledgeItemFragment: BaseVmDbFragment<KnowledgeItemViewModel, FragmentKn
 
     override fun initView() {
         //注册LoadingService
-        loadService = LoadSir.getDefault().register(swipeRefreshLayout) {
+        loadService = LoadSir.getDefault().register(mDataBind.swipeRefreshLayout) {
             loadService.showCallback(LoadingCallback::class.java)
             pageNo=0
             mViewModel.getKnowledgeItemList(pageNo,cid)
         }
         cid=arguments?.getInt(Constant.TAB_CID)?:0
-        recyclerView?.let {
+        mDataBind.recyclerView?.let {
             it.layoutManager=LinearLayoutManager(activity)
             it.adapter=knowledgeItemAdapter
         }
-        swipeRefreshLayout.setOnRefreshListener {
+        mDataBind.swipeRefreshLayout.setOnRefreshListener {
             pageNo=0
             mViewModel.getKnowledgeItemList(pageNo,cid)
         }
@@ -95,7 +89,7 @@ class KnowledgeItemFragment: BaseVmDbFragment<KnowledgeItemViewModel, FragmentKn
             pageNo++
             mViewModel.getKnowledgeItemList(pageNo,cid)
 
-        },recyclerView)
+        },mDataBind.recyclerView)
     }
 
     override fun initData() {
@@ -106,7 +100,7 @@ class KnowledgeItemFragment: BaseVmDbFragment<KnowledgeItemViewModel, FragmentKn
     override fun createObserver() {
         addLoadingObserve(collectViewModel)
         mViewModel.knowItemLiveData.observe(this) {
-            swipeRefreshLayout?.isRefreshing=false
+            mDataBind.swipeRefreshLayout?.isRefreshing=false
             when(!it.isException){
                 true->{
                     if (it.dataBean != null && it.dataBean?.data?.datas != null &&
@@ -121,7 +115,7 @@ class KnowledgeItemFragment: BaseVmDbFragment<KnowledgeItemViewModel, FragmentKn
                                 knowledgeItemAdapter.addData(beanList)
                             }
                             //强制停止RecycleView的滑动
-                            recyclerView?.let {
+                            mDataBind.recyclerView?.let {
                                 CommonUtil.forceStopRecycleViewScroll(it)
                             }
                         }

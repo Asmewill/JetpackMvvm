@@ -1,9 +1,12 @@
 package com.example.oapp.ui
 
-import android.content.Intent
 import android.text.TextUtils
 import android.view.MenuItem
 import android.view.View
+import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
+import androidx.appcompat.widget.Toolbar
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.example.oapp.R
@@ -19,11 +22,8 @@ import com.example.oapp.http.HttpRetrofit
 import com.example.oapp.http.OObserver
 import com.example.oapp.utils.DialogUtil
 import com.example.oapp.utils.Preference
-import com.example.oapp.utils.SettingUtil
-import kotlinx.android.synthetic.main.activity_login.*
-import kotlinx.android.synthetic.main.toolbar.*
 import org.greenrobot.eventbus.EventBus
-import org.jetbrains.anko.backgroundColor
+import org.jetbrains.anko.find
 
 /**
  * Created by jsxiaoshui on 2021/7/9
@@ -35,12 +35,25 @@ class LoginActivity:BaseActivity() ,View.OnClickListener{
     private val loadingDialog by lazy {
         DialogUtil.getWaitDialog(this,"登录中...")
     }
+    lateinit var toolbar: Toolbar
+    lateinit var btn_login: TextView
+    lateinit var tv_sign_up: TextView
+    lateinit var et_username: EditText
+    lateinit var et_password: EditText
 
     override fun attachLayoutRes(): Int {
         return R.layout.activity_login
     }
 
     override fun initView() {
+        toolbar=findViewById<Toolbar>(R.id.toolbar)
+        btn_login=findViewById<TextView>(R.id.btn_login)
+        tv_sign_up=findViewById<TextView>(R.id.tv_sign_up)
+        et_username=findViewById<EditText>(R.id.et_username)
+        et_password=findViewById<EditText>(R.id.et_password)
+
+
+
         toolbar?.let {
             it.title="登录"
             setSupportActionBar(it)

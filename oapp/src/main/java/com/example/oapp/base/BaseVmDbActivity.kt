@@ -2,6 +2,8 @@ package com.example.oapp.base
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.databinding.ViewDataBindingKtx
+import androidx.viewbinding.ViewBinding
 
 
 /**
@@ -17,6 +19,7 @@ abstract class BaseVmDbActivity<VM :BaseViewModel,DB: ViewDataBinding> :BaseVmAc
 
     override fun initDataBind() {
         mDataBind= DataBindingUtil.setContentView(this,layoutId())
+
         mDataBind.lifecycleOwner=this
 
     }

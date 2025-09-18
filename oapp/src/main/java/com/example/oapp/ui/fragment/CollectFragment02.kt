@@ -15,7 +15,6 @@ import com.example.oapp.databinding.FragmentCollectBinding
 import com.example.oapp.ui.ContentActivity
 import com.example.oapp.utils.CommonUtil
 import com.example.oapp.viewmodel.CollectViewModel
-import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.coroutines.*
 
 /**
@@ -45,7 +44,7 @@ class CollectFragment02:BaseVmDbFragment<CollectViewModel,FragmentCollectBinding
 
 
     override fun initView() {
-        recyclerView?.let {
+        mDataBind.recyclerView?.let {
             it.layoutManager=LinearLayoutManager(activity)
             it.adapter=collectListAdapter
         }
@@ -59,7 +58,7 @@ class CollectFragment02:BaseVmDbFragment<CollectViewModel,FragmentCollectBinding
                intent.putExtra(Constant.CONTENT_ID,item.courseId)
                startActivity(intent)
         }
-        swipeRefreshLayout.setOnRefreshListener {
+        mDataBind.swipeRefreshLayout.setOnRefreshListener {
             pageNo=0
             mViewModel.getCollectList(pageNo)
         }
@@ -86,7 +85,7 @@ class CollectFragment02:BaseVmDbFragment<CollectViewModel,FragmentCollectBinding
 
     override fun createObserver() {
         mViewModel.collectLiveData.observe(this, Observer {
-            swipeRefreshLayout?.isRefreshing=false
+            mDataBind.swipeRefreshLayout?.isRefreshing=false
             when(!it.isException){
                 true->{
                     it.dataBean?.data?.datas?.let {

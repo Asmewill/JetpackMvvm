@@ -1,5 +1,8 @@
 package com.example.oapp.ui.fragment
 
+import android.widget.LinearLayout
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import androidx.viewpager.widget.ViewPager
 import com.example.oapp.R
 import com.example.oapp.adapter.ProjectPageAdapter
 import com.example.oapp.base.BaseFragment
@@ -13,24 +16,34 @@ import com.example.oapp.http.HttpRetrofit
 import com.example.oapp.http.OObserver
 import com.example.oapp.utils.SettingUtil
 import com.example.oapp.viewmodel.EventViewModel
+import com.google.android.material.tabs.TabLayout
 import com.kingja.loadsir.callback.SuccessCallback
 import com.kingja.loadsir.core.LoadService
 import com.kingja.loadsir.core.LoadSir
-import kotlinx.android.synthetic.main.fragment_project.*
-import kotlinx.android.synthetic.main.fragment_wechat_tab.*
+
 import me.hgj.jetpackmvvm.demo.app.weight.loadCallBack.ErrorCallback
 import me.hgj.jetpackmvvm.demo.app.weight.loadCallBack.LoadingCallback
+
 
 /**
  * Created by jsxiaoshui on 2021/6/25
  */
 class ProjectFragment:BaseFragment() {
     lateinit var loadService: LoadService<Any>
+
+    lateinit  var ll_content: LinearLayout
+    lateinit var tabLayout: TabLayout
+    lateinit var viewPager: ViewPager
+    //lateinit var  swipeRefreshLayout: SwipeRefreshLayout
     override fun attachlayoutRes(): Int {
         return R.layout.fragment_project
     }
 
     override fun initView() {
+        ll_content=mContentView.findViewById<LinearLayout>(R.id.ll_content)
+        tabLayout=mContentView.findViewById<TabLayout>(R.id.tabLayout)
+        viewPager=mContentView.findViewById<ViewPager>(R.id.viewPager)
+       // swipeRefreshLayout=mContentView.findViewById<SwipeRefreshLayout>(R.id.swipeRefreshLayout)
         createObserver()
         //注册LoadingService
         loadService = LoadSir.getDefault().register(ll_content) {
@@ -55,7 +68,7 @@ class ProjectFragment:BaseFragment() {
                 tabLayout.setupWithViewPager(viewPager)
             }
             override fun onFailture(error: Throwable) {
-                swipeRefreshLayout?.isRefreshing=false
+                //swipeRefreshLayout?.isRefreshing=false
                 loadService.showCallback(ErrorCallback::class.java)
                 error?.message?.let {
                     showToast(it)

@@ -6,6 +6,8 @@ import android.os.Bundle
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.example.oapp.R
 import com.example.oapp.adapter.HomeAdapter
@@ -20,8 +22,8 @@ import com.example.oapp.http.OObserver
 import com.example.oapp.ui.ContentActivity
 import com.example.oapp.utils.CommonUtil
 import com.example.oapp.viewmodel.CollectViewModel
-import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.fragment_search_list.*
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+
 
 /**
  * Created by jsxiaoshui on 2021/7/8
@@ -30,6 +32,10 @@ class SearchListFragment:BaseFragment() {
     private val mViewModel:CollectViewModel by viewModels()
     private var pageNum:Int=0
     private var keyWord:String=""
+    lateinit var  swipeRefreshLayout: SwipeRefreshLayout
+    lateinit var  recyclerView: RecyclerView
+    lateinit var floating_action_btn: FloatingActionButton
+
     private val homeAdapter by lazy {
         HomeAdapter(mViewModel)
     }
@@ -48,6 +54,10 @@ class SearchListFragment:BaseFragment() {
     }
 
     override fun initView() {
+        swipeRefreshLayout=mContentView.findViewById<SwipeRefreshLayout>(R.id.swipeRefreshLayout)
+        recyclerView=mContentView.findViewById<RecyclerView>(R.id.recyclerView)
+        floating_action_btn.findViewById<FloatingActionButton>(R.id.floating_action_btn)
+
         floating_action_btn.backgroundTintList= ColorStateList.valueOf(mThemeColor)
         keyWord=arguments?.getString(Constant.SEARCH_KEY)!!
         recyclerView?.let {

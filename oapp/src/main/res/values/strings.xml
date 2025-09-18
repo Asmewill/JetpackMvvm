@@ -176,4 +176,13 @@
 
     <string name="nav_line_4" translatable="false">----</string>
     <string name="nav_line_2" translatable="false">--</string>
+
+    <string name="agentweb_loading" translatable="false">加载中...</string>
+
+    <string name="customactivityoncrash_error_activity_error_details_title" translatable="false">错误详情</string>
+    <string name="customactivityoncrash_error_activity_error_details_close" translatable="false">关闭</string>
+    <string name="customactivityoncrash_error_activity_error_details_copy" translatable="false">复制</string>
+
+
+
 </resources>

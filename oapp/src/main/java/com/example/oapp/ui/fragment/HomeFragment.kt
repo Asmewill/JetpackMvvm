@@ -6,6 +6,8 @@ import android.widget.ImageView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import cn.bingoogolapple.bgabanner.BGABanner
 import com.alibaba.android.arouter.launcher.ARouter
 import com.example.oapp.R
@@ -29,7 +31,7 @@ import com.example.oapp.viewmodel.EventViewModel
 import com.kingja.loadsir.callback.SuccessCallback
 import com.kingja.loadsir.core.LoadService
 import com.kingja.loadsir.core.LoadSir
-import kotlinx.android.synthetic.main.fragment_home.*
+
 import me.hgj.jetpackmvvm.demo.app.weight.loadCallBack.EmptyCallback
 import me.hgj.jetpackmvvm.demo.app.weight.loadCallBack.ErrorCallback
 import me.hgj.jetpackmvvm.demo.app.weight.loadCallBack.LoadingCallback
@@ -45,6 +47,8 @@ class HomeFragment : BaseFragment() {
     private var banner: BGABanner? = null
     private var pageNo: Int = 0
     lateinit var loadService: LoadService<Any>
+    lateinit var  swipeRefreshLayout: SwipeRefreshLayout
+    lateinit var  recyclerView:RecyclerView
     private val homeAdapter by lazy {
         HomeAdapter(mViewModel)
     }
@@ -54,6 +58,9 @@ class HomeFragment : BaseFragment() {
     }
 
     override fun initView() {
+        swipeRefreshLayout=mContentView.findViewById<SwipeRefreshLayout>(R.id.swipeRefreshLayout)
+        recyclerView=mContentView.findViewById<RecyclerView>(R.id.recyclerView);
+
         //注册LoadingService
         loadService = LoadSir.getDefault().register(swipeRefreshLayout) {
             loadService.showCallback(LoadingCallback::class.java)

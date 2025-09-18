@@ -5,6 +5,8 @@ import android.os.Bundle
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.oapp.R
 import com.example.oapp.adapter.WeChatItemAdapter
 import com.example.oapp.base.BaseFragment
@@ -22,10 +24,7 @@ import com.example.oapp.viewmodel.CollectViewModel
 import com.kingja.loadsir.callback.SuccessCallback
 import com.kingja.loadsir.core.LoadService
 import com.kingja.loadsir.core.LoadSir
-import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.fragment_knowledge.*
-import kotlinx.android.synthetic.main.fragment_wechat_tab.recyclerView
-import kotlinx.android.synthetic.main.fragment_wechat_tab.swipeRefreshLayout
+
 import me.hgj.jetpackmvvm.demo.app.weight.loadCallBack.EmptyCallback
 import me.hgj.jetpackmvvm.demo.app.weight.loadCallBack.ErrorCallback
 import me.hgj.jetpackmvvm.demo.app.weight.loadCallBack.LoadingCallback
@@ -38,7 +37,8 @@ class WeChatItemFragment:BaseFragment() {
     lateinit var loadService: LoadService<Any>
     private val mViewModel:CollectViewModel by viewModels()
     private var pageNo=0
-
+    lateinit var  swipeRefreshLayout: SwipeRefreshLayout
+    lateinit var  recyclerView: RecyclerView
     private val weChatItemAdapter by lazy {
         WeChatItemAdapter(mViewModel)
     }
@@ -56,6 +56,8 @@ class WeChatItemFragment:BaseFragment() {
         return R.layout.fragment_wechat_tab
     }
     override fun initView() {
+        swipeRefreshLayout=mContentView.findViewById<SwipeRefreshLayout>(R.id.swipeRefreshLayout)
+        recyclerView=mContentView.findViewById<RecyclerView>(R.id.recyclerView)
         //注册LoadingService
         loadService = LoadSir.getDefault().register(swipeRefreshLayout) {
             loadService.showCallback(LoadingCallback::class.java)

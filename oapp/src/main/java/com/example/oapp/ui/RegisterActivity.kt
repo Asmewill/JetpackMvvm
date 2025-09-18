@@ -4,6 +4,10 @@ import android.content.Intent
 import android.text.TextUtils
 import android.view.MenuItem
 import android.view.View
+import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
+import androidx.appcompat.widget.Toolbar
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.example.oapp.R
@@ -22,12 +26,8 @@ import com.example.oapp.utils.Preference
 import com.example.oapp.utils.SettingUtil
 import com.example.oapp.utils.SharedPreUtil
 import com.google.gson.Gson
-import kotlinx.android.synthetic.main.activity_login.*
-import kotlinx.android.synthetic.main.activity_register.*
-import kotlinx.android.synthetic.main.activity_register.et_password
-import kotlinx.android.synthetic.main.activity_register.et_username
-import kotlinx.android.synthetic.main.toolbar.*
 import org.greenrobot.eventbus.EventBus
+import org.jetbrains.anko.find
 
 /**
  * Created by jsxiaoshui on 2021/7/9
@@ -35,6 +35,13 @@ import org.greenrobot.eventbus.EventBus
 @Route(path = Constant.PagePath.REGISTER)
 class RegisterActivity:BaseActivity(),View.OnClickListener {
 
+    lateinit var toolbar: Toolbar
+    lateinit var tv_sign_in: TextView
+    lateinit var btn_register: TextView
+
+    lateinit var  et_username: EditText
+    lateinit var et_password: EditText
+    lateinit var et_password2: EditText
 
     private val loadingDialog by lazy {
         DialogUtil.getWaitDialog(this,"注册中...")
@@ -45,6 +52,13 @@ class RegisterActivity:BaseActivity(),View.OnClickListener {
     }
 
     override fun initView() {
+        toolbar=findViewById<Toolbar>(R.id.toolbar)
+        tv_sign_in=findViewById<TextView>(R.id.tv_sign_in)
+        btn_register=findViewById<TextView>(R.id.btn_register)
+        et_username=findViewById<EditText>(R.id.et_username)
+        et_password=findViewById<EditText>(R.id.et_password)
+        et_password2=findViewById<EditText>(R.id.et_password2)
+
         toolbar?.let {
             it.title="注册"
             setSupportActionBar(it)

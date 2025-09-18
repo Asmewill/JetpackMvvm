@@ -1,6 +1,7 @@
 package com.example.oapp.ui
 
 import android.view.MenuItem
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
@@ -13,7 +14,6 @@ import com.example.oapp.ui.fragment.AboutUsFragment
 import com.example.oapp.ui.fragment.AddToDoFragment
 import com.example.oapp.ui.fragment.CollectFragment
 import com.example.oapp.ui.fragment.SearchListFragment
-import kotlinx.android.synthetic.main.toolbar.*
 
 /**
  * Created by jsxiaoshui on 2021/7/8
@@ -32,11 +32,13 @@ class CommonActivity :BaseActivity() {
     @JvmField var item_bean:ToDoBean.DatasBean?=null
     private var type=""
     private var title=""
+    lateinit var toolbar: Toolbar
 
     override fun attachLayoutRes(): Int {
         return R.layout.activity_common
     }
     override fun initView() {
+        toolbar=findViewById<Toolbar>(R.id.toolbar)
         ARouter.getInstance().inject(this)// Start auto inject.
     }
     override fun initData() {

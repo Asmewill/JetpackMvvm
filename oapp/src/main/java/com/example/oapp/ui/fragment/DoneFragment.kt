@@ -7,6 +7,7 @@ import com.example.oapp.R
 import com.example.oapp.adapter.DoneAdapter
 import com.example.oapp.base.BaseVmDbFragment
 import com.example.oapp.databinding.FragmentDoneBinding
+import com.example.oapp.databinding.FragmentTodoBinding
 import com.example.oapp.ext.showToast
 import com.example.oapp.utils.CommonUtil
 import com.example.oapp.viewmodel.DoneViewModel
@@ -15,11 +16,6 @@ import com.example.oapp.widget.SwipeItemLayout
 import com.kingja.loadsir.callback.SuccessCallback
 import com.kingja.loadsir.core.LoadService
 import com.kingja.loadsir.core.LoadSir
-import kotlinx.android.synthetic.main.activity_point_rank_list.*
-import kotlinx.android.synthetic.main.fragment_done.*
-import kotlinx.android.synthetic.main.fragment_done.recyclerView
-import kotlinx.android.synthetic.main.fragment_done.swipeRefreshLayout
-import kotlinx.android.synthetic.main.fragment_todo.*
 import me.hgj.jetpackmvvm.demo.app.weight.loadCallBack.EmptyCallback
 import me.hgj.jetpackmvvm.demo.app.weight.loadCallBack.ErrorCallback
 import me.hgj.jetpackmvvm.demo.app.weight.loadCallBack.LoadingCallback2
@@ -27,7 +23,7 @@ import me.hgj.jetpackmvvm.demo.app.weight.loadCallBack.LoadingCallback2
 /**
  * Created by jsxiaoshui on 2021/7/27
  */
-class DoneFragment:BaseVmDbFragment<DoneViewModel,FragmentDoneBinding>() {
+class DoneFragment:BaseVmDbFragment<DoneViewModel, FragmentTodoBinding>() {
     lateinit var loadService: LoadService<Any>
     private var pageNo: Int=1
     private val doneAdapter by lazy {
@@ -43,17 +39,17 @@ class DoneFragment:BaseVmDbFragment<DoneViewModel,FragmentDoneBinding>() {
 
     override fun initView() {
         //注册LoadingService
-        loadService = LoadSir.getDefault().register(swipeRefreshLayout) {
+        loadService = LoadSir.getDefault().register(mDataBind.swipeRefreshLayout) {
             loadService.showCallback(LoadingCallback2::class.java)
             pageNo=1
             mViewModel.getDoneList(pageNo)
         }
-        recyclerView?.let {
+        mDataBind.recyclerView?.let {
             it.layoutManager=LinearLayoutManager(activity)
             it.adapter=doneAdapter
             it.addOnItemTouchListener(SwipeItemLayout.OnSwipeItemTouchListener(activity))
         }
-        swipeRefreshLayout.setOnRefreshListener {
+       mDataBind.swipeRefreshLayout.setOnRefreshListener {
             pageNo=1
             mViewModel.getDoneList(pageNo)
         }
@@ -64,7 +60,7 @@ class DoneFragment:BaseVmDbFragment<DoneViewModel,FragmentDoneBinding>() {
             }
             pageNo++
             mViewModel.getDoneList(pageNo)
-        },recyclerView)
+        }, mDataBind.recyclerView)
     }
     override fun initData() {
         loadService.showCallback(LoadingCallback2::class.java)
@@ -74,7 +70,7 @@ class DoneFragment:BaseVmDbFragment<DoneViewModel,FragmentDoneBinding>() {
     override fun createObserver() {
         mViewModel.doneListLiveData.observe(this, Observer {
 
-            swipeRefreshLayout?.isRefreshing = false
+            mDataBind.swipeRefreshLayout?.isRefreshing = false
             when (!it.isException) {
                 true -> {
                     if (it.dataBean != null && it.dataBean?.data?.datas != null &&
@@ -89,7 +85,7 @@ class DoneFragment:BaseVmDbFragment<DoneViewModel,FragmentDoneBinding>() {
                                 doneAdapter.addData(beanList)
                             }
                             //强制停止RecycleView的滑动
-                            recyclerView?.let {
+                            mDataBind.recyclerView?.let {
                                 CommonUtil.forceStopRecycleViewScroll(it)
                             }
                         }

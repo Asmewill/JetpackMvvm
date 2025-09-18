@@ -2,6 +2,8 @@ package com.example.oapp.ui.fragment
 
 import android.content.Intent
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.alibaba.android.arouter.launcher.ARouter
 import com.example.oapp.R
 import com.example.oapp.adapter.KnowledgeAdapter
@@ -18,7 +20,6 @@ import com.example.oapp.ui.KnowledgeActivity
 import com.kingja.loadsir.callback.SuccessCallback
 import com.kingja.loadsir.core.LoadService
 import com.kingja.loadsir.core.LoadSir
-import kotlinx.android.synthetic.main.fragment_knowledge.*
 import me.hgj.jetpackmvvm.demo.app.weight.loadCallBack.ErrorCallback
 import me.hgj.jetpackmvvm.demo.app.weight.loadCallBack.LoadingCallback
 
@@ -27,6 +28,8 @@ import me.hgj.jetpackmvvm.demo.app.weight.loadCallBack.LoadingCallback
  */
 class KnowledgeFragment:BaseFragment() {
     lateinit var loadService: LoadService<Any>
+    lateinit var  swipeRefreshLayout: SwipeRefreshLayout
+    lateinit var  recyclerView: RecyclerView
     private val knowledgeAdapter by lazy {
         KnowledgeAdapter()
     }
@@ -36,6 +39,8 @@ class KnowledgeFragment:BaseFragment() {
     }
 
     override fun initView() {
+        swipeRefreshLayout=mContentView.findViewById<SwipeRefreshLayout>(R.id.swipeRefreshLayout)
+        recyclerView=mContentView.findViewById<RecyclerView>(R.id.recyclerView);
         //注册LoadingService
         loadService = LoadSir.getDefault().register(swipeRefreshLayout) {
             loadService.showCallback(LoadingCallback::class.java)

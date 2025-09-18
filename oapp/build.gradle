@@ -1,21 +1,22 @@
 
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
+//apply plugin: 'kotlin-android-extensions'//引入该插件可直接使用xml中定义的ID
+apply plugin: 'org.jetbrains.kotlin.plugin.parcelize'
 apply plugin: 'kotlin-kapt'
 
 
 android {
     namespace "com.example.oapp"
-    compileSdkVersion 34
+    compileSdkVersion 35
     buildToolsVersion "30.0.2"
 
     //避免编译不能用于在编译类路径中发现的注解处理器，因为它们中的任何更改都需要运行注解处理任务
     kapt.includeCompileClasspath = false
     defaultConfig {
         applicationId "com.example.oapp"
-        minSdkVersion 16
-        targetSdkVersion 34
+        minSdkVersion 21
+        targetSdkVersion 35
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -29,8 +30,8 @@ android {
         }
 
     }
-    dataBinding{
-        enabled = true
+    buildFeatures {
+        dataBinding true
     }
 
     buildTypes {

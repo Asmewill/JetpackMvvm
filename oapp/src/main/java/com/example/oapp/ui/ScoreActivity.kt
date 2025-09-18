@@ -22,12 +22,9 @@ import com.example.oapp.viewmodel.ScoreListViewModel
 import com.kingja.loadsir.callback.SuccessCallback
 import com.kingja.loadsir.core.LoadService
 import com.kingja.loadsir.core.LoadSir
-import kotlinx.android.synthetic.main.activity_point_rank_list.*
-import kotlinx.android.synthetic.main.activity_point_rank_list.recyclerView
-import kotlinx.android.synthetic.main.activity_score.*
-import kotlinx.android.synthetic.main.toolbar.toolbar
-import me.hgj.jetpackmvvm.demo.app.weight.loadCallBack.*
-import kotlinx.android.synthetic.main.activity_point_rank_list.swipeRefreshLayout as swipeRefreshLayout
+import me.hgj.jetpackmvvm.demo.app.weight.loadCallBack.EmptyCallback
+import me.hgj.jetpackmvvm.demo.app.weight.loadCallBack.ErrorCallback2
+import me.hgj.jetpackmvvm.demo.app.weight.loadCallBack.LoadingCallback2
 
 
 /**
@@ -47,22 +44,22 @@ class ScoreActivity:BaseVmDbActivity<ScoreListViewModel,ActivityScoreBinding>() 
        return R.layout.activity_score
     }
     override fun initView() {
-        rl_content.setBackgroundColor(mThemeColor)
-        toolbar?.title="积分"
-        setSupportActionBar(toolbar)
+        mDataBind.rlContent.setBackgroundColor(mThemeColor)
+        mDataBind.toolbar?.title="积分"
+        setSupportActionBar(mDataBind.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        recyclerView.let {
+        mDataBind.recyclerView.let {
             it.layoutManager=LinearLayoutManager(this)
             it.adapter=scoreAdapter
         }
         //设置重新加载更多
-        loadService=LoadSir.getDefault().register(swipeRefreshLayout) {
+        loadService=LoadSir.getDefault().register(mDataBind.swipeRefreshLayout) {
             loadService.showCallback(LoadingCallback2::class.java)
             pageNo=1
             mViewModel.getScoreList(pageNo)
         }
         //下拉刷新
-        swipeRefreshLayout.setOnRefreshListener {
+        mDataBind.swipeRefreshLayout.setOnRefreshListener {
             pageNo=1
             mViewModel.getScoreList(pageNo)
         }
@@ -71,7 +68,7 @@ class ScoreActivity:BaseVmDbActivity<ScoreListViewModel,ActivityScoreBinding>() 
             pageNo++
             mViewModel.getScoreList(pageNo)
 
-        },recyclerView)
+        },mDataBind.recyclerView)
 
     }
     override fun initData() {
@@ -83,7 +80,7 @@ class ScoreActivity:BaseVmDbActivity<ScoreListViewModel,ActivityScoreBinding>() 
     override fun createObserver() {
         mViewModel.scoreListLiveData.observe(this,
             Observer<ListDataUiState<ScoreBean>> {
-                swipeRefreshLayout?.isRefreshing=false
+                mDataBind.swipeRefreshLayout?.isRefreshing=false
                 when(!it.isException){
                     true->{
                         if (it.dataBean != null && it.dataBean?.data?.datas != null &&
@@ -98,7 +95,7 @@ class ScoreActivity:BaseVmDbActivity<ScoreListViewModel,ActivityScoreBinding>() 
                                     scoreAdapter.addData(beanList)
                                 }
                                 //强制停止RecycleView的滑动
-                                recyclerView?.let {
+                                mDataBind.recyclerView?.let {
                                     CommonUtil.forceStopRecycleViewScroll(it)
                                 }
                             }
@@ -125,7 +122,7 @@ class ScoreActivity:BaseVmDbActivity<ScoreListViewModel,ActivityScoreBinding>() 
                         it.error?.message?.let { it1 -> showToast(it1) }
                     }
                 }
-                tv_score.text=getTotalScore(scoreAdapter).toString()
+                mDataBind.tvScore.text=getTotalScore(scoreAdapter).toString()
             })
     }
 
