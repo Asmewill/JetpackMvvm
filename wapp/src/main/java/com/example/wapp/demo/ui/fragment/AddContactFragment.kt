@@ -19,7 +19,6 @@ import com.example.wapp.databinding.FragmentAddContactBinding
 import com.example.wapp.demo.adapter.AddContackAdapter
 import com.example.wapp.demo.ext.nav
 import com.example.wapp.demo.viewmodel.ConversationViewModel
-import kotlinx.android.synthetic.main.fragment_add_contact.*
 
 /**
  * Created by jsxiaoshui on 2021-11-25
@@ -36,23 +35,23 @@ class AddContactFragment:BaseVmDbFragment<ConversationViewModel,FragmentAddConta
        return R.layout.fragment_add_contact
     }
     override fun initView() {
-        et_search.addTextChangedListener(object : TextWatcher {
+       mDataBind.etSearch.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
             override fun afterTextChanged(s: Editable) {
                 if (s.isNotEmpty()) {
-                    iv_clear.visibility = View.VISIBLE
+                   mDataBind.ivClear.visibility = View.VISIBLE
 
                 } else {
-                    iv_clear.visibility = View.INVISIBLE
+                    mDataBind.ivClear.visibility = View.INVISIBLE
                     addContackAdapter.setList(mutableListOf())
                 }
             }
         })
 
-        et_search.setOnEditorActionListener(OnEditorActionListener { v, actionId, event ->
+        mDataBind.etSearch.setOnEditorActionListener(OnEditorActionListener { v, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                val search: String = et_search.text.toString().trim()
+                val search: String = mDataBind.etSearch.text.toString().trim()
                 if (!TextUtils.isEmpty(search)) {
                     dataList.clear()
                     dataList.add(search)
@@ -65,19 +64,19 @@ class AddContactFragment:BaseVmDbFragment<ConversationViewModel,FragmentAddConta
             false
         })
 
-        iv_clear.setOnClickListener(View.OnClickListener {
-            et_search.text.clear()
+        mDataBind.ivClear.setOnClickListener(View.OnClickListener {
+             mDataBind.etSearch.text.clear()
             addContackAdapter.setList(mutableListOf())
         })
 
-        tv_cancel.setOnClickListener(View.OnClickListener {
+       mDataBind.tvCancel.setOnClickListener(View.OnClickListener {
             KeyboardUtils.hideSoftInput(mActivity)
              nav().navigateUp()
           }
         )
         //recycleview设置
-        rv_list.layoutManager=LinearLayoutManager(mActivity)
-        rv_list.adapter=addContackAdapter
+       mDataBind.rvList.layoutManager=LinearLayoutManager(mActivity)
+       mDataBind.rvList.adapter=addContackAdapter
 
     }
 

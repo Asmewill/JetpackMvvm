@@ -28,8 +28,6 @@ import com.kingja.loadsir.callback.SuccessCallback
 import com.kingja.loadsir.core.LoadSir
 import com.yanzhenjie.recyclerview.SwipeRecyclerView
 import com.zhpan.bannerview.BannerViewPager
-import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.fragment_home.view.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -64,12 +62,12 @@ class HomeFragment : BaseVmDbFragment<HomeViewModel, FragmentHomeBinding>() ,Cor
 
 
         //注册LoadingService
-        loadService = LoadSir.getDefault().register(swipeRefresh) {
+        loadService = LoadSir.getDefault().register(mDataBind.swipeRefresh) {
             loadService.showCallback(LoadingCallback::class.java)
             mViewModel.getBannerData()
             mViewModel.getHomeData(true)
         }
-        toolbar?.run {
+        mDataBind.toolbar?.run {
             this.init("首页")
             this.inflateMenu(R.menu.home_menu)
             this.setOnMenuItemClickListener {
@@ -83,14 +81,14 @@ class HomeFragment : BaseVmDbFragment<HomeViewModel, FragmentHomeBinding>() ,Cor
             }
         }
         //初始化RecycleView
-        recyclerView.init(LinearLayoutManager(activity), articleAdapter).let {
+        mDataBind.recyclerView.init(LinearLayoutManager(activity), articleAdapter).let {
              it.initFooter(SwipeRecyclerView.LoadMoreListener {
                 mViewModel.getHomeData(false)
             })
-            it.initFloatBtn(floatbtn)
+            it.initFloatBtn(mDataBind.floatbtn)
         }
         //初始化SwipeRefreshLayout
-        swipeRefresh.init {
+        mDataBind.swipeRefresh.init {
             mViewModel.getHomeData(true)
         }
         articleAdapter.run {
@@ -122,7 +120,7 @@ class HomeFragment : BaseVmDbFragment<HomeViewModel, FragmentHomeBinding>() ,Cor
 
     override fun createObserver() {
         mViewModel.bannerDataState.observe(viewLifecycleOwner, androidx.lifecycle.Observer {listDataUistate->
-             if(recyclerView.headerCount==0){
+             if(mDataBind.recyclerView.headerCount==0){
                   headerView=LayoutInflater.from(context).inflate(R.layout.include_banner,null).apply {
                     this.findViewById<BannerViewPager<BannerResponse,HomeBannerViewHolder>>(R.id.banner_view).apply {
                         this.adapter=HomeBannerAdapter()
@@ -140,13 +138,13 @@ class HomeFragment : BaseVmDbFragment<HomeViewModel, FragmentHomeBinding>() ,Cor
                         create(listDataUistate.listData)
                     }
                  }
-                 recyclerView.addHeaderView(headerView)
-                 recyclerView.scrollToPosition(0)
+                 mDataBind.recyclerView.addHeaderView(headerView)
+                 mDataBind.recyclerView.scrollToPosition(0)
              }
         })
         mViewModel.homeDataState.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-            swipeRefresh.isRefreshing=false
-            recyclerView.loadMoreFinish(it.listData.isEmpty(),it.hasMore)
+            mDataBind.swipeRefresh.isRefreshing=false
+            mDataBind.recyclerView.loadMoreFinish(it.listData.isEmpty(),it.hasMore)
             if(it.isSuccess){
                 when{
                     //第一页，没有数据，显示空布局
@@ -166,14 +164,14 @@ class HomeFragment : BaseVmDbFragment<HomeViewModel, FragmentHomeBinding>() ,Cor
             }else{
                 //如果是第一的时候，网络异常了
                 if(it.isRefresh){
-                    if(recyclerView.headerCount>0){
-                        recyclerView.removeHeaderView(headerView)
+                    if(mDataBind.recyclerView.headerCount>0){
+                        mDataBind.recyclerView.removeHeaderView(headerView)
                     }
                     loadService.showCallback(ErrorCallback::class.java)
                     ToastUtils.showShort(it.errorMsg)
                 }else{//第二页，第三页...异常
                     //上啦加载网络异常
-                  recyclerView.loadMoreError(0,it.errorMsg)
+                    mDataBind.recyclerView.loadMoreError(0,it.errorMsg)
                 }
             }
         })

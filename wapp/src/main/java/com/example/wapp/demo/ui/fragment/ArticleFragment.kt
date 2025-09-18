@@ -6,7 +6,6 @@ import com.example.wapp.databinding.FragmentArticleBinding
 import com.example.wapp.demo.ext.initClose
 import com.example.wapp.demo.navigation.NavHostFragment
 import com.example.wapp.demo.viewmodel.ArticleViewModel
-import kotlinx.android.synthetic.main.fragment_home.*
 
 /**
  * Created by jsxiaoshui on 2021-11-15
@@ -17,10 +16,10 @@ class ArticleFragment:BaseVmDbFragment<ArticleViewModel,FragmentArticleBinding>(
     }
 
     override fun initView() {
-        toolbar.initClose(titleStr = "我的文章",onBack={
+        mDataBind.toolbar.initClose(titleStr = "我的文章",onBack={
             NavHostFragment.findNavController(this).navigateUp()
         })
-        toolbar?.run {
+        mDataBind.toolbar?.run {
             inflateMenu(R.menu.todo_menu)
             setOnMenuItemClickListener {
                 when(it.itemId){

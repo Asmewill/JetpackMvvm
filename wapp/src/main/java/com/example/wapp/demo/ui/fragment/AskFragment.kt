@@ -20,9 +20,6 @@ import com.kingja.loadsir.callback.SuccessCallback
 import com.kingja.loadsir.core.LoadService
 import com.kingja.loadsir.core.LoadSir
 import com.yanzhenjie.recyclerview.SwipeRecyclerView
-import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.include_recyclerview.recyclerView
-import kotlinx.android.synthetic.main.include_recyclerview.swipeRefresh
 import me.hgj.jetpackmvvm.demo.app.weight.loadCallBack.EmptyCallback
 import com.example.wapp.demo.loadcallback.ErrorCallback
 import me.hgj.jetpackmvvm.demo.app.weight.loadCallBack.LoadingCallback
@@ -50,43 +47,43 @@ class AskFragment:BaseVmDbFragment<SquareViewModel,FragmentSquareListBinding>() 
     }
     override fun initView() {
         //注册LoadingService,并设置--重试监听
-        loadService = LoadSir.getDefault().register(swipeRefresh) {
+        loadService = LoadSir.getDefault().register(mDataBind.swipeRefresh) {
             loadService.showCallback(LoadingCallback::class.java)
             mViewModel.getAskData(true)
         }
-        recyclerView.layoutManager= LinearLayoutManager(mActivity)
-        recyclerView.setHasFixedSize(true)//Adapter内Item的改变不会影响RecyclerView宽高的时候，可以设置为true让RecyclerView避免重新计算大小
-        recyclerView.adapter=articleAdapter
+        mDataBind.recyclerView.layoutManager= LinearLayoutManager(mActivity)
+        mDataBind.recyclerView.setHasFixedSize(true)//Adapter内Item的改变不会影响RecyclerView宽高的时候，可以设置为true让RecyclerView避免重新计算大小
+        mDataBind. recyclerView.adapter=articleAdapter
         //recycle滑动到顶部时,隐藏floatbtn
-        recyclerView.addOnScrollListener(object: RecyclerView.OnScrollListener(){
+        mDataBind.recyclerView.addOnScrollListener(object: RecyclerView.OnScrollListener(){
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 if(!recyclerView.canScrollVertically(-1)) {
-                    floatbtn.visibility = View.INVISIBLE
+                    mDataBind.floatbtn.visibility = View.INVISIBLE
                 }
             }
         })
         //快速返回顶部
-        floatbtn.setOnClickListener{
-            val layoutManager=recyclerView.layoutManager as LinearLayoutManager
+        mDataBind.floatbtn.setOnClickListener{
+            val layoutManager=  mDataBind.recyclerView.layoutManager as LinearLayoutManager
             if(layoutManager.findLastVisibleItemPosition()>=40){
-                recyclerView.scrollToPosition(0) //没有滚动动画，快速滑动到底部
+                mDataBind.recyclerView.scrollToPosition(0) //没有滚动动画，快速滑动到底部
             }else{
-                recyclerView.smoothScrollToPosition(0)//有滚动动画，快速滑动到底部
+                mDataBind.recyclerView.smoothScrollToPosition(0)//有滚动动画，快速滑动到底部
             }
         }
         //给recycleView添加footview
-        recyclerView.addFooterView(footView)
-        recyclerView.setLoadMoreView(footView)
+        mDataBind. recyclerView.addFooterView(footView)
+        mDataBind.recyclerView.setLoadMoreView(footView)
         //设置上拉加载更多
-        recyclerView.setLoadMoreListener {
+        mDataBind.recyclerView.setLoadMoreListener {
             mViewModel.getAskData(false)
         }
         //异常时,点击footView,获取更多数据
         footView.setmLoadMoreListener(SwipeRecyclerView.LoadMoreListener {
             mViewModel.getAskData(false)
         })
-        swipeRefresh.setOnRefreshListener {
+        mDataBind.swipeRefresh.setOnRefreshListener {
             mViewModel.getAskData(true)
         }
         articleAdapter.setOnItemClickListener { adapter, view, position ->
@@ -113,8 +110,8 @@ class AskFragment:BaseVmDbFragment<SquareViewModel,FragmentSquareListBinding>() 
 
     override fun createObserver() {
         mViewModel.askLiveData.observe(mActivity, Observer {
-            swipeRefresh.isRefreshing=false
-            recyclerView.loadMoreFinish(it.listData.isEmpty(),it.hasMore)
+            mDataBind.swipeRefresh.isRefreshing=false
+            mDataBind.recyclerView.loadMoreFinish(it.listData.isEmpty(),it.hasMore)
             if(it.isSuccess){
                 when{
                     it.isEmpty->{
@@ -132,7 +129,7 @@ class AskFragment:BaseVmDbFragment<SquareViewModel,FragmentSquareListBinding>() 
                 if(it.isRefresh){
                     loadService.showCallback(ErrorCallback::class.java)
                 }else{
-                    recyclerView.loadMoreError(0,it.errorMsg)
+                    mDataBind.recyclerView.loadMoreError(0,it.errorMsg)
                 }
             }
         })

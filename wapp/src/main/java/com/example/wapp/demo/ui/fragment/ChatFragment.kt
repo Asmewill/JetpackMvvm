@@ -11,8 +11,7 @@ import com.example.wapp.demo.ext.nav
 import com.example.wapp.demo.hxchat.LiveDataBus
 import com.example.wapp.demo.viewmodel.ConversationViewModel
 import com.hyphenate.easeui.constants.EaseConstant
-import com.hyphenate.easeui.model.EaseEvent
-import kotlinx.android.synthetic.main.fragment_system_msgs.*
+
 
 /**
  * Created by jsxiaoshui on 2021-11-29
@@ -30,17 +29,14 @@ class ChatFragment:BaseVmDbFragment<ConversationViewModel,FragmentChatBinding>()
         chatType= arguments?.getInt(Constant.chatType)!!
         conversionId= arguments?.getString(Constant.conversationId)!!
       //  historyMsgId=arguments?.getString(Constant.HISTORY_MSG_ID)!!
-        tv_title.text=conversionId
-        titlebar.setNavigationIcon(R.drawable.ic_back)
-        titlebar.setNavigationOnClickListener{
+        mDataBind.tvTitle.text=conversionId
+        mDataBind.titlebar.setNavigationIcon(R.drawable.ic_back)
+        mDataBind.titlebar.setNavigationOnClickListener{
             KeyboardUtils.hideSoftInput(requireActivity())
             nav().navigateUp()
 
         }
         initChatFragment()
-
-
-
     }
 
     private fun initChatFragment() {

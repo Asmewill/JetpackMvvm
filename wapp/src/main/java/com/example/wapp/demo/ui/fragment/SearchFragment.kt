@@ -4,10 +4,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.*
 import android.widget.ImageView
-import android.widget.SearchView
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
-import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
@@ -20,22 +17,17 @@ import com.example.wapp.demo.adapter.SearchHistoryAdapter
 import com.example.wapp.demo.adapter.SearchHotAdapter
 import com.example.wapp.demo.bean.SearchResponse
 import com.example.wapp.demo.ext.*
-import com.example.wapp.demo.ui.MainActivity
 import com.example.wapp.demo.utils.CacheUtil
 import com.example.wapp.demo.viewmodel.SearchViewModel
 import com.google.android.flexbox.FlexDirection
-import com.google.android.flexbox.FlexboxLayout
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
-import kotlinx.android.synthetic.main.fragment_search.*
-import okhttp3.Cache
-import java.lang.Exception
 
 /**
  * Created by jsxiaoshui on 2021/8/23
  */
 class SearchFragment : BaseVmDbFragment<SearchViewModel, FragmentSearchBinding>() {
-    private val searchHotAdapter by lazy{
+    private val searchHotAdapter by lazy {
         SearchHotAdapter()
     }
     private val searchHistoryAdapter by lazy {
@@ -45,10 +37,11 @@ class SearchFragment : BaseVmDbFragment<SearchViewModel, FragmentSearchBinding>(
     override fun layoutId(): Int {
         return R.layout.fragment_search
     }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         setHasOptionsMenu(true)
         return super.onCreateView(inflater, container, savedInstanceState)
@@ -62,56 +55,56 @@ class SearchFragment : BaseVmDbFragment<SearchViewModel, FragmentSearchBinding>(
         //左对齐
         flexboxLayout.justifyContent = JustifyContent.FLEX_START
 
-        search_hotRv.init(
+        mDataBind.searchHotRv.init(
             flexboxLayout, searchHotAdapter, false
         )
         searchHotAdapter.setOnItemClickListener { adapter, view, position ->
-            val query:String= (adapter.data[position] as SearchResponse).name
+            val query: String = (adapter.data[position] as SearchResponse).name
             //try-catch防止短时间内多次快速跳转Fragment出现的bug
             try {
                 nav().navigate(R.id.action_searchFragment_to_searchResultFragment, Bundle().apply {
                     this.putString("searchKey", query)
                 })
-            }catch (e:Exception){
+            } catch (e: Exception) {
 
             }
         }
-        search_historyRv.init(LinearLayoutManager(mActivity), searchHistoryAdapter, true)
+        mDataBind.searchHistoryRv.init(LinearLayoutManager(mActivity), searchHistoryAdapter, true)
         searchHistoryAdapter.setOnItemClickListener { adapter, view, position ->
-            val query:String= adapter.data[position] as String
+            val query: String = adapter.data[position] as String
             //try-catch防止短时间内多次快速跳转Fragment出现的bug
             try {
                 nav().navigate(R.id.action_searchFragment_to_searchResultFragment, Bundle().apply {
                     this.putString("searchKey", query)
                 })
-            }catch (e:Exception){
+            } catch (e: Exception) {
             }
 
         }
 
 
-        search_clear.setOnClickListener {
+        mDataBind.searchClear.setOnClickListener {
             MaterialDialog(mActivity).cancelable(false).lifecycleOwner(this).show {
-                     this.title(text = "温馨提示")
-                    this.message(text = "确定清空吗?")
-                    this.negativeButton(text = "取消"){
-                       Handler().postDelayed(Runnable {
-                            KeyboardUtils.hideSoftInput(mActivity)
-                        },300)
-                    }
-                    this.positiveButton(text = "确定"){
-                        mViewModel.historyData.value= arrayListOf()
-                        CacheUtil.setSearchHistoryData("")
-                        Handler().postDelayed(Runnable {
-                            KeyboardUtils.hideSoftInput(mActivity)
-                        },300)
-                    }
+                this.title(text = "温馨提示")
+                this.message(text = "确定清空吗?")
+                this.negativeButton(text = "取消") {
+                    Handler().postDelayed(Runnable {
+                        KeyboardUtils.hideSoftInput(mActivity)
+                    }, 300)
+                }
+                this.positiveButton(text = "确定") {
+                    mViewModel.historyData.value = arrayListOf()
+                    CacheUtil.setSearchHistoryData("")
+                    Handler().postDelayed(Runnable {
+                        KeyboardUtils.hideSoftInput(mActivity)
+                    }, 300)
+                }
             }
         }
     }
 
-    fun setClearTextVisibility(visibility:Int){
-        search_clear.visibility=visibility
+    fun setClearTextVisibility(visibility: Int) {
+        mDataBind.searchClear.visibility = visibility
     }
 
     override fun initData() {
@@ -132,10 +125,10 @@ class SearchFragment : BaseVmDbFragment<SearchViewModel, FragmentSearchBinding>(
         //历史记录
         mViewModel.historyData.observe(mActivity, Observer {
             searchHistoryAdapter.setList(it)
-            if(it.isNotEmpty()){
-                search_clear.visibility=View.VISIBLE
-            }else{
-                search_clear.visibility=View.GONE
+            if (it.isNotEmpty()) {
+                mDataBind.searchClear.visibility = View.VISIBLE
+            } else {
+                mDataBind.searchClear.visibility = View.GONE
             }
         })
     }
@@ -153,12 +146,15 @@ class SearchFragment : BaseVmDbFragment<SearchViewModel, FragmentSearchBinding>(
                 override fun onQueryTextSubmit(query: String): Boolean {
                     updateKey(query)
                     query?.let {
-                        nav().navigate(R.id.action_searchFragment_to_searchResultFragment, Bundle().apply {
-                            this.putString("searchKey", query)
-                        })
+                        nav().navigate(
+                            R.id.action_searchFragment_to_searchResultFragment,
+                            Bundle().apply {
+                                this.putString("searchKey", query)
+                            })
                     }
                     return false
                 }
+
                 override fun onQueryTextChange(newText: String?): Boolean {
                     return false
                 }
@@ -189,7 +185,7 @@ class SearchFragment : BaseVmDbFragment<SearchViewModel, FragmentSearchBinding>(
 
     private fun setMenu() {
         setHasOptionsMenu(true)
-        toolbar.run {
+        mDataBind.toolbar.run {
             mActivity.setSupportActionBar(this)//必须设置，否则不显示toolbar按钮
             this.initClose {
                 nav().navigateUp()

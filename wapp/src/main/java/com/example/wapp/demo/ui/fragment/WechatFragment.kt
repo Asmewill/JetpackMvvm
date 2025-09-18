@@ -16,14 +16,8 @@ import com.example.wapp.demo.ext.toHtml
 import com.example.wapp.demo.viewmodel.WechatViewModel
 import com.example.wapp.demo.widget.ScaleTransitionPagerTitleView
 import com.kingja.loadsir.callback.SuccessCallback
-import com.kingja.loadsir.core.LoadService
 import com.kingja.loadsir.core.LoadSir
-import kotlinx.android.synthetic.main.fragment_project.*
 import com.example.wapp.demo.loadcallback.ErrorCallback
-import kotlinx.android.synthetic.main.fragment_project.ll_content
-import kotlinx.android.synthetic.main.fragment_project.magic_indicator
-import kotlinx.android.synthetic.main.fragment_project.view_pager
-import kotlinx.android.synthetic.main.fragment_wechat.*
 import me.hgj.jetpackmvvm.demo.app.weight.loadCallBack.LoadingCallback
 import net.lucode.hackware.magicindicator.buildins.UIUtil
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator
@@ -35,12 +29,12 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.Li
 /**
  * Created by jsxiaoshui on 2021/8/20
  */
-class WechatFragment:BaseVmDbFragment<WechatViewModel,FragmentWechatBinding>() {
+class WechatFragment : BaseVmDbFragment<WechatViewModel, FragmentWechatBinding>() {
     private val commonNavigator by lazy {
         CommonNavigator(MyApp.instance)
     }
-    private var fragments= arrayListOf<Fragment>()
-    private var mDataList= arrayListOf<String>()
+    private var fragments = arrayListOf<Fragment>()
+    private var mDataList = arrayListOf<String>()
 
     override fun layoutId(): Int {
         return R.layout.fragment_wechat
@@ -48,23 +42,24 @@ class WechatFragment:BaseVmDbFragment<WechatViewModel,FragmentWechatBinding>() {
 
     override fun initView() {
         //注册LoadingService
-        loadService = LoadSir.getDefault().register(ll_content_wechat) {
+        loadService = LoadSir.getDefault().register(mDataBind.llContentWechat) {
             loadService.showCallback(LoadingCallback::class.java)
             mViewModel.getPublicTitle()
         }
 
-        view_pager.isUserInputEnabled=true//设置是否禁止用户滑动页面
-        view_pager.adapter=object: FragmentStateAdapter(this) {
+        mDataBind.viewPager.isUserInputEnabled = true//设置是否禁止用户滑动页面
+        mDataBind.viewPager.adapter = object : FragmentStateAdapter(this) {
             override fun getItemCount(): Int {
-                return  fragments.size
+                return fragments.size
             }
+
             override fun createFragment(position: Int): Fragment {
                 return fragments[position]
             }
         }
-        commonNavigator.adapter=object : CommonNavigatorAdapter(){
+        commonNavigator.adapter = object : CommonNavigatorAdapter() {
             override fun getCount(): Int {
-                return  mDataList.size
+                return mDataList.size
             }
 
             override fun getTitleView(context: Context, index: Int): IPagerTitleView {
@@ -78,13 +73,13 @@ class WechatFragment:BaseVmDbFragment<WechatViewModel,FragmentWechatBinding>() {
                     //选中颜色
                     selectedColor = Color.WHITE
                     this.setOnClickListener {
-                        view_pager.currentItem=index
+                        mDataBind.viewPager.currentItem = index
                     }
                 }
             }
 
             override fun getIndicator(context: Context?): IPagerIndicator {
-                return  LinePagerIndicator(context).apply {
+                return LinePagerIndicator(context).apply {
                     mode = LinePagerIndicator.MODE_EXACTLY
                     //线条的宽高度
                     lineHeight = UIUtil.dip2px(MyApp.instance, 3.0).toFloat()
@@ -98,24 +93,30 @@ class WechatFragment:BaseVmDbFragment<WechatViewModel,FragmentWechatBinding>() {
                 }
             }
         }
-        magic_indicator.navigator=commonNavigator
-        view_pager.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback() {
+        mDataBind.magicIndicator.navigator = commonNavigator
+        mDataBind.viewPager.registerOnPageChangeCallback(object :
+            ViewPager2.OnPageChangeCallback() {
             override fun onPageScrolled(
                 position: Int,
                 positionOffset: Float,
-                positionOffsetPixels: Int
+                positionOffsetPixels: Int,
             ) {
                 super.onPageScrolled(position, positionOffset, positionOffsetPixels)
-                magic_indicator.onPageScrolled(position, positionOffset, positionOffsetPixels)
+                mDataBind.magicIndicator.onPageScrolled(
+                    position,
+                    positionOffset,
+                    positionOffsetPixels
+                )
             }
 
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
-                magic_indicator.onPageSelected(position)
+                mDataBind.magicIndicator.onPageSelected(position)
             }
+
             override fun onPageScrollStateChanged(state: Int) {
                 super.onPageScrollStateChanged(state)
-                magic_indicator.onPageScrollStateChanged(state)
+                mDataBind.magicIndicator.onPageScrollStateChanged(state)
             }
         })
 
@@ -134,18 +135,18 @@ class WechatFragment:BaseVmDbFragment<WechatViewModel,FragmentWechatBinding>() {
 
     override fun createObserver() {
         mViewModel.publicLiveData.observe(mActivity, Observer {
-            if(it.isSuccess){
+            if (it.isSuccess) {
                 mDataList.clear()
                 fragments.clear()
-                it.listData.forEach {  classifyResponse->
+                it.listData.forEach { classifyResponse ->
                     mDataList.add(classifyResponse.name)
                     fragments.add(WechatChildFragment.newInstance(classifyResponse.id))
                 }
-                magic_indicator.navigator.notifyDataSetChanged()
-                view_pager.adapter?.notifyDataSetChanged()
-                view_pager.offscreenPageLimit=fragments.size
+                mDataBind.magicIndicator.navigator.notifyDataSetChanged()
+                mDataBind.viewPager.adapter?.notifyDataSetChanged()
+                mDataBind.viewPager.offscreenPageLimit = fragments.size
                 loadService.showCallback(SuccessCallback::class.java)
-            }else{
+            } else {
                 loadService.showCallback(ErrorCallback::class.java)
             }
         })

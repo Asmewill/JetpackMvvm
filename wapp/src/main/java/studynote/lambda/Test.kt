@@ -1,7 +1,5 @@
 package studynote
 
-import kotlinx.android.synthetic.main.fragment_project_child.*
-
 /**
  * Created by jsxiaoshui on 2021/7/31
  */

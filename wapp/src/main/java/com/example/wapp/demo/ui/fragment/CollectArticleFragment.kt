@@ -24,9 +24,7 @@ import com.example.wapp.demo.widget.DefineLoadMoreView
 import com.kingja.loadsir.callback.Callback
 import com.kingja.loadsir.callback.SuccessCallback
 import com.kingja.loadsir.core.LoadSir
-import com.yanzhenjie.recyclerview.OnItemClickListener
 import com.yanzhenjie.recyclerview.SwipeRecyclerView
-import kotlinx.android.synthetic.main.fragment_home.*
 import me.hgj.jetpackmvvm.demo.app.weight.loadCallBack.EmptyCallback
 import me.hgj.jetpackmvvm.demo.app.weight.loadCallBack.LoadingCallback
 import java.lang.Exception
@@ -47,45 +45,45 @@ class CollectArticleFragment: BaseVmDbFragment<CollectViewModel, FragmentCollect
     }
 
     override fun initView() {
-        loadService= LoadSir.getDefault().register(swipeRefresh, Callback.OnReloadListener {
+        loadService= LoadSir.getDefault().register(mDataBind.swipeRefresh, Callback.OnReloadListener {
             pageNo=0
             loadService.showCallback(LoadingCallback::class.java)
             collectViewModel.collectArticleList(pageNo)
         })
-        recyclerView.layoutManager= LinearLayoutManager(activity)
-        recyclerView.adapter=collectArticleAdapter
+        mDataBind.recyclerView.layoutManager= LinearLayoutManager(activity)
+        mDataBind.recyclerView.adapter=collectArticleAdapter
         //floatBtn快速返回到顶部
-        floatbtn.setOnClickListener {
-            val layoutManager: LinearLayoutManager = recyclerView.layoutManager as LinearLayoutManager
+        mDataBind.floatbtn.setOnClickListener {
+            val layoutManager: LinearLayoutManager =  mDataBind.recyclerView.layoutManager as LinearLayoutManager
             if(layoutManager.findLastVisibleItemPosition()>=40){
-                recyclerView.scrollToPosition(0)  //没有滑动动画，快速滚动到顶部
+                mDataBind.recyclerView.scrollToPosition(0)  //没有滑动动画，快速滚动到顶部
             }else{
-                recyclerView.smoothScrollToPosition(0) //有滑动动画，快速滚动到顶部
+                mDataBind.recyclerView.smoothScrollToPosition(0) //有滑动动画，快速滚动到顶部
             }
         }
         //滑动到顶部，隐藏 FloatingActionBtn
-        recyclerView.addOnScrollListener(object: RecyclerView.OnScrollListener(){
+        mDataBind.recyclerView.addOnScrollListener(object: RecyclerView.OnScrollListener(){
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
             }
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 if(!recyclerView.canScrollVertically(-1)){
-                    floatbtn.visibility= View.INVISIBLE
+                    mDataBind.floatbtn.visibility= View.INVISIBLE
                 }
             }
         })
         //下拉刷新
-        swipeRefresh.setOnRefreshListener {
+        mDataBind.swipeRefresh.setOnRefreshListener {
             pageNo=1
             collectViewModel.collectArticleList(pageNo)
         }
         //添加FootView  自定义
         val footView= DefineLoadMoreView(MyApp.instance)
-        recyclerView.addFooterView(footView)
-        recyclerView.setLoadMoreView(footView)
+        mDataBind.recyclerView.addFooterView(footView)
+        mDataBind.recyclerView.setLoadMoreView(footView)
         //加载更多
-        recyclerView.setLoadMoreListener {
+        mDataBind.recyclerView.setLoadMoreListener {
             pageNo++
             collectViewModel.collectArticleList(pageNo)
         }
@@ -119,11 +117,11 @@ class CollectArticleFragment: BaseVmDbFragment<CollectViewModel, FragmentCollect
 
     override fun createObserver() {
         collectViewModel.articleListLiveData.observe(this, Observer {
-            swipeRefresh.isRefreshing=false
+            mDataBind.swipeRefresh.isRefreshing=false
             when(it.isSuccess){
                 true->{
                     loadService.showCallback(SuccessCallback::class.java)
-                    recyclerView.loadMoreFinish(it.isEmpty,it.hasMore)
+                    mDataBind.recyclerView.loadMoreFinish(it.isEmpty,it.hasMore)
                     if(it.response!!.getResponseData().curPage==1){
                         if(it.response.getResponseData().datas.isNotEmpty()){
                             collectArticleAdapter.setList(it.response.getResponseData().datas)
@@ -135,8 +133,8 @@ class CollectArticleFragment: BaseVmDbFragment<CollectViewModel, FragmentCollect
                     }
                 }
                 false->{
-                    recyclerView.loadMoreFinish(true,false)
-                    recyclerView.loadMoreError(0,it.errorMsg)
+                    mDataBind.recyclerView.loadMoreFinish(true,false)
+                    mDataBind.recyclerView.loadMoreError(0,it.errorMsg)
                     if(!TextUtils.isEmpty(it.errorMsg)){
                         ToastUtils.showLong(it.errorMsg)
                     }

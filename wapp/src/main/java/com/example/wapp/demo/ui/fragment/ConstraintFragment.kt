@@ -6,7 +6,6 @@ import com.example.wapp.R
 import com.example.wapp.databinding.FragmentConstraintBinding
 import com.example.wapp.demo.ext.initClose
 import com.example.wapp.demo.ext.nav
-import kotlinx.android.synthetic.main.fragment_home.*
 
 /**
  * Data :2023/3/14
@@ -20,7 +19,7 @@ class ConstraintFragment:BaseVmDbFragment<BaseViewModel,FragmentConstraintBindin
     }
     //https://juejin.cn/post/6949186887609221133#heading-6
     override fun initView() {
-        toolbar.initClose ("ConstraintLayout示例"){
+        mDataBind.toolbar.initClose ("ConstraintLayout示例"){
            nav().navigateUp()
         }
     }

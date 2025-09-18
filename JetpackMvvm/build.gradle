@@ -7,7 +7,6 @@ apply plugin: 'kotlin-kapt'
 android {
     namespace "me.hgj.jetpackmvvm"
     compileSdkVersion 35
-    buildToolsVersion "30.0.2"
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 34

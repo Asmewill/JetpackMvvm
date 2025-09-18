@@ -162,7 +162,7 @@ public class ChatPresenter extends EaseChatPresenter {
                 EaseAtMessageHelper.get().removeAtMeGroup(msg.getTo());
             }
             EMMessage msgNotification = EMMessage.createReceiveMessage(EMMessage.Type.TXT);
-            EMTextMessageBody txtBody = new EMTextMessageBody(String.format(context.getString(R.string.msg_recall_by_user), msg.getFrom()));
+            EMTextMessageBody txtBody = new EMTextMessageBody(String.format(context.getString(com.hyphenate.easeui.R.string.msg_recall_by_user), msg.getFrom()));
             msgNotification.addBody(txtBody);
             msgNotification.setFrom(msg.getFrom());
             msgNotification.setTo(msg.getTo());

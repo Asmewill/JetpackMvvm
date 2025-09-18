@@ -25,7 +25,6 @@ import com.kingja.loadsir.callback.Callback
 import com.kingja.loadsir.callback.SuccessCallback
 import com.kingja.loadsir.core.LoadSir
 import com.yanzhenjie.recyclerview.SwipeRecyclerView
-import kotlinx.android.synthetic.main.fragment_home.*
 import me.hgj.jetpackmvvm.demo.app.weight.loadCallBack.LoadingCallback
 
 /**
@@ -42,12 +41,12 @@ class MyPointFragment:BaseVmDbFragment<MyPointViewModel,FragmentMyPointBinding>(
         return R.layout.fragment_my_point
     }
     override fun initView() {
-        toolbar.initClose(titleStr = "我的积分",onBack={
+        mDataBind.toolbar.initClose(titleStr = "我的积分",onBack={
             NavHostFragment.findNavController(this).navigateUp()
         })
 
-        toolbar.inflateMenu(R.menu.integral_menu)
-        toolbar.setOnMenuItemClickListener {
+        mDataBind.toolbar.inflateMenu(R.menu.integral_menu)
+        mDataBind.toolbar.setOnMenuItemClickListener {
             when(it.itemId){
                 R.id.integral_guize->{
                     val bundle=Bundle()
@@ -63,45 +62,45 @@ class MyPointFragment:BaseVmDbFragment<MyPointViewModel,FragmentMyPointBinding>(
             }
             true
         }
-        loadService=LoadSir.getDefault().register(swipeRefresh, Callback.OnReloadListener {
+        loadService=LoadSir.getDefault().register(mDataBind.swipeRefresh, Callback.OnReloadListener {
             pageNo=1
             loadService.showCallback(LoadingCallback::class.java)
             myPointViewModel.getMyPointList(pageNo)
         })
-        recyclerView.layoutManager=LinearLayoutManager(activity)
-        recyclerView.adapter=myPointAdapter
+        mDataBind.recyclerView.layoutManager=LinearLayoutManager(activity)
+        mDataBind.recyclerView.adapter=myPointAdapter
         //floatBtn快速返回到顶部
-        floatbtn.setOnClickListener {
-            val layoutManager:LinearLayoutManager= recyclerView.layoutManager as LinearLayoutManager
+        mDataBind.floatbtn.setOnClickListener {
+            val layoutManager:LinearLayoutManager= mDataBind.recyclerView.layoutManager as LinearLayoutManager
             if(layoutManager.findLastVisibleItemPosition()>=40){
-                recyclerView.scrollToPosition(0)  //没有滑动动画，快速滚动到顶部
+                mDataBind.recyclerView.scrollToPosition(0)  //没有滑动动画，快速滚动到顶部
             }else{
-                recyclerView.smoothScrollToPosition(0) //有滑动动画，快速滚动到顶部
+                mDataBind.recyclerView.smoothScrollToPosition(0) //有滑动动画，快速滚动到顶部
             }
         }
         //滑动到顶部，隐藏 FloatingActionBtn
-        recyclerView.addOnScrollListener(object: RecyclerView.OnScrollListener(){
+        mDataBind.recyclerView.addOnScrollListener(object: RecyclerView.OnScrollListener(){
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
             }
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 if(!recyclerView.canScrollVertically(-1)){
-                    floatbtn.visibility= View.INVISIBLE
+                    mDataBind.floatbtn.visibility= View.INVISIBLE
                 }
             }
         })
         //下拉刷新
-        swipeRefresh.setOnRefreshListener {
+        mDataBind.swipeRefresh.setOnRefreshListener {
             pageNo=1
             myPointViewModel.getMyPointList(pageNo)
         }
         //添加FootView  自定义
         val footView= DefineLoadMoreView(MyApp.instance)
-        recyclerView.addFooterView(footView)
-        recyclerView.setLoadMoreView(footView)
+        mDataBind.recyclerView.addFooterView(footView)
+        mDataBind.recyclerView.setLoadMoreView(footView)
         //加载更多
-        recyclerView.setLoadMoreListener {
+        mDataBind.recyclerView.setLoadMoreListener {
             pageNo++
             myPointViewModel.getMyPointList(pageNo)
         }
@@ -120,11 +119,11 @@ class MyPointFragment:BaseVmDbFragment<MyPointViewModel,FragmentMyPointBinding>(
     }
     override fun createObserver() {
         myPointViewModel.pointLiveData.observe(this, Observer {
-            swipeRefresh.isRefreshing=false
+            mDataBind.swipeRefresh.isRefreshing=false
             if(it.isSuccess){
                 if(it.response!!.getStatus()){
                     loadService.showCallback(SuccessCallback::class.java)
-                    recyclerView.loadMoreFinish(it.response!!.getResponseData().isEmpty(),it.response!!.getResponseData().curPage<it.response!!.getResponseData().pageCount)
+                    mDataBind.recyclerView.loadMoreFinish(it.response!!.getResponseData().isEmpty(),it.response!!.getResponseData().curPage<it.response!!.getResponseData().pageCount)
                     if(it.response!!.getResponseData().curPage==1){
                         myPointAdapter.setList((it.response.getResponseData().datas))
                     }else{
@@ -136,8 +135,8 @@ class MyPointFragment:BaseVmDbFragment<MyPointViewModel,FragmentMyPointBinding>(
                 }
 
             }else{
-                recyclerView.loadMoreFinish(true,false)
-                recyclerView.loadMoreError(0,it.errorMsg)
+                mDataBind.recyclerView.loadMoreFinish(true,false)
+                mDataBind.recyclerView.loadMoreError(0,it.errorMsg)
                 if(!TextUtils.isEmpty(it.errorMsg)){
                     ToastUtils.showLong(it.errorMsg)
                 }

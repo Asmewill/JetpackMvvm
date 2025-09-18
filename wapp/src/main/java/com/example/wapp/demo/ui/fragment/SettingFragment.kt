@@ -1,28 +1,18 @@
 package com.example.wapp.demo.ui.fragment
 
 import android.view.View
-import android.widget.Switch
-import androidx.lifecycle.observe
 import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.WhichButton
-import com.afollestad.materialdialogs.actions.getActionButton
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.blankj.utilcode.util.ToastUtils
 import com.example.oapp.base.BaseVmDbFragment
 import com.example.wapp.R
 import com.example.wapp.databinding.FragmentSettingBinding
-import com.example.wapp.demo.bean.UserInfo
 import com.example.wapp.demo.ext.initClose
 import com.example.wapp.demo.http.NetworkApi
 import com.example.wapp.demo.navigation.NavHostFragment
 import com.example.wapp.demo.utils.CacheUtil
 import com.example.wapp.demo.viewmodel.EventViewModel
 import com.example.wapp.demo.viewmodel.SettingViewModel
-
-import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.fragment_home.toolbar
-import kotlinx.android.synthetic.main.fragment_setting.*
-import java.util.*
 
 /**
  * Created by jsxiaoshui on 2021-11-15
@@ -35,18 +25,18 @@ class SettingFragment:BaseVmDbFragment<SettingViewModel,FragmentSettingBinding>(
     }
 
     override fun initView() {
-        toolbar.initClose(titleStr = "设置",onBack={
+        mDataBind.toolbar.initClose(titleStr = "设置",onBack={
             NavHostFragment.findNavController(this).navigateUp()
         })
-        ll_isShowTop.setOnClickListener(this)
-        ll_clear_cache.setOnClickListener(this)
-        ll_exit_login.setOnClickListener(this)
-        ll_list_animation.setOnClickListener(this)
-        ll_theme_color.setOnClickListener(this)
-        ll_version.setOnClickListener(this)
-        ll_author.setOnClickListener(this)
-        ll_origin_code.setOnClickListener(this)
-        ll_copyright.setOnClickListener(this)
+        mDataBind.llIsShowTop.setOnClickListener(this)
+        mDataBind.llClearCache.setOnClickListener(this)
+        mDataBind.llExitLogin.setOnClickListener(this)
+        mDataBind.llListAnimation.setOnClickListener(this)
+        mDataBind.llThemeColor.setOnClickListener(this)
+        mDataBind.llVersion.setOnClickListener(this)
+        mDataBind.llAuthor.setOnClickListener(this)
+        mDataBind.llOriginCode.setOnClickListener(this)
+        mDataBind.llCopyright.setOnClickListener(this)
     }
 
     override fun initData() {

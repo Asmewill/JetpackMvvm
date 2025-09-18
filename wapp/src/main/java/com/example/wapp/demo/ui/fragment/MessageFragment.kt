@@ -11,13 +11,9 @@ import com.example.oapp.base.BaseVmDbFragment
 import com.example.wapp.R
 import com.example.wapp.databinding.FragmentMessageBinding
 import com.example.wapp.demo.MyApp
-import com.example.wapp.demo.ext.initClose
 import com.example.wapp.demo.ext.toHtml
-import com.example.wapp.demo.navigation.NavHostFragment
 import com.example.wapp.demo.viewmodel.MessageViewModel
 import com.example.wapp.demo.widget.ScaleTransitionPagerTitleView
-import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.fragment_project.*
 import net.lucode.hackware.magicindicator.buildins.UIUtil
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNavigatorAdapter
@@ -44,9 +40,9 @@ class MessageFragment:BaseVmDbFragment<MessageViewModel,FragmentMessageBinding>(
     }
 
     override fun initView() {
-        toolbar.title=""
-        view_pager.isUserInputEnabled=true//设置是否禁止用户滑动页面
-        view_pager.adapter=object: FragmentStateAdapter(this) {
+        mDataBind.toolbar.title=""
+        mDataBind.viewPager.isUserInputEnabled=true//设置是否禁止用户滑动页面
+        mDataBind.viewPager.adapter=object: FragmentStateAdapter(this) {
             override fun getItemCount(): Int {
                 return  fragments.size
             }
@@ -70,7 +66,7 @@ class MessageFragment:BaseVmDbFragment<MessageViewModel,FragmentMessageBinding>(
                     //选中颜色
                     selectedColor = Color.WHITE
                     this.setOnClickListener {
-                        view_pager.currentItem=index
+                        mDataBind.viewPager.currentItem=index
                     }
                 }
             }
@@ -90,24 +86,24 @@ class MessageFragment:BaseVmDbFragment<MessageViewModel,FragmentMessageBinding>(
                 }
             }
         }
-        magic_indicator.navigator=commonNavigator
-        view_pager.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback() {
+        mDataBind.magicIndicator.navigator=commonNavigator
+        mDataBind.viewPager.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback() {
             override fun onPageScrolled(
                 position: Int,
                 positionOffset: Float,
                 positionOffsetPixels: Int
             ) {
                 super.onPageScrolled(position, positionOffset, positionOffsetPixels)
-                magic_indicator.onPageScrolled(position, positionOffset, positionOffsetPixels)
+               mDataBind.magicIndicator.onPageScrolled(position, positionOffset, positionOffsetPixels)
             }
 
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
-                magic_indicator.onPageSelected(position)
+                mDataBind.magicIndicator.onPageSelected(position)
             }
             override fun onPageScrollStateChanged(state: Int) {
                 super.onPageScrollStateChanged(state)
-                magic_indicator.onPageScrollStateChanged(state)
+                mDataBind.magicIndicator.onPageScrollStateChanged(state)
             }
         })
 

@@ -1,5 +1,6 @@
 package com.example.wapp.demo.ui.fragment;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.media.MediaPlayer;
@@ -66,9 +67,9 @@ public class ImageGridFragment extends Fragment implements OnItemClickListener {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		mImageThumbSize = getResources().getDimensionPixelSize(
-				R.dimen.image_thumbnail_size);
+				R.dimen.adaptive_40dp);
 		mImageThumbSpacing = getResources().getDimensionPixelSize(
-				R.dimen.image_thumbnail_spacing);
+				R.dimen.adaptive_3dp);
 		mAdapter = new ImageAdapter();
 		
 		ImageCache.ImageCacheParams cacheParams=new ImageCache.ImageCacheParams();
@@ -79,7 +80,7 @@ public class ImageGridFragment extends Fragment implements OnItemClickListener {
 		// The ImageFetcher takes care of loading images into our ImageView
 		// children asynchronously
 		mImageResizer = new ImageResizer(getActivity(), mImageThumbSize);
-		mImageResizer.setLoadingImage(R.drawable.em_empty_photo);
+		mImageResizer.setLoadingImage(R.drawable.em_empty_logo);
 		mImageResizer.addImageCache(getActivity().getSupportFragmentManager(),
 				cacheParams);
 	}
@@ -218,7 +219,7 @@ public class ImageGridFragment extends Fragment implements OnItemClickListener {
 		}
 
 		@Override
-		public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+		public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
 			holder.itemView.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
@@ -249,7 +250,7 @@ public class ImageGridFragment extends Fragment implements OnItemClickListener {
 			holder.tvDur.setText(EaseDateUtils.toTime(entity.duration));
 			holder.tvSize.setText(TextFormater.getDataSize(entity.size));
 			holder.imageView.setBackground(null);
-			holder.imageView.setImageResource(R.drawable.em_empty_photo);
+			holder.imageView.setImageResource(R.drawable.em_empty_logo);
 			mImageResizer.loadImage(entity.filePath, holder.imageView);
 		}
 

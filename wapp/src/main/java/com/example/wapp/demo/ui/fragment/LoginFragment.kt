@@ -18,7 +18,7 @@ import com.example.wapp.demo.navigation.NavHostFragment
 import com.example.wapp.demo.utils.CacheUtil
 import com.example.wapp.demo.viewmodel.EventViewModel
 import com.example.wapp.demo.viewmodel.LoginRegisterViewModel
-import kotlinx.android.synthetic.main.fragment_home.*
+
 
 /**
  * Created by jsxiaoshui on 2021-11-12
@@ -31,7 +31,7 @@ class LoginFragment: BaseVmDbFragment<LoginRegisterViewModel, FragmentLoginBindi
     }
 
     override fun initView() {
-        toolbar.initClose(titleStr = "登录"){
+        mDataBind.toolbar.initClose(titleStr = "登录"){
             nav().navigateUp()
         }
         mDataBind.vm=mViewModel

@@ -21,7 +21,6 @@ import com.example.wapp.demo.viewmodel.CollectViewModel
 import com.kingja.loadsir.callback.Callback
 import com.kingja.loadsir.callback.SuccessCallback
 import com.kingja.loadsir.core.LoadSir
-import kotlinx.android.synthetic.main.fragment_home.*
 import me.hgj.jetpackmvvm.demo.app.weight.loadCallBack.EmptyCallback
 import me.hgj.jetpackmvvm.demo.app.weight.loadCallBack.LoadingCallback
 import java.lang.Exception
@@ -41,35 +40,35 @@ class CollectUrlFragment:BaseVmDbFragment<CollectViewModel,FragmentCollectUrlBin
     }
 
     override fun initView() {
-        loadService= LoadSir.getDefault().register(swipeRefresh, Callback.OnReloadListener {
+        loadService= LoadSir.getDefault().register(mDataBind.swipeRefresh, Callback.OnReloadListener {
             loadService.showCallback(LoadingCallback::class.java)
             collectViewModel.collectUrlList();
         })
-        recyclerView.layoutManager=LinearLayoutManager(mActivity)
-        recyclerView.adapter=collectUrlAdapter;
+        mDataBind.recyclerView.layoutManager=LinearLayoutManager(mActivity)
+        mDataBind.recyclerView.adapter=collectUrlAdapter;
         //floatBtn快速返回到顶部
-        floatbtn.setOnClickListener {
-            val layoutManager:LinearLayoutManager= recyclerView.layoutManager as LinearLayoutManager
+        mDataBind.floatbtn.setOnClickListener {
+            val layoutManager:LinearLayoutManager= mDataBind.recyclerView.layoutManager as LinearLayoutManager
             if(layoutManager.findLastVisibleItemPosition()>=40){
-                recyclerView.scrollToPosition(0)  //没有滑动动画，快速滚动到顶部
+                mDataBind.recyclerView.scrollToPosition(0)  //没有滑动动画，快速滚动到顶部
             }else{
-                recyclerView.smoothScrollToPosition(0) //有滑动动画，快速滚动到顶部
+                mDataBind.recyclerView.smoothScrollToPosition(0) //有滑动动画，快速滚动到顶部
             }
         }
         //滑动到顶部，隐藏 FloatingActionBtn
-        recyclerView.addOnScrollListener(object: RecyclerView.OnScrollListener(){
+        mDataBind.recyclerView.addOnScrollListener(object: RecyclerView.OnScrollListener(){
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
             }
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 if(!recyclerView.canScrollVertically(-1)){
-                    floatbtn.visibility= View.INVISIBLE
+                    mDataBind.floatbtn.visibility= View.INVISIBLE
                 }
             }
         })
         //下拉刷新
-        swipeRefresh.setOnRefreshListener {
+        mDataBind.swipeRefresh.setOnRefreshListener {
             collectViewModel.collectUrlList();
         }
         collectUrlAdapter.setOnItemChildClickListener { adapter, view, position ->
@@ -94,7 +93,7 @@ class CollectUrlFragment:BaseVmDbFragment<CollectViewModel,FragmentCollectUrlBin
 
     override fun createObserver() {
         collectViewModel.urlListLiveData.observe(this, Observer {
-            swipeRefresh.isRefreshing=false
+            mDataBind.swipeRefresh.isRefreshing=false
             when(it.isSuccess){
                 true->{//请求成功
                     loadService.showCallback(SuccessCallback::class.java)

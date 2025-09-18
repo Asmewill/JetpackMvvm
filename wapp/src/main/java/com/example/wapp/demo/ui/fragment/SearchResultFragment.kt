@@ -1,11 +1,8 @@
 package com.example.wapp.demo.ui.fragment
 
 import android.os.Bundle
-import android.view.View
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.chad.library.adapter.base.BaseQuickAdapter
-import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.example.oapp.base.BaseVmDbFragment
 import com.example.wapp.R
 import com.example.wapp.databinding.FragmentSearchResultBinding
@@ -15,16 +12,13 @@ import com.example.wapp.demo.bean.ArticleResponse
 import com.example.wapp.demo.bean.enums.CollectType
 import com.example.wapp.demo.constant.Constant
 import com.example.wapp.demo.ext.*
+import com.example.wapp.demo.loadcallback.ErrorCallback
 import com.example.wapp.demo.viewmodel.SearchResultViewModel
 import com.example.wapp.demo.widget.DefineLoadMoreView
 import com.kingja.loadsir.callback.SuccessCallback
-import com.kingja.loadsir.core.LoadService
 import com.kingja.loadsir.core.LoadSir
 import com.yanzhenjie.recyclerview.SwipeRecyclerView
-
-import kotlinx.android.synthetic.main.fragment_search_result.*
 import me.hgj.jetpackmvvm.demo.app.weight.loadCallBack.EmptyCallback
-import com.example.wapp.demo.loadcallback.ErrorCallback
 import me.hgj.jetpackmvvm.demo.app.weight.loadCallBack.LoadingCallback
 
 /**
@@ -39,29 +33,29 @@ class SearchResultFragment : BaseVmDbFragment<SearchResultViewModel, FragmentSea
 
     override fun initView() {
         //注册LoadingService
-        loadService = LoadSir.getDefault().register(swipeRefresh) {
+        loadService = LoadSir.getDefault().register(mDataBind.swipeRefresh) {
             loadService.showCallback(LoadingCallback::class.java)
             mViewModel.getSearchDataByKey(searchKey, true)
         }
         searchKey = arguments?.getString("searchKey").toString()
-        toolbar.initClose(searchKey) {
+        mDataBind.toolbar.initClose(searchKey) {
             nav().navigateUp()
         }
-        rv_search_list.layoutManager = LinearLayoutManager(mActivity)
-        rv_search_list.adapter = articleAdapter
+        mDataBind.rvSearchList.layoutManager = LinearLayoutManager(mActivity)
+        mDataBind.rvSearchList.adapter = articleAdapter
         val footView = DefineLoadMoreView(MyApp.instance)
         //设置尾部点击
         footView.setmLoadMoreListener(SwipeRecyclerView.LoadMoreListener {
             footView.onLoading()
             mViewModel.getSearchDataByKey(searchKey, false)
         })
-        rv_search_list.addFooterView(footView)
-        rv_search_list.setLoadMoreView(footView)
-        rv_search_list.setLoadMoreListener {
+         mDataBind.rvSearchList.addFooterView(footView)
+        mDataBind.rvSearchList.setLoadMoreView(footView)
+        mDataBind.rvSearchList.setLoadMoreListener {
             mViewModel.getSearchDataByKey(searchKey, false)
         }
-        rv_search_list.initFloatBtn(floatbtn)
-        swipeRefresh.init {
+        mDataBind.rvSearchList.initFloatBtn(mDataBind.floatbtn)
+        mDataBind.swipeRefresh.init {
             mViewModel.getSearchDataByKey(searchKey, true)
         }
         articleAdapter.setOnItemClickListener { adapter, view, position ->
@@ -85,7 +79,7 @@ class SearchResultFragment : BaseVmDbFragment<SearchResultViewModel, FragmentSea
 
     override fun createObserver() {
         mViewModel.searchResultLiveData.observe(mActivity, Observer {
-            swipeRefresh.isRefreshing = false
+            mDataBind.swipeRefresh.isRefreshing = false
             if (it.isSuccess) {
                 if (it.isRefresh && it.listData.size <= 0) {//空布局
                     loadService.showCallback(EmptyCallback::class.java)
@@ -96,12 +90,12 @@ class SearchResultFragment : BaseVmDbFragment<SearchResultViewModel, FragmentSea
                     articleAdapter.addData(it.listData)
                     loadService.showCallback(SuccessCallback::class.java)
                 }
-                rv_search_list.loadMoreFinish(it.isEmpty, it.hasMore)//必须要加，否则上拉加载，无法实现
+                mDataBind.rvSearchList.loadMoreFinish(it.isEmpty, it.hasMore)//必须要加，否则上拉加载，无法实现
             } else {//异常数据
                 if (it.isRefresh) {
                     loadService.showCallback(ErrorCallback::class.java)
                 } else {
-                    rv_search_list.loadMoreError(404, it.errorMsg)
+                    mDataBind.rvSearchList.loadMoreError(404, it.errorMsg)
                 }
             }
         })

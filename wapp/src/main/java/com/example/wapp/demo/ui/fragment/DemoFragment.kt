@@ -5,10 +5,7 @@ import com.example.wapp.R
 import com.example.wapp.databinding.FragmentDemoBinding
 import com.example.wapp.demo.ext.initClose
 import com.example.wapp.demo.navigation.NavHostFragment
-import com.example.wapp.demo.room.AppDataBase
-import com.example.wapp.demo.room.User
 import com.example.wapp.demo.viewmodel.DemoViewModel
-import kotlinx.android.synthetic.main.fragment_home.*
 
 /**
  * Data :2023/3/13
@@ -22,7 +19,7 @@ class DemoFragment:BaseVmDbFragment<DemoViewModel,FragmentDemoBinding>() {
     }
 
     override fun initView() {
-       toolbar.initClose(titleStr = "示例"){
+       mDataBind.toolbar.initClose(titleStr = "示例"){
            NavHostFragment.findNavController(this).navigateUp()
        }
 

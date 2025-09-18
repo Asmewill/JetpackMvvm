@@ -11,7 +11,7 @@ import com.example.wapp.databinding.FragmentMineBinding
 import com.example.wapp.demo.utils.CacheUtil
 import com.example.wapp.demo.viewmodel.EventViewModel
 import com.example.wapp.demo.viewmodel.MineViewModel
-import kotlinx.android.synthetic.main.fragment_mine.*
+
 
 /**
  * Created by jsxiaoshui on 2021/8/20
@@ -41,8 +41,8 @@ class MineFragment:BaseVmDbFragment<MineViewModel,FragmentMineBinding>() {
 
     }
     override fun initData() {
-        me_swipe.setOnRefreshListener {
-            me_swipe.isRefreshing=true
+         mDataBind.meSwipe.setOnRefreshListener {
+             mDataBind.meSwipe.isRefreshing=true
             mViewModel.getPointAndRank()
         }
     }
@@ -59,7 +59,7 @@ class MineFragment:BaseVmDbFragment<MineViewModel,FragmentMineBinding>() {
             }
         })
         mViewModel.pointLiveData.observe(mActivity, Observer {
-            me_swipe.isRefreshing=false
+            mDataBind.meSwipe.isRefreshing=false
             if(it.isSuccess){
                 mViewModel.info.set("id:${it.listData[0].userId}　排名：${it.listData[0].rank}")
                 mViewModel.point.set(it.listData[0].coinCount)

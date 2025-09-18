@@ -23,7 +23,6 @@ import com.example.wapp.demo.ext.nav
 import com.example.wapp.demo.ext.toHtml
 import com.example.wapp.demo.viewmodel.SquareViewModel
 import com.example.wapp.demo.widget.ScaleTransitionPagerTitleView
-import kotlinx.android.synthetic.main.fragment_project.*
 import net.lucode.hackware.magicindicator.buildins.UIUtil
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNavigatorAdapter
@@ -53,8 +52,8 @@ class SquareFragment:BaseVmDbFragment<SquareViewModel,FragmentSquareBinding>() {
     }
 
     override fun initView() {
-        include_viewpager_toolbar.inflateMenu(R.menu.todo_menu)
-        include_viewpager_toolbar.setOnMenuItemClickListener {
+        mDataBind.includeViewpagerToolbar.inflateMenu(R.menu.todo_menu)
+        mDataBind.includeViewpagerToolbar.setOnMenuItemClickListener {
              when(it.itemId){
                  R.id.todo_add->{
                      val items= arrayListOf<String>("分享文章", "公众号")
@@ -83,8 +82,8 @@ class SquareFragment:BaseVmDbFragment<SquareViewModel,FragmentSquareBinding>() {
 
              }
         }
-        view_pager.isUserInputEnabled=true//设置是否禁止用户滑动页面
-        view_pager.adapter=object: FragmentStateAdapter(this) {
+        mDataBind.viewPager.isUserInputEnabled=true//设置是否禁止用户滑动页面
+        mDataBind.viewPager.adapter=object: FragmentStateAdapter(this) {
             override fun getItemCount(): Int {
                 return  fragmentList.size
             }
@@ -110,7 +109,7 @@ class SquareFragment:BaseVmDbFragment<SquareViewModel,FragmentSquareBinding>() {
                     //选中颜色
                     selectedColor = Color.WHITE
                     this.setOnClickListener {
-                        view_pager.currentItem=index
+                        mDataBind.viewPager.currentItem=index
                     }
                 }
             }
@@ -129,24 +128,24 @@ class SquareFragment:BaseVmDbFragment<SquareViewModel,FragmentSquareBinding>() {
                 }
             }
         }
-        magic_indicator.navigator=commonNavigator
-        view_pager.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback() {
+        mDataBind.magicIndicator.navigator=commonNavigator
+        mDataBind.viewPager.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback() {
             override fun onPageScrolled(
                 position: Int,
                 positionOffset: Float,
                 positionOffsetPixels: Int
             ) {
                 super.onPageScrolled(position, positionOffset, positionOffsetPixels)
-                magic_indicator.onPageScrolled(position, positionOffset, positionOffsetPixels)
+                mDataBind.magicIndicator.onPageScrolled(position, positionOffset, positionOffsetPixels)
             }
 
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
-                magic_indicator.onPageSelected(position)
+                mDataBind.magicIndicator.onPageSelected(position)
             }
             override fun onPageScrollStateChanged(state: Int) {
                 super.onPageScrollStateChanged(state)
-                magic_indicator.onPageScrollStateChanged(state)
+                mDataBind.magicIndicator.onPageScrollStateChanged(state)
             }
         })
 

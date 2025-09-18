@@ -15,30 +15,29 @@ import com.example.wapp.demo.viewmodel.ConversationViewModel
 import com.hyphenate.chat.EMClient
 import com.hyphenate.chat.EMConversation
 import com.hyphenate.easeui.model.EaseEvent
-import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.fragment_system_msgs.*
 
 /**
  * Created by jsxiaoshui on 2021-11-26
  */
-class SystemMsgFragment:BaseVmDbFragment<ConversationViewModel,FragmentSystemMsgsBinding>() {
-    private val conversationViewModel:ConversationViewModel by viewModels()
+class SystemMsgFragment : BaseVmDbFragment<ConversationViewModel, FragmentSystemMsgsBinding>() {
+    private val conversationViewModel: ConversationViewModel by viewModels()
 
-    private val  systemMsgAdapter  by lazy {
-        SystemMsgAdapter(mutableListOf(),conversationViewModel)
+    private val systemMsgAdapter by lazy {
+        SystemMsgAdapter(mutableListOf(), conversationViewModel)
     }
+
     override fun layoutId(): Int {
-        return  R.layout.fragment_system_msgs
+        return R.layout.fragment_system_msgs
     }
 
     override fun initView() {
-        tv_title.text="系统消息"
-        titlebar.setNavigationIcon(R.drawable.ic_back)
-        titlebar.setNavigationOnClickListener{
+        mDataBind.tvTitle.text = "系统消息"
+        mDataBind.titlebar.setNavigationIcon(R.drawable.ic_back)
+        mDataBind.titlebar.setNavigationOnClickListener {
             nav().navigateUp()
         }
-        rv_list.layoutManager=LinearLayoutManager(mActivity)
-        rv_list.adapter=systemMsgAdapter
+        mDataBind.rvList.layoutManager = LinearLayoutManager(mActivity)
+        mDataBind.rvList.adapter = systemMsgAdapter
         //通知会话列表刷新---更新消息个数
         LiveDataBus.get().with(DemoConstant.MESSAGE_CHANGE_CHANGE)
             .postValue(EaseEvent(DemoConstant.MESSAGE_CHANGE_CHANGE, EaseEvent.TYPE.MESSAGE))
@@ -55,29 +54,30 @@ class SystemMsgFragment:BaseVmDbFragment<ConversationViewModel,FragmentSystemMsg
         val conversation = EMClient.getInstance().chatManager().getConversation(
             DemoConstant.DEFAULT_SYSTEM_MESSAGE_ID,
             EMConversation.EMConversationType.Chat,
-            true)
-       conversation.markAllMessagesAsRead()
-       LiveDataBus.get().with(DemoConstant.NOTIFY_CHANGE)
+            true
+        )
+        conversation.markAllMessagesAsRead()
+        LiveDataBus.get().with(DemoConstant.NOTIFY_CHANGE)
             .postValue(EaseEvent.create(DemoConstant.NOTIFY_CHANGE, EaseEvent.TYPE.NOTIFY))
     }
 
     override fun createObserver() {
         conversationViewModel.systemLiveData.observe(mActivity, Observer {
-                systemMsgAdapter.setList(it.listData)
-            }
+            systemMsgAdapter.setList(it.listData)
+        }
         )
         conversationViewModel.agreeLiveData.observe(mActivity, Observer {
-            if(it.isSuccess){
+            if (it.isSuccess) {
                 conversationViewModel.loadSystemMsg(100)
                 //通知联系人列表
                 val event = EaseEvent.create(DemoConstant.CONTACT_CHANGE, EaseEvent.TYPE.CONTACT)
                 LiveDataBus.get().with(DemoConstant.CONTACT_CHANGE).postValue(event)
-            }else{
+            } else {
                 ToastUtils.showShort(it.errorMsg)
             }
         })
 
-        conversationViewModel.refuseLiveData.observe(mActivity,Observer{
+        conversationViewModel.refuseLiveData.observe(mActivity, Observer {
             conversationViewModel.loadSystemMsg(100)
             //通知联系人列表
             val event = EaseEvent.create(DemoConstant.CONTACT_CHANGE, EaseEvent.TYPE.CONTACT)

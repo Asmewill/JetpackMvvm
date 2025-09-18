@@ -17,8 +17,6 @@ import com.example.wapp.demo.ext.toHtml
 import com.example.wapp.demo.navigation.NavHostFragment
 import com.example.wapp.demo.viewmodel.CollectViewModel
 import com.example.wapp.demo.widget.ScaleTransitionPagerTitleView
-import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.fragment_project.*
 import net.lucode.hackware.magicindicator.buildins.UIUtil
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNavigatorAdapter
@@ -30,33 +28,37 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.Li
  * Created by jsxiaoshui on 2021-11-15
  *
  */
-class CollectFragment:BaseVmDbFragment<CollectViewModel,FragmentCollectBinding>() {
-    private val mDataList= arrayListOf("文章","网址")
-    private var fragments= arrayListOf<Fragment>()
-    private var commonNavigator= CommonNavigator(MyApp.instance)
+class CollectFragment : BaseVmDbFragment<CollectViewModel, FragmentCollectBinding>() {
+    private val mDataList = arrayListOf("文章", "网址")
+    private var fragments = arrayListOf<Fragment>()
+    private var commonNavigator = CommonNavigator(MyApp.instance)
+
     init {
         fragments.add(CollectArticleFragment())
         fragments.add(CollectUrlFragment())
     }
+
     override fun layoutId(): Int {
-       return R.layout.fragment_collect
+        return R.layout.fragment_collect
     }
+
     override fun initView() {
-        toolbar.initClose(titleStr = "",onBack={
+        mDataBind.toolbar.initClose(titleStr = "", onBack = {
             NavHostFragment.findNavController(this).navigateUp()
         })
-        view_pager.isUserInputEnabled=true//设置是否禁止用户滑动页面
-        view_pager.adapter=object: FragmentStateAdapter(this) {
+        mDataBind.viewPager.isUserInputEnabled = true//设置是否禁止用户滑动页面
+        mDataBind.viewPager.adapter = object : FragmentStateAdapter(this) {
             override fun getItemCount(): Int {
-                return  fragments.size
+                return fragments.size
             }
+
             override fun createFragment(position: Int): Fragment {
                 return fragments[position]
             }
         }
-        commonNavigator.adapter=object : CommonNavigatorAdapter(){
+        commonNavigator.adapter = object : CommonNavigatorAdapter() {
             override fun getCount(): Int {
-                return  mDataList.size
+                return mDataList.size
             }
 
             override fun getTitleView(context: Context, index: Int): IPagerTitleView {
@@ -70,13 +72,13 @@ class CollectFragment:BaseVmDbFragment<CollectViewModel,FragmentCollectBinding>(
                     //选中颜色
                     selectedColor = Color.WHITE
                     this.setOnClickListener {
-                        view_pager.currentItem=index
+                        mDataBind.viewPager.currentItem = index
                     }
                 }
             }
 
             override fun getIndicator(context: Context?): IPagerIndicator {
-                return  LinePagerIndicator(context).apply {
+                return LinePagerIndicator(context).apply {
                     mode = LinePagerIndicator.MODE_EXACTLY
                     //线条的宽高度
                     lineHeight = UIUtil.dip2px(MyApp.instance, 3.0).toFloat()
@@ -90,24 +92,30 @@ class CollectFragment:BaseVmDbFragment<CollectViewModel,FragmentCollectBinding>(
                 }
             }
         }
-        magic_indicator.navigator=commonNavigator
-        view_pager.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback() {
+        mDataBind.magicIndicator.navigator = commonNavigator
+        mDataBind.viewPager.registerOnPageChangeCallback(object :
+            ViewPager2.OnPageChangeCallback() {
             override fun onPageScrolled(
                 position: Int,
                 positionOffset: Float,
-                positionOffsetPixels: Int
+                positionOffsetPixels: Int,
             ) {
                 super.onPageScrolled(position, positionOffset, positionOffsetPixels)
-                magic_indicator.onPageScrolled(position, positionOffset, positionOffsetPixels)
+                mDataBind.magicIndicator.onPageScrolled(
+                    position,
+                    positionOffset,
+                    positionOffsetPixels
+                )
             }
 
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
-                magic_indicator.onPageSelected(position)
+                mDataBind.magicIndicator.onPageSelected(position)
             }
+
             override fun onPageScrollStateChanged(state: Int) {
                 super.onPageScrollStateChanged(state)
-                magic_indicator.onPageScrollStateChanged(state)
+                mDataBind.magicIndicator.onPageScrollStateChanged(state)
             }
         })
 

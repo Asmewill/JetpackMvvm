@@ -16,10 +16,7 @@ import com.example.wapp.demo.ext.toHtml
 import com.example.wapp.demo.viewmodel.ProjectViewModel
 import com.example.wapp.demo.widget.ScaleTransitionPagerTitleView
 import com.kingja.loadsir.callback.SuccessCallback
-import com.kingja.loadsir.core.LoadService
 import com.kingja.loadsir.core.LoadSir
-import kotlinx.android.synthetic.main.fragment_project.*
-import kotlinx.android.synthetic.main.include_recyclerview.*
 import me.hgj.jetpackmvvm.demo.app.weight.loadCallBack.LoadingCallback
 import net.lucode.hackware.magicindicator.buildins.UIUtil
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator
@@ -42,12 +39,12 @@ class ProjectFragment:BaseVmDbFragment<ProjectViewModel,FragmentProjectBinding>(
 
     override fun initView() {
         //注册LoadingService
-        loadService = LoadSir.getDefault().register(view_pager) {
+        loadService = LoadSir.getDefault().register(mDataBind.viewPager) {
             loadService.showCallback(LoadingCallback::class.java)
             mViewModel.getProjectTitle()
         }
-        view_pager.isUserInputEnabled=true//设置是否禁止用户滑动页面
-        view_pager.adapter=object: FragmentStateAdapter(this) {
+        mDataBind.viewPager.isUserInputEnabled=true//设置是否禁止用户滑动页面
+        mDataBind.viewPager.adapter=object: FragmentStateAdapter(this) {
             override fun getItemCount(): Int {
                 return  fragments.size
             }
@@ -71,7 +68,7 @@ class ProjectFragment:BaseVmDbFragment<ProjectViewModel,FragmentProjectBinding>(
                      //选中颜色
                      selectedColor = Color.WHITE
                      this.setOnClickListener {
-                         view_pager.currentItem=index
+                         mDataBind.viewPager.currentItem=index
                      }
                  }
             }
@@ -91,24 +88,24 @@ class ProjectFragment:BaseVmDbFragment<ProjectViewModel,FragmentProjectBinding>(
                   }
             }
         }
-        magic_indicator.navigator=commonNavigator
-        view_pager.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback() {
+         mDataBind.magicIndicator.navigator=commonNavigator
+         mDataBind.viewPager.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback() {
             override fun onPageScrolled(
                 position: Int,
                 positionOffset: Float,
                 positionOffsetPixels: Int
             ) {
                 super.onPageScrolled(position, positionOffset, positionOffsetPixels)
-                magic_indicator.onPageScrolled(position, positionOffset, positionOffsetPixels)
+                mDataBind.magicIndicator.onPageScrolled(position, positionOffset, positionOffsetPixels)
             }
 
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
-                magic_indicator.onPageSelected(position)
+                mDataBind.magicIndicator.onPageSelected(position)
             }
             override fun onPageScrollStateChanged(state: Int) {
                 super.onPageScrollStateChanged(state)
-                magic_indicator.onPageScrollStateChanged(state)
+                mDataBind.magicIndicator.onPageScrollStateChanged(state)
             }
         })
     }
@@ -136,9 +133,9 @@ class ProjectFragment:BaseVmDbFragment<ProjectViewModel,FragmentProjectBinding>(
                 mDataList.add(classifyResponse.name)
                 fragments.add(ProjectChildFragment.newInstance(classifyResponse.id,false))
             }
-            magic_indicator.navigator.notifyDataSetChanged()
-            view_pager.adapter?.notifyDataSetChanged()
-            view_pager.offscreenPageLimit=fragments.size
+            mDataBind.magicIndicator.navigator.notifyDataSetChanged()
+            mDataBind.viewPager.adapter?.notifyDataSetChanged()
+            mDataBind.viewPager.offscreenPageLimit=fragments.size
             loadService.showCallback(SuccessCallback::class.java)
         })
     }

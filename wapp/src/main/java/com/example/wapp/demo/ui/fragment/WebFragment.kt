@@ -23,9 +23,7 @@ import com.example.wapp.demo.ext.initClose
 import com.example.wapp.demo.ext.nav
 import com.example.wapp.demo.utils.CacheUtil
 import com.example.wapp.demo.viewmodel.CollectViewModel
-import com.hyphenate.easeui.widget.EaseAlertDialog
 import com.just.agentweb.AgentWeb
-import kotlinx.android.synthetic.main.fragment_web.*
 
 /**
  * Data :2022/5/26
@@ -57,8 +55,8 @@ class WebFragment: BaseVmDbFragment<BaseViewModel, FragmentWebBinding>() {
             isCollect=it.getBoolean(Constant.IS_COLLECT)
             collectType=it.getInt(Constant.COLLECT_TYPE)
         }
-        mActivity.setSupportActionBar(toolbar)
-        toolbar.initClose(titleStr = articleTitle, onBack = {
+        mActivity.setSupportActionBar(mDataBind.toolbar)
+        mDataBind.toolbar.initClose(titleStr = articleTitle, onBack = {
             if(mAgentWeb!!.webCreator.webView.canGoBack()){
                 mAgentWeb!!.webCreator.webView.goBack()
             }else{
@@ -66,7 +64,7 @@ class WebFragment: BaseVmDbFragment<BaseViewModel, FragmentWebBinding>() {
             }
         })
         preWeb = AgentWeb.with(this)
-            .setAgentWebParent(webcontent, LinearLayout.LayoutParams(-1, -1))
+            .setAgentWebParent(mDataBind.webcontent, LinearLayout.LayoutParams(-1, -1))
             .useDefaultIndicator()
             .createAgentWeb()
             .ready()

@@ -5,7 +5,7 @@ import com.example.oapp.base.BaseVmDbFragment
 import com.example.wapp.R
 import com.example.wapp.databinding.FragmentShareAriticleBinding
 import com.example.wapp.demo.viewmodel.ArticleViewModel
-import kotlinx.android.synthetic.main.fragment_home.*
+
 
 /**
  * Data :2023/2/13

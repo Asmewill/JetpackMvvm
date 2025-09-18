@@ -20,9 +20,7 @@ import com.example.wapp.demo.viewmodel.SquareViewModel
 import com.kingja.loadsir.callback.SuccessCallback
 import com.kingja.loadsir.core.LoadService
 import com.kingja.loadsir.core.LoadSir
-import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.include_recyclerview.recyclerView
-import kotlinx.android.synthetic.main.include_recyclerview.swipeRefresh
+
 import me.hgj.jetpackmvvm.demo.app.weight.loadCallBack.EmptyCallback
 import com.example.wapp.demo.loadcallback.ErrorCallback
 import me.hgj.jetpackmvvm.demo.app.weight.loadCallBack.LoadingCallback
@@ -48,32 +46,32 @@ class NavigationFragment:BaseVmDbFragment<SquareViewModel,FragmentSquareListBind
 
     override fun initView() {
         //注册LoadingService,并设置--重试监听
-        loadService = LoadSir.getDefault().register(swipeRefresh) {
+        loadService = LoadSir.getDefault().register(mDataBind.swipeRefresh) {
             loadService.showCallback(LoadingCallback::class.java)
             mViewModel.getNavigationData(true)
         }
-        recyclerView.layoutManager= LinearLayoutManager(mActivity)
-        recyclerView.setHasFixedSize(true)//Adapter内Item的改变不会影响RecyclerView宽高的时候，可以设置为true让RecyclerView避免重新计算大小
-        recyclerView.adapter=navigatorAdapter
+        mDataBind.recyclerView.layoutManager= LinearLayoutManager(mActivity)
+        mDataBind.recyclerView.setHasFixedSize(true)//Adapter内Item的改变不会影响RecyclerView宽高的时候，可以设置为true让RecyclerView避免重新计算大小
+        mDataBind. recyclerView.adapter=navigatorAdapter
         //recycle滑动到顶部时,隐藏floatbtn
-        recyclerView.addOnScrollListener(object: RecyclerView.OnScrollListener(){
+        mDataBind.recyclerView.addOnScrollListener(object: RecyclerView.OnScrollListener(){
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 if(!recyclerView.canScrollVertically(-1)) {
-                    floatbtn.visibility = View.INVISIBLE
+                    mDataBind.floatbtn.visibility = View.INVISIBLE
                 }
             }
         })
         //快速返回顶部
-        floatbtn.setOnClickListener{
-            val layoutManager=recyclerView.layoutManager as LinearLayoutManager
+        mDataBind.floatbtn.setOnClickListener{
+            val layoutManager=mDataBind.recyclerView.layoutManager as LinearLayoutManager
             if(layoutManager.findLastVisibleItemPosition()>=40){
-                recyclerView.scrollToPosition(0) //没有滚动动画，快速滑动到底部
+                mDataBind.recyclerView.scrollToPosition(0) //没有滚动动画，快速滑动到底部
             }else{
-                recyclerView.smoothScrollToPosition(0)//有滚动动画，快速滑动到底部
+                mDataBind.recyclerView.smoothScrollToPosition(0)//有滚动动画，快速滑动到底部
             }
         }
-        swipeRefresh.setOnRefreshListener {
+        mDataBind.swipeRefresh.setOnRefreshListener {
             mViewModel.getNavigationData(true)
         }
         navigatorAdapter.setOnItemClickListener { adapter, view, position ->
@@ -99,7 +97,7 @@ class NavigationFragment:BaseVmDbFragment<SquareViewModel,FragmentSquareListBind
 
     override fun createObserver() {
         mViewModel.navigatorLiveData.observe(mActivity, Observer {
-            swipeRefresh.isRefreshing=false
+            mDataBind.swipeRefresh.isRefreshing=false
             if(it.isSuccess){
                 when{
                     it.isFirstEmpty->{
@@ -118,7 +116,7 @@ class NavigationFragment:BaseVmDbFragment<SquareViewModel,FragmentSquareListBind
                     loadService.showCallback(ErrorCallback::class.java)
                     ToastUtils.showShort(it.errorMsg)
                 }else{
-                    recyclerView.loadMoreError(0,it.errorMsg)
+                    mDataBind.recyclerView.loadMoreError(0,it.errorMsg)
                 }
             }
         })

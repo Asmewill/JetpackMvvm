@@ -7,7 +7,6 @@ import android.view.View
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
 import com.blankj.utilcode.util.ToastUtils
 import com.example.wapp.R
 import com.example.wapp.demo.constant.Constant
@@ -19,7 +18,6 @@ import com.hyphenate.easeui.constants.EaseConstant
 import com.hyphenate.easeui.domain.EaseUser
 import com.hyphenate.easeui.model.EaseEvent
 import com.hyphenate.easeui.modules.contact.EaseContactListFragment
-import com.hyphenate.easeui.utils.EaseCommonUtils
 
 /**
  * Created by jsxiaoshui on 2021-11-23

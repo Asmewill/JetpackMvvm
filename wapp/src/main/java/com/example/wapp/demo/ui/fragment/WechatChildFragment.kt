@@ -18,9 +18,6 @@ import com.kingja.loadsir.callback.SuccessCallback
 import com.kingja.loadsir.core.LoadService
 import com.kingja.loadsir.core.LoadSir
 import com.yanzhenjie.recyclerview.SwipeRecyclerView
-import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.include_recyclerview.recyclerView
-import kotlinx.android.synthetic.main.include_recyclerview.swipeRefresh
 import me.hgj.jetpackmvvm.demo.app.weight.loadCallBack.EmptyCallback
 import com.example.wapp.demo.loadcallback.ErrorCallback
 import me.hgj.jetpackmvvm.demo.app.weight.loadCallBack.LoadingCallback
@@ -55,42 +52,42 @@ class WechatChildFragment : BaseVmDbFragment<WechatViewModel, FragmentProjectChi
             cid = it.getInt(Constant.CID, 0)
         }
         //注册LoadingService
-        loadService = LoadSir.getDefault().register(swipeRefresh) {
+        loadService = LoadSir.getDefault().register(mDataBind.swipeRefresh) {
             loadService.showCallback(LoadingCallback::class.java)
             mViewModel.getPublicData(true,cid)
         }
-        recyclerView.layoutManager=LinearLayoutManager(mActivity)
-        recyclerView.setHasFixedSize(true)
-        recyclerView.adapter=articleAdapter
-        recyclerView.addOnScrollListener(object:RecyclerView.OnScrollListener(){
+        mDataBind.recyclerView.layoutManager=LinearLayoutManager(mActivity)
+        mDataBind.recyclerView.setHasFixedSize(true)
+        mDataBind.recyclerView.adapter=articleAdapter
+        mDataBind.recyclerView.addOnScrollListener(object:RecyclerView.OnScrollListener(){
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 if(!recyclerView.canScrollVertically(-1)) {
-                    floatbtn.visibility = View.INVISIBLE
+                    mDataBind.floatbtn.visibility = View.INVISIBLE
                 }
             }
         })
-        floatbtn.setOnClickListener{
-            val layoutManager=recyclerView.layoutManager as LinearLayoutManager
+        mDataBind.floatbtn.setOnClickListener{
+            val layoutManager=mDataBind.recyclerView.layoutManager as LinearLayoutManager
             if(layoutManager.findLastVisibleItemPosition()>=40){
-                recyclerView.scrollToPosition(0) //没有滚动动画，快速滑动到底部
+                mDataBind.recyclerView.scrollToPosition(0) //没有滚动动画，快速滑动到底部
             }else{
-                recyclerView.smoothScrollToPosition(0)//有滚动动画，快速滑动到底部
+                mDataBind.recyclerView.smoothScrollToPosition(0)//有滚动动画，快速滑动到底部
             }
         }
 
         //给recycleView添加footview
-        recyclerView.addFooterView(footView)
-        recyclerView.setLoadMoreView(footView)
+        mDataBind.recyclerView.addFooterView(footView)
+        mDataBind.recyclerView.setLoadMoreView(footView)
         //设置上拉加载更多
-        recyclerView.setLoadMoreListener {
+        mDataBind.recyclerView.setLoadMoreListener {
             mViewModel.getPublicData(false,cid)
         }
         //异常时,点击footView,获取更多数据
         footView.setmLoadMoreListener(SwipeRecyclerView.LoadMoreListener {
             mViewModel.getPublicData(false,cid)
         })
-        swipeRefresh.setOnRefreshListener {
+        mDataBind.swipeRefresh.setOnRefreshListener {
             mViewModel.getPublicData(true,cid)
         }
     }
@@ -107,8 +104,8 @@ class WechatChildFragment : BaseVmDbFragment<WechatViewModel, FragmentProjectChi
 
     override fun createObserver() {
         mViewModel.publicDataLiveData.observe(mActivity, Observer {
-            swipeRefresh.isRefreshing=false
-            recyclerView.loadMoreFinish(it.listData.isEmpty(),it.hasMore)
+            mDataBind.swipeRefresh.isRefreshing=false
+            mDataBind.recyclerView.loadMoreFinish(it.listData.isEmpty(),it.hasMore)
             if(it.isSuccess){
                 when{
                     //第一页，没有数据，显示空布局
@@ -132,7 +129,7 @@ class WechatChildFragment : BaseVmDbFragment<WechatViewModel, FragmentProjectChi
                     ToastUtils.showShort(it.errorMsg)
                 }else{//第二页，第三页...异常
                     //上啦加载网络异常
-                    recyclerView.loadMoreError(0,it.errorMsg)
+                    mDataBind.recyclerView.loadMoreError(0,it.errorMsg)
                 }
             }
         })

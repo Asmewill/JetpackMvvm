@@ -18,10 +18,6 @@ import com.example.wapp.demo.viewmodel.EventViewModel
 import com.example.wapp.demo.viewmodel.LoginRegisterViewModel
 
 
-import kotlinx.android.synthetic.main.fragment_register.*
-
-
-
 /**
  * Created by jsxiaoshui on 2021-11-12
  */
@@ -34,39 +30,39 @@ class RegisterFragment:BaseVmDbFragment<LoginRegisterViewModel,FragmentRegisterB
     }
 
     override fun initView() {
-        toolbar.initClose(titleStr = "注册",onBack={
+        mDataBind.toolbar.initClose(titleStr = "注册",onBack={
             NavHostFragment.findNavController(this).navigateUp()
         })
-        registerUsername.addTextChangedListener{
+        mDataBind.registerUsername.addTextChangedListener{
             if(it.toString().isNotEmpty()){
-                registerClear.visibility= View.VISIBLE
+                mDataBind.registerClear.visibility= View.VISIBLE
             }else{
-                registerClear.visibility=View.GONE
+                mDataBind.registerClear.visibility=View.GONE
             }
         }
-        registerClear.setOnClickListener {
-            registerUsername.setText("")
+        mDataBind.registerClear.setOnClickListener {
+            mDataBind. registerUsername.setText("")
         }
-        registerKey.setOnCheckedChangeListener { buttonView, isChecked ->
+        mDataBind.registerKey.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
-                registerPwd.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+                mDataBind.registerPwd.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
             } else {
-                registerPwd.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+                mDataBind.registerPwd.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
             }
-            registerPwd.setSelection(registerPwd.text.toString().length)
+            mDataBind.registerPwd.setSelection( mDataBind.registerPwd.text.toString().length)
         }
-        registerKey1.setOnCheckedChangeListener { buttonView, isChecked ->
+        mDataBind.registerKey1.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
-                registerPwd1.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+                mDataBind.registerPwd1.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
             } else {
-                registerPwd1.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+                mDataBind.registerPwd1.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
             }
-            registerPwd.setSelection(registerPwd1.text.toString().length)
+            mDataBind. registerPwd.setSelection( mDataBind.registerPwd1.text.toString().length)
         }
-        registerSub.setOnClickListener {
-             userName=registerUsername.text.toString().trim()
-             pwd1=registerPwd.text.toString().trim()
-             pwd2=registerPwd1.text.toString().trim()
+        mDataBind.registerSub.setOnClickListener {
+             userName= mDataBind.registerUsername.text.toString().trim()
+             pwd1= mDataBind.registerPwd.text.toString().trim()
+             pwd2= mDataBind.registerPwd1.text.toString().trim()
             if(TextUtils.isEmpty(userName)){
                 ToastUtils.showLong("用户名不能为空")
                 return@setOnClickListener

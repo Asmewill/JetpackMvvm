@@ -22,7 +22,6 @@ import com.kingja.loadsir.callback.Callback
 import com.kingja.loadsir.callback.SuccessCallback
 import com.kingja.loadsir.core.LoadSir
 import com.yanzhenjie.recyclerview.SwipeRecyclerView
-import kotlinx.android.synthetic.main.fragment_home.*
 import me.hgj.jetpackmvvm.demo.app.weight.loadCallBack.LoadingCallback
 
 
@@ -43,49 +42,49 @@ class PointRecordFragment:BaseVmDbFragment<PointRecordViewModel,FragmentPointRec
         return R.layout.fragment_point_record
     }
     override fun initView() {
-        loadService= LoadSir.getDefault().register(swipeRefresh, Callback.OnReloadListener {
+        loadService= LoadSir.getDefault().register(mDataBind.swipeRefresh, Callback.OnReloadListener {
             pageNo=1
             loadService.showCallback(LoadingCallback::class.java)
             pointRecordViewModel.getPointRecordList(pageNo)
         })
-        toolbar.initClose(titleStr = "积分记录",onBack = {
+        mDataBind.toolbar.initClose(titleStr = "积分记录",onBack = {
             nav().navigateUp()
         })
 
-        recyclerView.layoutManager= LinearLayoutManager(activity)
-        recyclerView.adapter=pointRecordAdapter
+        mDataBind.recyclerView.layoutManager= LinearLayoutManager(activity)
+        mDataBind.recyclerView.adapter=pointRecordAdapter
         //floatBtn快速返回到顶部
-        floatbtn.setOnClickListener {
-            val layoutManager:LinearLayoutManager= recyclerView.layoutManager as LinearLayoutManager
+        mDataBind.floatbtn.setOnClickListener {
+            val layoutManager:LinearLayoutManager=  mDataBind.recyclerView.layoutManager as LinearLayoutManager
             if(layoutManager.findLastVisibleItemPosition()>=40){
-                recyclerView.scrollToPosition(0)  //没有滑动动画，快速滚动到顶部
+                mDataBind.recyclerView.scrollToPosition(0)  //没有滑动动画，快速滚动到顶部
             }else{
-                recyclerView.smoothScrollToPosition(0) //有滑动动画，快速滚动到顶部
+                mDataBind.recyclerView.smoothScrollToPosition(0) //有滑动动画，快速滚动到顶部
             }
         }
         //滑动到顶部，隐藏 FloatingActionBtn
-        recyclerView.addOnScrollListener(object: RecyclerView.OnScrollListener(){
+        mDataBind.recyclerView.addOnScrollListener(object: RecyclerView.OnScrollListener(){
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
             }
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 if(!recyclerView.canScrollVertically(-1)){
-                    floatbtn.visibility= View.INVISIBLE
+                    mDataBind.floatbtn.visibility= View.INVISIBLE
                 }
             }
         })
         //下拉刷新
-        swipeRefresh.setOnRefreshListener {
+        mDataBind.swipeRefresh.setOnRefreshListener {
             pageNo=1
             pointRecordViewModel.getPointRecordList(pageNo)
         }
         //添加FootView  自定义
         val footView= DefineLoadMoreView(MyApp.instance)
-        recyclerView.addFooterView(footView)
-        recyclerView.setLoadMoreView(footView)
+        mDataBind.recyclerView.addFooterView(footView)
+        mDataBind.recyclerView.setLoadMoreView(footView)
         //加载更多
-        recyclerView.setLoadMoreListener {
+        mDataBind.recyclerView.setLoadMoreListener {
             pageNo++
             pointRecordViewModel.getPointRecordList(pageNo)
         }
@@ -103,12 +102,12 @@ class PointRecordFragment:BaseVmDbFragment<PointRecordViewModel,FragmentPointRec
     }
     override fun createObserver() {
         mViewModel.pointRecordLiveData.observe(viewLifecycleOwner, Observer {
-            swipeRefresh.isRefreshing=false
+            mDataBind.swipeRefresh.isRefreshing=false
              when(it.isSuccess){
                  true->{
                      if(it.response!!.getrResponseCode()==0){
                          loadService.showCallback(SuccessCallback::class.java)
-                         recyclerView.loadMoreFinish(it.response!!.getResponseData().isEmpty(),it.response!!.getResponseData().curPage<it.response!!.getResponseData().pageCount)
+                         mDataBind.recyclerView.loadMoreFinish(it.response!!.getResponseData().isEmpty(),it.response!!.getResponseData().curPage<it.response!!.getResponseData().pageCount)
                          if(it.response!!.getResponseData().curPage==1){
                              pointRecordAdapter.setList((it.response.getResponseData().datas))
                          }else{
@@ -121,8 +120,8 @@ class PointRecordFragment:BaseVmDbFragment<PointRecordViewModel,FragmentPointRec
                      }
                  }
                  false->{
-                     recyclerView.loadMoreFinish(true,false)
-                     recyclerView.loadMoreError(0,it.errorMsg)
+                     mDataBind.recyclerView.loadMoreFinish(true,false)
+                     mDataBind.recyclerView.loadMoreError(0,it.errorMsg)
                      if(!TextUtils.isEmpty(it.errorMsg)){
                          ToastUtils.showLong(it.errorMsg)
                      }

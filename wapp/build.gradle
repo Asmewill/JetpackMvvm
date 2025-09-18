@@ -1,14 +1,14 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
-    id 'kotlin-android-extensions'//引入该插件可直接使用xml中定义的ID
+   // id 'kotlin-android-extensions'//替换成
+    id 'org.jetbrains.kotlin.plugin.parcelize'// 代替kotlin-android-extensions
     id 'kotlin-kapt'
 }
 
 android {
     namespace "com.example.wapp"
-    compileSdkVersion 34
-    buildToolsVersion "30.0.2"
+    compileSdkVersion 35
     signingConfigs {
         config {
             storeFile file('../wapp/wapp.jks')

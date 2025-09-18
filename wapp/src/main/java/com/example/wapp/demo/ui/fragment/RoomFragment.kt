@@ -11,7 +11,7 @@ import com.example.wapp.demo.ext.nav
 import com.example.wapp.demo.room.AppDataBase
 import com.example.wapp.demo.room.User
 import com.example.wapp.demo.viewmodel.DemoViewModel
-import kotlinx.android.synthetic.main.fragment_room.*
+
 
 /**
  * Data :2023/3/13
@@ -31,16 +31,16 @@ class RoomFragment:BaseVmDbFragment<DemoViewModel,FragmentRoomBinding>() {
     }
 
     override fun initView() {
-        toolbar.initClose(titleStr = "Room数据库demo") {
+        mDataBind.toolbar.initClose(titleStr = "Room数据库demo") {
             nav().navigateUp()
         }
-        rv_content.layoutManager=LinearLayoutManager(mActivity)
-        rv_content.adapter=roomListAdapter
+        mDataBind.rvContent.layoutManager=LinearLayoutManager(mActivity)
+        mDataBind.rvContent.adapter=roomListAdapter
         roomListAdapter.setNewInstance(AppDataBase.getInstance().userDao().getUsers().toMutableList())
-        btn_added.setOnClickListener {
+        mDataBind.btnAdded.setOnClickListener {
             addItem()
         }
-        btn_delete_all.setOnClickListener {
+        mDataBind.btnDeleteAll.setOnClickListener {
             AppDataBase.getInstance().userDao().deleteUsers(roomListAdapter.data.toList())
            var userList= AppDataBase.getInstance().userDao().getUsers().toMutableList()
             roomListAdapter.setNewInstance(userList)

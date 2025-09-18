@@ -1,5 +1,6 @@
 package com.example.wapp.demo.ui
 
+import android.annotation.SuppressLint
 import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
@@ -23,8 +24,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import com.hyphenate.chat.EMClient
 import com.hyphenate.easeui.model.EaseEvent
-import kotlinx.android.synthetic.main.fragment_main.*
-import java.util.logging.Handler
+
 
 /**
  * Created by jsxiaoshui on 2021/8/18
@@ -40,38 +40,38 @@ class MainFragment :BaseVmDbFragment<MainViewModel,FragmentMainBinding>() {
     }
 
     override fun initView() {
-       mainViewpager.initMain(this)
-       mainBottom.init {
+       mDataBind.mainViewpager.initMain(this)
+        mDataBind.mainBottom.init {
             when(it){
                 R.id.menu_main->{
-                    mainViewpager.setCurrentItem(0,false)
+                    mDataBind.mainViewpager.setCurrentItem(0,false)
                 }
                 R.id.menu_project-> {
-                    mainViewpager.setCurrentItem(1,false)
+                    mDataBind.mainViewpager.setCurrentItem(1,false)
                 }
                 R.id.menu_system->{
-                    mainViewpager.setCurrentItem(2,false)
+                    mDataBind.mainViewpager.setCurrentItem(2,false)
                 }
                 R.id.menu_public->{
-                    mainViewpager.setCurrentItem(3,false)
+                    mDataBind.mainViewpager.setCurrentItem(3,false)
                 }
                 R.id.menu_me-> {
-                    mainViewpager.setCurrentItem(4,false)
+                    mDataBind.mainViewpager.setCurrentItem(4,false)
                 }
             }
        }
-        mainBottom.interceptLongClick(R.id.menu_main, R.id.menu_project, R.id.menu_system,R.id.menu_public,R.id.menu_me)
+        mDataBind.mainBottom.interceptLongClick(R.id.menu_main, R.id.menu_project, R.id.menu_system,R.id.menu_public,R.id.menu_me)
 
-        mainBottom.let {
-
-        }
-        mainBottom.run {
+        mDataBind.mainBottom.let {
 
         }
-        mainBottom.also {
+        mDataBind.mainBottom.run {
 
         }
-        mainBottom.apply {
+        mDataBind.mainBottom.also {
+
+        }
+        mDataBind.mainBottom.apply {
 
         }
         /****
@@ -110,8 +110,9 @@ class MainFragment :BaseVmDbFragment<MainViewModel,FragmentMainBinding>() {
      * 添加BottomNavigationView中每个item右上角的红点
      */
 
+    @SuppressLint("RestrictedApi")
     private fun addTabBadge() {
-        val menuView = mainBottom.getChildAt(0) as BottomNavigationMenuView
+        val menuView =  mDataBind.mainBottom.getChildAt(0) as BottomNavigationMenuView
         val childCount = menuView.childCount
         Log.e("TAG", "bottom child count = $childCount")
         var itemTab: BottomNavigationItemView = menuView.getChildAt(3) as BottomNavigationItemView
